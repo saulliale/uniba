@@ -6,278 +6,30 @@
     <title>Indice Lezioni - Programmazione</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --bg: #0f1117;
-            --surface: #1a1d27;
-            --surface-2: #222535;
-            --border: rgba(255,255,255,0.07);
-            --border-hover: rgba(99,102,241,0.5);
-            --text: #e8eaf0;
-            --text-muted: #6b7280;
-            --accent: #6366f1;
-            --accent-2: #818cf8;
-            --disabled-bg: #14161f;
-            --disabled-border: rgba(255,255,255,0.04);
-            --font: 'Inter', system-ui, sans-serif;
-            --radius: 16px;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: var(--font);
-            background-color: var(--bg);
-            background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99,102,241,0.1) 0%, transparent 60%);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 3rem 1.5rem 5rem;
-            display: flex;
-            justify-content: center;
-        }
-
-        .dashboard-container { width: 100%; max-width: 1000px; }
-
-        nav { margin-bottom: 3rem; animation: fadeDown 0.5s ease both; }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.2s ease, gap 0.2s ease;
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            padding: 8px 16px 8px 12px;
-            background: var(--surface);
-        }
-
-        .back-link:hover { color: var(--accent-2); gap: 12px; border-color: rgba(99,102,241,0.3); }
-        .back-link svg { transition: transform 0.2s ease; }
-        .back-link:hover svg { transform: translateX(-3px); }
-
-        header {
-            margin-bottom: 3.5rem;
-            padding-bottom: 2.5rem;
-            border-bottom: 1px solid var(--border);
-            animation: fadeDown 0.5s 0.1s ease both;
-        }
-
-        .header-tag {
-            display: inline-block;
-            background: rgba(99,102,241,0.12);
-            border: 1px solid rgba(99,102,241,0.25);
-            border-radius: 100px;
-            padding: 4px 14px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--accent-2);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: -0.03em;
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle { color: var(--text-muted); font-size: 1rem; }
-
-        .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-            gap: 1.25rem;
-        }
-
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.35s cubic-bezier(.22,.68,0,1.2), box-shadow 0.35s ease, border-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            animation: fadeUp 0.5s ease both;
-        }
-
-        .card:nth-child(1) { animation-delay: 0.15s; }
-        .card:nth-child(2) { animation-delay: 0.25s; }
-        .card:nth-child(3) { animation-delay: 0.35s; }
-        .card:nth-child(4) { animation-delay: 0.45s; }
-
-        .card.active::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 3px; height: 100%;
-            background: linear-gradient(180deg, var(--accent), var(--accent-2));
-        }
-
-        .card.active:hover {
-            transform: translateY(-5px);
-            border-color: var(--border-hover);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.12);
-        }
-
-        .card.disabled {
-            background: var(--disabled-bg);
-            border-color: var(--disabled-border);
-            cursor: not-allowed;
-            opacity: 0.55;
-        }
-
-        .lesson-badge {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(99,102,241,0.1);
-            border: 1px solid rgba(99,102,241,0.2);
-            color: var(--accent-2);
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            padding: 4px 12px;
-            border-radius: 100px;
-            margin-bottom: 1.25rem;
-            align-self: flex-start;
-        }
-
-        .card.disabled .lesson-badge {
-            background: rgba(255,255,255,0.04);
-            border-color: rgba(255,255,255,0.06);
-            color: #4b5563;
-        }
-
-        .card h2 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 0.65rem;
-            line-height: 1.4;
-            letter-spacing: -0.02em;
-        }
-
-        .card.disabled h2 { color: #374151; }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            line-height: 1.65;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .card.disabled p { color: #374151; }
-
-        .card-footer {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent-2);
-            transition: gap 0.25s ease;
-        }
-
-        .card-footer svg {
-            width: 15px; height: 15px;
-            stroke: var(--accent-2);
-            stroke-width: 2;
-            transition: transform 0.25s ease;
-        }
-
-        .card.active:hover .card-footer { gap: 12px; }
-        .card.active:hover .card-footer svg { transform: translateX(4px); }
-        .card.disabled .card-footer { color: #374151; }
-
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-16px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 2rem 1rem 4rem; }
-            header { margin-bottom: 2.5rem; }
-            .card { padding: 1.5rem; }
-        }
-    </style>
+    <link rel="stylesheet" href="theme.css">
 </head>
-<body>
-
-    <div class="dashboard-container">
-
+<body class="idx">
+    <div class="wrap">
         <nav>
             <a href="index.html" class="back-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
                 Torna alla Home
             </a>
         </nav>
-
         <header>
-            <div class="header-tag">Linguaggio C &amp; Algoritmi</div>
+            <div class="tag">Linguaggio C &amp; Algoritmi</div>
             <h1>Programmazione</h1>
-            <p class="subtitle">Fondamenti di coding, algoritmi e Linguaggio C — Indice degli appunti</p>
+            <p class="sub">Fondamenti di coding, algoritmi e Linguaggio C — Indice degli appunti</p>
         </header>
-
-        <main class="lessons-grid">
-
-            <!-- LEZIONE 1 (Attiva) -->
-            <a href="programmazione1.html" class="card active">
-                <div class="lesson-badge">Lezione 1</div>
+        <main class="grid">
+            <a href="programmazione1.html" class="card">
+                <div class="badge">Lezione 1</div>
                 <h2>Introduzione al C</h2>
                 <p>Architettura di un programma, sintassi, tipi di dati, Input/Output (printf/scanf) e logica decisionale (if-else).</p>
-                <div class="card-footer">
-                    Leggi appunti
-                    <svg viewBox="0 0 24 24" fill="none"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </div>
+                <div class="foot">Leggi appunti <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
             </a>
-
-            <!-- LEZIONE 2 (Prossimamente) -->
-            <div class="card disabled">
-                <div class="lesson-badge">Lezione 2</div>
-                <h2>Costrutti Iterativi</h2>
-                <p>Gestione del flusso ciclico: istruzioni while, do-while, for e tecniche di iterazione strutturata.</p>
-                <div class="card-footer">Prossimamente...</div>
-            </div>
-
-            <!-- LEZIONE 3 (Prossimamente) -->
-            <div class="card disabled">
-                <div class="lesson-badge">Lezione 3</div>
-                <h2>Funzioni e Ricorsione</h2>
-                <p>Definizione delle funzioni, scope delle variabili, passaggio dei parametri per valore e funzioni ricorsive.</p>
-                <div class="card-footer">Prossimamente...</div>
-            </div>
-
-            <!-- LEZIONE 4 (Prossimamente) -->
-            <div class="card disabled">
-                <div class="lesson-badge">Lezione 4</div>
-                <h2>Array e Puntatori</h2>
-                <p>Strutture dati sequenziali, manipolazione di stringhe, indirizzi di memoria e aritmetica dei puntatori.</p>
-                <div class="card-footer">Prossimamente...</div>
-            </div>
-
         </main>
     </div>
-
+    <script src="motion.js"></script>
 </body>
 </html>
