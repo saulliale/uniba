@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintesi: Elaborazione dell'Informazione</title>
+    <style>
+        /* =========================================
+           Variabili di Stile (Minimal & Professional)
+           ========================================= */
+        :root {
+            --bg-color: #f4f6f8;
+            --paper-color: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --accent-color: #3182ce;
+            --accent-light: #ebf8ff;
+            --border-color: #e2e8f0;
+            --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        /* =========================================
+           Reset e Base
+           ========================================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            font-size: 17px;
+            padding: 2rem 1rem;
+        }
+
+        /* =========================================
+           Layout Principale
+           ========================================= */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--paper-color);
+            padding: 4rem 5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            color: var(--accent-color);
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* =========================================
+           Tipografia e Contenuti
+           ========================================= */
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        p { margin-bottom: 1.5rem; }
+
+        ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        li { margin-bottom: 0.5rem; }
+
+        strong { color: #1a202c; }
+
+        /* =========================================
+           Componenti Specifici (Box, Highlight, Stack)
+           ========================================= */
+        .highlight-box {
+            background-color: var(--accent-light);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p:last-child { margin-bottom: 0; }
+
+        /* Grafica dei Livelli (Astrazione) */
+        .stack-container {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .stack-level {
+            background-color: #f7fafc;
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            border-radius: 6px;
+            font-weight: 500;
+            color: #4a5568;
+            transition: all 0.2s ease;
+        }
+
+        .stack-level:hover {
+            background-color: var(--accent-color);
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.2);
+        }
+
+        .stack-hw { background-color: #edf2f7; border-bottom: 4px solid #cbd5e0; }
+
+        /* Contenitore Immagini/SVG */
+        .figure-container {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .figure-caption {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* =========================================
+           Media Queries per Mobile
+           ========================================= */
+        @media (max-width: 768px) {
+            .container { padding: 2rem; }
+            h1 { font-size: 1.8rem; }
+            body { font-size: 16px; padding: 1rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <header>
+            <div class="subtitle">Appunti di Informatica</div>
+            <h1>Sintesi Approfondita:<br>Elaborazione dell'Informazione</h1>
+        </header>
+
+        <main>
+            <!-- SEZIONE 1 -->
+            <section>
+                <h2>1. Definizioni di Base dell'Informatica e dell'Elaboratore</h2>
+                <p>L'<strong>Informatica</strong> si definisce essenzialmente come la fusione dei termini "<em>INFORMAzione automaTICA</em>" ed è la scienza che si occupa rigorosamente della rappresentazione, della trasmissione e dell'elaborazione automatica delle informazioni.</p>
+                <p>A supporto di questo processo teorico e pratico troviamo l'<strong>Elaboratore</strong>, che rappresenta il mezzo strumentale, ovvero la macchina fisica impiegata direttamente per la rappresentazione, la memorizzazione e l'elaborazione concreta di tali informazioni sotto forma di dati.</p>
+            </section>
+
+            <!-- SEZIONE 2 -->
+            <section>
+                <h2>2. Il Concetto di Elaborazione dell'Informazione ed Algoritmo</h2>
+                <p>L'elaborazione dell'informazione è quel processo specifico attraverso cui un determinato esecutore compie una serie ben precisa di azioni su un insieme di dati o informazioni di partenza. Tutto questo avviene obbedendo rigorosamente a una procedura ben definita, con il fine ultimo di risolvere un determinato problema.</p>
+                
+                <div class="highlight-box">
+                    <strong>Algoritmo:</strong> Una sequenza finita di azioni che permette di giungere alla soluzione di un problema in un tempo finito.
+                </div>
+
+                <p>La descrizione di qualsiasi procedura operativa deve obbligatoriamente contenere tre elementi fondamentali:</p>
+                <ul>
+                    <li>La specifica dettagliata dei <strong>dati</strong> da elaborare;</li>
+                    <li>L'insieme delle <strong>azioni</strong> da compiere;</li>
+                    <li>La specifica dei <strong>controlli</strong> che determinano l'ordine e il flusso temporale con cui tali azioni devono essere eseguite.</li>
+                </ul>
+
+                <div class="figure-container">
+                    <!-- SVG: Analogia Cook Book -->
+                    <svg viewBox="0 0 600 150" width="100%">
+                        <!-- Frecce -->
+                        <path d="M 180 75 L 220 75" stroke="#cbd5e0" stroke-width="4" marker-end="url(#arrow)"/>
+                        <path d="M 380 75 L 420 75" stroke="#cbd5e0" stroke-width="4" marker-end="url(#arrow)"/>
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#cbd5e0" />
+                            </marker>
+                        </defs>
+                        <!-- Box 1 -->
+                        <rect x="20" y="35" width="160" height="80" rx="8" fill="#edf2f7" stroke="#cbd5e0" stroke-width="2"/>
+                        <text x="100" y="70" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">INGREDIENTI</text>
+                        <text x="100" y="90" font-family="sans-serif" font-size="12" fill="#718096" text-anchor="middle">(Dati di Input)</text>
+                        <!-- Box 2 -->
+                        <rect x="220" y="35" width="160" height="80" rx="8" fill="#ebf8ff" stroke="#3182ce" stroke-width="2"/>
+                        <text x="300" y="70" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2b6cb0" text-anchor="middle">RICETTA</text>
+                        <text x="300" y="90" font-family="sans-serif" font-size="12" fill="#3182ce" text-anchor="middle">(Algoritmo)</text>
+                        <!-- Box 3 -->
+                        <rect x="420" y="35" width="160" height="80" rx="8" fill="#f0fff4" stroke="#68d391" stroke-width="2"/>
+                        <text x="500" y="70" font-family="sans-serif" font-size="14" font-weight="bold" fill="#22543d" text-anchor="middle">PIATTO FINITO</text>
+                        <text x="500" y="90" font-family="sans-serif" font-size="12" fill="#38a169" text-anchor="middle">(Soluzione / Output)</text>
+                    </svg>
+                    <div class="figure-caption">Fig 1. Rappresentazione concettuale: L'analogia con il libro di ricette evidenzia come l'esecutore debba seguire passaggi sequenziali sui dati per ottenere una soluzione.</div>
+                </div>
+            </section>
+
+            <!-- SEZIONE 3 -->
+            <section>
+                <h2>3. Elaborazione Automatica, Programma ed Istruzioni</h2>
+                <p>Quando l'elaborazione diventa automatica, entra in gioco il <strong>Programma</strong>, ossia la descrizione di una procedura di elaborazione mediante un linguaggio formale (linguaggio di programmazione), strutturato per essere comprensibile dalla macchina. Un programma è una sequenza finita di istruzioni.</p>
+                <p>L'<strong>Istruzione</strong> è un singolo comando caratterizzato da sintassi e semantica non ambigue. L'Elaboratore è la macchina fisica in grado di eseguire le istruzioni dettate dal programma memorizzato al suo interno.</p>
+            </section>
+
+            <!-- SEZIONE 4 -->
+            <section>
+                <h2>4. Struttura del Sistema di Elaborazione: HW, SW e Firmware</h2>
+                <p>L'elaboratore costituisce un sistema complesso composto da due macro-componenti interdipendenti:</p>
+                <ul>
+                    <li><strong>Hardware (HW):</strong> La struttura fisica, costituita da componenti elettronici ed elettromeccanici.</li>
+                    <li><strong>Software (SW):</strong> L'insieme dei programmi che permettono all'hardware di svolgere compiti specifici.</li>
+                </ul>
+                <p>La caratteristica vincente dell'elaboratore è che <em>la medesima struttura fisica (HW) può realizzare compiti completamente diversi eseguendo programmi (SW) differenti</em>.</p>
+                <p>Il Software si articola in categorie principali con un livello intermedio:</p>
+                <ul>
+                    <li><strong>Firmware:</strong> Software codificato e integrato direttamente all'interno dell'hardware.</li>
+                    <li><strong>Software di base:</strong> Programmi dedicati alla gestione operativa del sistema (es. Sistema Operativo).</li>
+                    <li><strong>Software Applicativo:</strong> Programmi finalizzati allo svolgimento di compiti specifici (es. Word o Excel).</li>
+                </ul>
+            </section>
+
+            <!-- SEZIONE 5 -->
+            <section>
+                <h2>5. Strutturazione ad Astrazione in Livelli</h2>
+                <p>Un sistema di elaborazione è organizzato secondo un'architettura gerarchica ad astrazione in livelli per colmare il divario tra il ragionamento umano e l'esecuzione nativa della macchina.</p>
+                
+                <!-- Stack visuale generato in HTML/CSS -->
+                <div class="stack-container">
+                    <div class="stack-level" style="opacity: 0.6;">OO and Visual Language (es. C++, Java)</div>
+                    <div class="stack-level" style="opacity: 0.7;">FORTRAN / C / Pascal</div>
+                    <div class="stack-level" style="opacity: 0.8;">High-Level Language (Linguaggio ad alto livello)</div>
+                    <div class="stack-level" style="opacity: 0.9;">Assembly Language (Linguaggio assemblatore)</div>
+                    <div class="stack-level" style="opacity: 1;">Machine Language (Linguaggio macchina)</div>
+                    <div class="stack-level stack-hw">Hardware (Livello fisico)</div>
+                </div>
+            </section>
+
+            <!-- SEZIONE 6 -->
+            <section>
+                <h2>6. Rappresentazione dell'Informazione: Analogico vs Digitale</h2>
+                <p>L'informazione può essere espressa a diversi livelli di astrazione. Un confronto pratico si può fare con la misurazione del peso:</p>
+                <ul>
+                    <li><strong>Rappresentazione Analogica (Alto Livello):</strong> Bilancia a bracci o con ago (il movimento indica visivamente e con continuità l'entità del peso).</li>
+                    <li><strong>Rappresentazione Digitale (Basso Livello):</strong> Bilancia con display numerico (espressa tramite cifre discrete come "0.0").</li>
+                </ul>
+                
+                <p>Per far interagire il mondo reale (analogico) e l'elaboratore (digitale), si usano convertitori:</p>
+                <ul>
+                    <li><strong>Conversione A/D (Analogico/Digitale):</strong> Trasforma i segnali continui esterni in sequenze di bit (0 e 1).</li>
+                    <li><strong>Conversione D/A (Digitale/Analogico):</strong> Riconverte le sequenze binarie in grandezze continue per l'uomo.</li>
+                </ul>
+            </section>
+
+            <!-- SEZIONE 8 (Accorpata) -->
+            <section>
+                <h2>7. Rappresentazione Digitale Binaria e Segnali Elettrici</h2>
+                <p>L'elaboratore è un sistema digitale binario: le informazioni vengono discretizzate su <strong>due soli livelli</strong>. La grandezza fisica impiegata è la tensione elettrica:</p>
+                <ul>
+                    <li>Tensioni basse (es. 0V - 1V) &rarr; valore logico <strong>0</strong></li>
+                    <li>Tensioni alte (es. 2V - 5V) &rarr; valore logico <strong>1</strong></li>
+                </ul>
+
+                <div class="figure-container">
+                    <!-- SVG: Onda Quadra -->
+                    <svg viewBox="0 0 600 250" width="100%">
+                        <!-- Assi -->
+                        <line x1="40" y1="200" x2="550" y2="200" stroke="#718096" stroke-width="2" />
+                        <line x1="40" y1="200" x2="40" y2="20" stroke="#718096" stroke-width="2" />
+                        <text x="560" y="205" font-family="sans-serif" font-size="14" fill="#718096">Tempo (t)</text>
+                        <text x="20" y="15" font-family="sans-serif" font-size="14" fill="#718096">Volt (V)</text>
+                        
+                        <!-- Etichette Y -->
+                        <text x="15" y="200" font-family="sans-serif" font-size="14" fill="#718096">0V</text>
+                        <text x="15" y="150" font-family="sans-serif" font-size="14" fill="#718096">1V</text>
+                        <text x="15" y="100" font-family="sans-serif" font-size="14" fill="#718096">2V</text>
+                        <text x="15" y="50" font-family="sans-serif" font-size="14" fill="#718096">5V</text>
+
+                        <!-- Zone -->
+                        <rect x="40" y="50" width="510" height="50" fill="#ebf8ff" opacity="0.5"/>
+                        <rect x="40" y="150" width="510" height="50" fill="#fefcbf" opacity="0.5"/>
+                        <text x="50" y="80" font-family="sans-serif" font-size="12" font-weight="bold" fill="#3182ce">Livello ALTO (Logico 1)</text>
+                        <text x="50" y="180" font-family="sans-serif" font-size="12" font-weight="bold" fill="#d69e2e">Livello BASSO (Logico 0)</text>
+
+                        <!-- Onda Segnale -->
+                        <path d="M 40 180 L 120 180 L 120 70 L 250 70 L 250 180 L 380 180 L 380 70 L 510 70 L 510 180" stroke="#e53e3e" stroke-width="4" fill="none" stroke-linejoin="round"/>
+                    </svg>
+                    <div class="figure-caption">Fig 2. Segnale onda quadra nel tempo: alternanza tra livello logico 1 e livello logico 0 entro fasce di tensione prestabilite.</div>
+                </div>
+            </section>
+
+            <!-- SEZIONE 9 -->
+            <section>
+                <h2>8. Motivazioni della Scelta del Sistema Binario</h2>
+                <p>Perché usare due livelli e non, ad esempio, cinque? Le ragioni ingegneristiche sono due:</p>
+                <ol>
+                    <li><strong>Semplicità costruttiva:</strong> I componenti elettronici (come i transistor) lavorano in modo ottimale in soli due stati (acceso/spento).</li>
+                    <li><strong>Affidabilità e tolleranza ai disturbi:</strong> I circuiti sono soggetti a disturbi (rumore elettrico). Riducendo le fasce a due (0 e 1), si massimizza la "distanza" tra i livelli logici. Il rumore faticherà molto di più a far scavalcare involontariamente la soglia logica.</li>
+                </ol>
+
+                <div class="figure-container">
+                    <!-- SVG: Tolleranza al rumore -->
+                    <svg viewBox="0 0 600 250" width="100%">
+                        <!-- Titoli -->
+                        <text x="150" y="25" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">SISTEMA A 2 LIVELLI (Binario)</text>
+                        <text x="450" y="25" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">SISTEMA A 5 LIVELLI</text>
+                        
+                        <!-- Linea div -->
+                        <line x1="300" y1="10" x2="300" y2="240" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="5,5" />
+
+                        <!-- Sinistra: 2 livelli -->
+                        <rect x="50" y="50" width="200" height="40" fill="#ebf8ff"/>
+                        <rect x="50" y="160" width="200" height="40" fill="#fefcbf"/>
+                        <text x="40" y="75" font-family="sans-serif" font-size="12" fill="#718096">1</text>
+                        <text x="40" y="185" font-family="sans-serif" font-size="12" fill="#718096">0</text>
+                        <!-- Segnale disturbato sx -->
+                        <path d="M 50 180 Q 70 170 90 190 T 130 175 T 170 185 T 210 170 L 250 180" stroke="#e53e3e" stroke-width="2" fill="none"/>
+                        <!-- Freccia margine ampio -->
+                        <line x1="150" y1="95" x2="150" y2="155" stroke="#48bb78" stroke-width="3" marker-end="url(#arrow-green)" marker-start="url(#arrow-green-start)"/>
+                        <text x="160" y="130" font-family="sans-serif" font-size="11" fill="#48bb78" font-weight="bold">Margine Sicuro</text>
+
+                        <!-- Destra: 5 livelli -->
+                        <rect x="350" y="50" width="200" height="20" fill="#ebf8ff"/>
+                        <rect x="350" y="85" width="200" height="20" fill="#ebf8ff"/>
+                        <rect x="350" y="120" width="200" height="20" fill="#ebf8ff"/>
+                        <rect x="350" y="155" width="200" height="20" fill="#ebf8ff"/>
+                        <rect x="350" y="190" width="200" height="20" fill="#ebf8ff"/>
+                        <!-- Segnale disturbato dx (esce dalla fascia) -->
+                        <path d="M 350 165 Q 370 145 390 160 T 430 145 T 470 168 T 510 140 L 550 165" stroke="#e53e3e" stroke-width="2" fill="none"/>
+                        
+                        <circle cx="410" cy="149" r="6" fill="#e53e3e" />
+                        <text x="425" y="145" font-family="sans-serif" font-size="11" fill="#e53e3e" font-weight="bold">Errore! Scavalcata</text>
+
+                        <defs>
+                            <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L6,3 z" fill="#48bb78" />
+                            </marker>
+                            <marker id="arrow-green-start" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto">
+                                <path d="M6,0 L6,6 L0,3 z" fill="#48bb78" />
+                            </marker>
+                        </defs>
+                    </svg>
+                    <div class="figure-caption">Fig 3. Effetto del rumore: nel sistema a 2 livelli la fascia di sicurezza è enorme, prevenendo la corruzione del dato. Nel sistema a più livelli, un piccolo picco genera un errore logico.</div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+</body>
+</html>

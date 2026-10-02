@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintesi: Programmazione - Lezione 1</title>
+    <style>
+        /* =========================================
+           Variabili di Stile
+           ========================================= */
+        :root {
+            --bg-color: #f4f6f8;
+            --paper-color: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --accent-color: #3182ce;
+            --accent-light: #ebf8ff;
+            --border-color: #e2e8f0;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+            --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            --font-code: 'Courier New', Courier, monospace;
+        }
+
+        /* =========================================
+           Reset e Base
+           ========================================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.7;
+            font-size: 17px;
+            padding: 2rem 1rem;
+        }
+
+        /* =========================================
+           Layout Principale
+           ========================================= */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background-color: var(--paper-color);
+            padding: 4rem 5rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+        }
+
+        .back-nav {
+            margin-bottom: 2rem;
+        }
+
+        .back-nav a {
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: color 0.2s;
+        }
+
+        .back-nav a:hover { color: var(--accent-color); }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding-bottom: 2rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+            line-height: 1.3;
+        }
+
+        .subtitle {
+            color: var(--accent-color);
+            font-weight: 500;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* =========================================
+           Tipografia e Contenuti
+           ========================================= */
+        h2 {
+            font-size: 1.5rem;
+            color: var(--accent-color);
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: "";
+            display: inline-block;
+            width: 25px;
+            height: 3px;
+            background-color: var(--accent-color);
+            border-radius: 2px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: #2d3748;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        p { margin-bottom: 1.5rem; }
+        ul, ol { margin-bottom: 1.5rem; padding-left: 1.5rem; }
+        li { margin-bottom: 0.5rem; }
+        strong { color: #1a202c; }
+
+        /* =========================================
+           Blocchi di Codice
+           ========================================= */
+        .code-block {
+            background-color: var(--code-bg);
+            color: var(--code-text);
+            font-family: var(--font-code);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 2rem 0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+        }
+
+        .code-comment { color: #6a9955; font-style: italic; }
+        .code-keyword { color: #569cd6; }
+        .code-string { color: #ce9178; }
+        .code-function { color: #dcdcaa; }
+        .code-number { color: #b5cea8; }
+
+        /* =========================================
+           Tabelle
+           ========================================= */
+        .table-container {
+            overflow-x: auto;
+            margin: 2rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background-color: #f7fafc;
+            color: #4a5568;
+            font-weight: 600;
+        }
+
+        tr:last-child td { border-bottom: none; }
+        tr:hover td { background-color: #f8fafc; }
+
+        /* Keyword Grid (per la tabella delle parole riservate) */
+        .keyword-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            gap: 10px;
+            background-color: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin: 2rem 0;
+            font-family: var(--font-code);
+            font-size: 0.9rem;
+            color: #2b6cb0;
+        }
+
+        /* =========================================
+           Grafica SVG
+           ========================================= */
+        .figure-container {
+            background: #ffffff;
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+
+        .figure-caption {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-top: 1.5rem;
+            font-style: italic;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* Highlight box */
+        .highlight-box {
+            background-color: var(--accent-light);
+            border-left: 4px solid var(--accent-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        /* =========================================
+           Media Queries
+           ========================================= */
+        @media (max-width: 768px) {
+            .container { padding: 2rem; }
+            h1 { font-size: 1.8rem; }
+            body { font-size: 16px; padding: 1rem 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div class="back-nav">
+            <a href="index.html">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Torna all'indice
+            </a>
+        </div>
+
+        <header>
+            <div class="subtitle">Lezione 1</div>
+            <h1>Introduzione al Linguaggio C</h1>
+        </header>
+
+        <main>
+            <!-- SEZIONE 1 -->
+            <section>
+                <h2>1. Architettura e Struttura di un Programma in C</h2>
+                <p>Un programma in C è una sequenza ordinata di righe di codice che si suddividono in tre categorie concettuali:</p>
+                <ul>
+                    <li><strong>Dichiarazioni:</strong> specificano le variabili, le funzioni e i tipi di dati.</li>
+                    <li><strong>Istruzioni (Statement):</strong> rappresentano le azioni eseguibili (devono terminare con <code>;</code>).</li>
+                    <li><strong>Commenti:</strong> note esplicative per il programmatore.</li>
+                </ul>
+
+                <div class="code-block">
+<span class="code-comment">/* Fig. 2.1: fig02_01.c
+   A first program in C */</span>
+<span class="code-keyword">#include</span> &lt;stdio.h&gt;
+
+<span class="code-comment">/* function main begins program execution */</span>
+<span class="code-keyword">int</span> <span class="code-function">main</span>( <span class="code-keyword">void</span> )
+{
+    <span class="code-function">printf</span>( <span class="code-string">"Welcome to C!\n"</span> );
+
+    <span class="code-keyword">return</span> <span class="code-number">0</span>; <span class="code-comment">/* indicate that program ended successfully */</span>
+} <span class="code-comment">/* end function main */</span>
+                </div>
+
+                <p><strong>Punti chiave:</strong></p>
+                <ul>
+                    <li><code>#include &lt;stdio.h&gt;</code>: Direttiva del preprocessore che carica la libreria di Input/Output.</li>
+                    <li><code>int main(void)</code>: Il punto d'inizio obbligatorio dell'esecuzione. Restituisce un intero (<code>int</code>) e non prende parametri (<code>void</code>).</li>
+                    <li>Le parentesi graffe <code>{ }</code> delimitano i blocchi di codice.</li>
+                    <li>Il <strong>Linker</strong> collega le funzioni di libreria (come <code>printf</code>) al programma. Errori di battitura qui causeranno un errore del linker.</li>
+                </ul>
+            </section>
+
+            <!-- SEZIONE 2 -->
+            <section>
+                <h2>2. Formattazione e Sequenze di Escape</h2>
+                <p>Il carattere backslash <code>\</code> è il carattere di escape. Indica che il carattere successivo esegue un'operazione speciale.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Sequenza</th>
+                                <th>Nome</th>
+                                <th>Descrizione</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>\n</strong></td>
+                                <td>Newline (A capo)</td>
+                                <td>Posiziona il cursore all'inizio della riga successiva.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>\t</strong></td>
+                                <td>Horizontal tab</td>
+                                <td>Sposta il cursore al successivo punto di tabulazione.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>\a</strong></td>
+                                <td>Alert</td>
+                                <td>Produce un segnale acustico di sistema (campanella).</td>
+                            </tr>
+                            <tr>
+                                <td><strong>\\</strong></td>
+                                <td>Backslash</td>
+                                <td>Inserisce un carattere di barra rovesciata nella stringa.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>\"</strong></td>
+                                <td>Double quote</td>
+                                <td>Inserisce un doppio apice all'interno della stringa.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SEZIONE 3 -->
+            <section>
+                <h2>3. Parole Chiave Riservate ed Identificatori</h2>
+                <p>Il linguaggio C possiede un set di <em>keywords</em> predefinite che non possono mai essere usate come nomi di variabili o funzioni.</p>
+                
+                <div class="keyword-grid">
+                    <div>auto</div><div>break</div><div>case</div><div>char</div>
+                    <div>const</div><div>continue</div><div>default</div><div>do</div>
+                    <div>double</div><div>else</div><div>enum</div><div>extern</div>
+                    <div>float</div><div>for</div><div>goto</div><div>if</div>
+                    <div>int</div><div>long</div><div>register</div><div>return</div>
+                    <div>short</div><div>signed</div><div>sizeof</div><div>static</div>
+                    <div>struct</div><div>switch</div><div>typedef</div><div>union</div>
+                    <div>unsigned</div><div>void</div><div>volatile</div><div>while</div>
+                </div>
+
+                <p><strong>Regole per gli identificatori:</strong> Comprendono lettere, cifre e underscore (<code>_</code>). <em>Non possono iniziare con un numero</em>. Il C è <strong>case-sensitive</strong> (<code>Variabile</code> &ne; <code>variabile</code>).</p>
+            </section>
+
+            <!-- SEZIONE 4 -->
+            <section>
+                <h2>4. Concetti di Memoria: Stack ed Heap</h2>
+                <p>Ogni variabile rappresenta una locazione in RAM caratterizzata da: <strong>Nome</strong>, <strong>Tipo</strong> e <strong>Valore</strong>. L'assegnamento è un'operazione distruttiva (sovrascrive il vecchio valore).</p>
+
+                <div class="figure-container">
+                    <!-- SVG: Stack vs Heap -->
+                    <svg viewBox="0 0 700 350" width="100%">
+                        <rect x="50" y="50" width="250" height="250" rx="10" fill="#edf2f7" stroke="#cbd5e0" stroke-width="2"/>
+                        <rect x="400" y="50" width="250" height="250" rx="10" fill="#ebf8ff" stroke="#90cdf4" stroke-width="2"/>
+                        
+                        <text x="175" y="80" font-family="sans-serif" font-size="18" font-weight="bold" fill="#2d3748" text-anchor="middle">STACK (LIFO)</text>
+                        <text x="525" y="80" font-family="sans-serif" font-size="18" font-weight="bold" fill="#2b6cb0" text-anchor="middle">HEAP (Dinamica)</text>
+                        
+                        <!-- Stack items -->
+                        <rect x="80" y="110" width="190" height="40" fill="#fff" stroke="#a0aec0" stroke-width="1"/>
+                        <text x="175" y="135" font-family="sans-serif" font-size="14" fill="#4a5568" text-anchor="middle">fn() [Frame Corrente]</text>
+                        
+                        <rect x="80" y="150" width="190" height="40" fill="#e2e8f0" stroke="#a0aec0" stroke-width="1"/>
+                        <text x="175" y="175" font-family="sans-serif" font-size="14" fill="#4a5568" text-anchor="middle">f1()</text>
+                        
+                        <rect x="80" y="190" width="190" height="40" fill="#cbd5e0" stroke="#a0aec0" stroke-width="1"/>
+                        <text x="175" y="215" font-family="sans-serif" font-size="14" fill="#4a5568" text-anchor="middle">main()</text>
+
+                        <text x="175" y="270" font-family="sans-serif" font-size="12" fill="#718096" text-anchor="middle">Veloce, Dim. Fissa, Auto</text>
+
+                        <!-- Heap items -->
+                        <rect x="430" y="120" width="80" height="50" rx="5" fill="#fff" stroke="#63b3ed" stroke-dasharray="4"/>
+                        <rect x="540" y="170" width="90" height="60" rx="5" fill="#fff" stroke="#63b3ed" stroke-dasharray="4"/>
+                        <rect x="420" y="210" width="60" height="40" rx="5" fill="#fff" stroke="#63b3ed" stroke-dasharray="4"/>
+                        
+                        <text x="525" y="150" font-family="sans-serif" font-size="14" fill="#2b6cb0" text-anchor="middle">malloc / free</text>
+                        <text x="525" y="270" font-family="sans-serif" font-size="12" fill="#718096" text-anchor="middle">Lenta, Manuale, Ampia</text>
+                    </svg>
+                    <div class="figure-caption">Rappresentazione logica della memoria RAM allocata al programma in esecuzione.</div>
+                </div>
+            </section>
+
+            <!-- SEZIONE 5 & 6 -->
+            <section>
+                <h2>5. Input dei Dati (scanf) e Tipi Fondamentali</h2>
+                <p>La funzione <code>scanf</code> legge input da tastiera. Richiede la specifica di formato (es. <code>%d</code>) e l'<strong>operatore di indirizzo <code>&amp;</code></strong> per sapere in quale locazione RAM salvare il dato.</p>
+                
+                <div class="code-block">
+<span class="code-keyword">int</span> a;   <span class="code-comment">/* Tipo Intero: %d */</span>
+<span class="code-keyword">char</span> c;  <span class="code-comment">/* Tipo Carattere: %c */</span>
+<span class="code-keyword">float</span> f; <span class="code-comment">/* Tipo Reale: %f */</span>
+
+<span class="code-function">scanf</span>(<span class="code-string">"%d"</span>, &amp;a);
+                </div>
+
+                <div class="highlight-box">
+                    <strong>Pulizia del Buffer (stdin):</strong> Residui (come il tasto Invio `\n`) possono creare bug in acquisizioni multiple. Per pulire il buffer si usa: <br><br>
+                    <code>fflush(stdin);</code> oppure <br>
+                    <code>while (getchar() != '\n');</code>
+                </div>
+            </section>
+
+            <!-- SEZIONE 7 & 11 -->
+            <section>
+                <h2>6. Operatori Aritmetici e Precedenza</h2>
+                <p>In C, l'operatore <code>=</code> assegna il valore calcolato a destra alla variabile di sinistra.</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Operazione</th>
+                                <th>Operatore C</th>
+                                <th>Precedenza</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Parentesi</td>
+                                <td><strong>( )</strong></td>
+                                <td>Massima (da interno verso esterno)</td>
+                            </tr>
+                            <tr>
+                                <td>Moltiplicazione / Divisione / Modulo</td>
+                                <td><strong>*</strong> &nbsp; <strong>/</strong> &nbsp; <strong>%</strong></td>
+                                <td>Livello 3 (da sx a dx)</td>
+                            </tr>
+                            <tr>
+                                <td>Addizione / Sottrazione</td>
+                                <td><strong>+</strong> &nbsp; <strong>-</strong></td>
+                                <td>Livello 4 (da sx a dx)</td>
+                            </tr>
+                            <tr>
+                                <td>Assegnamento</td>
+                                <td><strong>=</strong></td>
+                                <td>Bassa (da <strong>dx a sx</strong>)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><em>Nota sul modulo (<code>%</code>):</em> Restituisce il resto della divisione intera (es. 7 % 5 restituisce 2).</p>
+            </section>
+
+            <!-- SEZIONE 8 & 9 & 12 -->
+            <section>
+                <h2>7. Logica Decisionale: Costrutti IF, ELSE e Flowchart</h2>
+                <p>Le condizioni in C si basano sulla <strong>Convenzione della Verità</strong>: il valore <code>0</code> rappresenta il FALSO, <strong>qualsiasi altro valore</strong> rappresenta il VERO.</p>
+
+                <div class="code-block">
+<span class="code-keyword">if</span> (numero > <span class="code-number">0</span>) {
+    <span class="code-function">printf</span>(<span class="code-string">"Positivo\n"</span>);
+} <span class="code-keyword">else</span> <span class="code-keyword">if</span> (numero < <span class="code-number">0</span>) {
+    <span class="code-function">printf</span>(<span class="code-string">"Negativo\n"</span>);
+} <span class="code-keyword">else</span> {
+    <span class="code-function">printf</span>(<span class="code-string">"Zero\n"</span>);
+}
+                </div>
+
+                <div class="figure-container">
+                    <!-- SVG: Flowchart IF-ELSE -->
+                    <svg viewBox="0 0 600 350" width="100%">
+                        <!-- Frecce centrali -->
+                        <path d="M 300 20 L 300 50" stroke="#718096" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <!-- Diamante -->
+                        <polygon points="300,50 400,100 300,150 200,100" fill="#ebf8ff" stroke="#3182ce" stroke-width="2"/>
+                        <text x="300" y="105" font-family="sans-serif" font-size="14" fill="#2b6cb0" text-anchor="middle">Condizione</text>
+                        
+                        <!-- Diramazioni -->
+                        <!-- Vera (Sinistra) -->
+                        <path d="M 200 100 L 150 100 L 150 180" stroke="#48bb78" stroke-width="2" marker-end="url(#arrow-green)"/>
+                        <text x="175" y="90" font-family="sans-serif" font-size="12" fill="#48bb78" font-weight="bold" text-anchor="middle">VERA (1)</text>
+                        <rect x="80" y="180" width="140" height="50" rx="4" fill="#f0fff4" stroke="#48bb78" stroke-width="2"/>
+                        <text x="150" y="210" font-family="sans-serif" font-size="14" fill="#22543d" text-anchor="middle">Istruzione A</text>
+
+                        <!-- Falsa (Destra) -->
+                        <path d="M 400 100 L 450 100 L 450 180" stroke="#e53e3e" stroke-width="2" marker-end="url(#arrow-red)"/>
+                        <text x="425" y="90" font-family="sans-serif" font-size="12" fill="#e53e3e" font-weight="bold" text-anchor="middle">FALSA (0)</text>
+                        <rect x="380" y="180" width="140" height="50" rx="4" fill="#fff5f5" stroke="#e53e3e" stroke-width="2"/>
+                        <text x="450" y="210" font-family="sans-serif" font-size="14" fill="#742a2a" text-anchor="middle">Istruzione B</text>
+
+                        <!-- Convergenza -->
+                        <path d="M 150 230 L 150 280 L 300 280" stroke="#718096" stroke-width="2"/>
+                        <path d="M 450 230 L 450 280 L 300 280" stroke="#718096" stroke-width="2"/>
+                        <path d="M 300 280 L 300 320" stroke="#718096" stroke-width="2" marker-end="url(#arrow)"/>
+                        
+                        <circle cx="300" cy="280" r="4" fill="#718096" />
+                        <rect x="220" y="320" width="160" height="30" rx="15" fill="#edf2f7" stroke="#a0aec0" stroke-width="1"/>
+                        <text x="300" y="340" font-family="sans-serif" font-size="12" fill="#4a5568" text-anchor="middle">Continuazione Programma</text>
+
+                        <defs>
+                            <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#718096" />
+                            </marker>
+                            <marker id="arrow-green" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#48bb78" />
+                            </marker>
+                            <marker id="arrow-red" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto">
+                                <path d="M0,0 L0,6 L9,3 z" fill="#e53e3e" />
+                            </marker>
+                        </defs>
+                    </svg>
+                    <div class="figure-caption">Diagramma di flusso (Flowchart) del costrutto if-else.</div>
+                </div>
+            </section>
+
+            <!-- SEZIONE 10 & 12 (Operatori Logici) -->
+            <section>
+                <h2>8. Operatori Relazionali e Logici</h2>
+                <p>Gli operatori relazionali confrontano due valori: <code>==</code> (uguale), <code>!=</code> (diverso), <code>&gt;</code>, <code>&lt;</code>, ecc.</p>
+                <p>Gli operatori Logici uniscono più condizioni:</p>
+                <ul>
+                    <li><strong>AND (<code>&amp;&amp;</code>)</strong>: Ritorna 1 solo se ENTRAMBE le condizioni sono vere.</li>
+                    <li><strong>OR (<code>||</code>)</strong>: Ritorna 1 se ALMENO UNA condizione è vera.</li>
+                    <li><strong>NOT (<code>!</code>)</strong>: Inverte il valore logico (es. <code>!=</code> significa "diverso da").</li>
+                </ul>
+
+                <h3>Trucchi di Programmazione Booleana</h3>
+                <p>Poiché un'espressione logica in C vale letteralmente <code>1</code> o <code>0</code>, possiamo usare la matematica per sostituire alcuni costrutti <code>if</code>:</p>
+                <div class="code-block">
+<span class="code-comment">/* Anziché usare due if: */</span>
+<span class="code-comment">/* if (type == 1) { a = 10; } */</span>
+<span class="code-comment">/* if (type == 2) { a = 20; } */</span>
+
+<span class="code-comment">/* Possiamo scrivere un'equazione algebrica diretta: */</span>
+a = (type == <span class="code-number">1</span>) * <span class="code-number">10</span> + (type == <span class="code-number">2</span>) * <span class="code-number">20</span>;
+                </div>
+                <p>Se <code>type</code> è 1, avremo: <code>(1)*10 + (0)*20 = 10</code>. Nessun salto condizionale richiesto dal processore, codice più veloce e compatto.</p>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>

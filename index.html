@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Appunti Universitari</title>
+    <style>
+        /* =========================================
+           Variabili di Stile
+           ========================================= */
+        :root {
+            --bg-color: #f4f6f8;
+            --paper-color: #ffffff;
+            --text-main: #2d3748;
+            --text-muted: #718096;
+            --accent-color: #3182ce;
+            --accent-hover: #2b6cb0;
+            --border-color: #e2e8f0;
+            --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        }
+
+        /* =========================================
+           Reset e Base
+           ========================================= */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            line-height: 1.6;
+            padding: 3rem 1.5rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        /* =========================================
+           Layout Principale
+           ========================================= */
+        .dashboard-container {
+            width: 100%;
+            max-width: 1100px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: #1a202c;
+            margin-bottom: 0.5rem;
+        }
+
+        .subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
+
+        /* =========================================
+           Griglia delle Materie (Cards)
+           ========================================= */
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background-color: var(--paper-color);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2.5rem 2rem;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        /* Effetto Hover sulle card */
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(49, 130, 206, 0.1);
+            border-color: var(--accent-color);
+        }
+
+        .card:hover .icon-container {
+            background-color: var(--accent-color);
+            color: white;
+        }
+
+        .card:hover .icon-container svg {
+            stroke: white;
+        }
+
+        /* =========================================
+           Contenuto delle Card
+           ========================================= */
+        .icon-container {
+            width: 60px;
+            height: 60px;
+            background-color: #ebf8ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .icon-container svg {
+            width: 30px;
+            height: 30px;
+            stroke: var(--accent-color);
+            fill: none;
+            stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            transition: all 0.3s ease;
+        }
+
+        .card h2 {
+            font-size: 1.4rem;
+            color: #2d3748;
+            margin-bottom: 0.8rem;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+            flex-grow: 1;
+        }
+
+        .card-footer {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--accent-color);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .card-footer::after {
+            content: "→";
+            font-size: 1.1rem;
+            transition: transform 0.2s;
+        }
+
+        .card:hover .card-footer::after {
+            transform: translateX(5px);
+        }
+
+        /* =========================================
+           Media Queries
+           ========================================= */
+        @media (max-width: 768px) {
+            header { margin-bottom: 2.5rem; }
+            h1 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <header>
+            <h1>Hub Appunti</h1>
+            <p class="subtitle">Seleziona una materia per accedere alle sintesi e al materiale di studio.</p>
+        </header>
+
+        <main class="subjects-grid">
+            
+            <!-- CARD 1: MATEMATICA DISCRETA -->
+            <a href="matematica_discreta.html" class="card">
+                <div class="icon-container">
+                    <!-- Icona Matematica (Radice quadrata / Funzione) -->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M4 19l4-14 4 14 3-8 5 8" />
+                    </svg>
+                </div>
+                <h2>Matematica Discreta</h2>
+                <p>Logica, insiemi, relazioni, algebra di Boole, teoria dei grafi e calcolo combinatorio.</p>
+                <div class="card-footer">Vai agli appunti</div>
+            </a>
+
+            <!-- CARD 2: PROGRAMMAZIONE -->
+            <a href="programmazione.html" class="card">
+                <div class="icon-container">
+                    <!-- Icona Codice (< />) -->
+                    <svg viewBox="0 0 24 24">
+                        <path d="M16 18l6-6-6-6" />
+                        <path d="M8 6l-6 6 6 6" />
+                        <path d="M14 4l-4 16" />
+                    </svg>
+                </div>
+                <h2>Programmazione</h2>
+                <p>Fondamenti di coding, algoritmi, strutture dati, sintassi e paradigmi di programmazione.</p>
+                <div class="card-footer">Vai agli appunti</div>
+            </a>
+
+            <!-- CARD 3: AESO -->
+            <a href="adeso.html" class="card">
+                <div class="icon-container">
+                    <!-- Icona CPU / Hardware -->
+                    <svg viewBox="0 0 24 24">
+                        <rect x="4" y="4" width="16" height="16" rx="2" ry="2" />
+                        <rect x="9" y="9" width="6" height="6" />
+                        <line x1="9" y1="1" x2="9" y2="4" />
+                        <line x1="15" y1="1" x2="15" y2="4" />
+                        <line x1="9" y1="20" x2="9" y2="23" />
+                        <line x1="15" y1="20" x2="15" y2="23" />
+                        <line x1="20" y1="9" x2="23" y2="9" />
+                        <line x1="20" y1="14" x2="23" y2="14" />
+                        <line x1="1" y1="9" x2="4" y2="9" />
+                        <line x1="1" y1="14" x2="4" y2="14" />
+                    </svg>
+                </div>
+                <h2>AESO</h2>
+                <p>Architettura degli Elaboratori e Sistemi Operativi. Rappresentazione dei dati, hardware, processi e memoria.</p>
+                <div class="card-footer">Vai agli appunti</div>
+            </a>
+
+        </main>
+    </div>
+
+</body>
+</html>
