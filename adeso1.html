@@ -4,178 +4,264 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sintesi: Elaborazione dell'Informazione</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <style>
         /* =========================================
-           Variabili di Stile (Minimal & Professional)
+           Variabili di Stile
            ========================================= */
         :root {
-            --bg-color: #f4f6f8;
-            --paper-color: #ffffff;
-            --text-main: #2d3748;
-            --text-muted: #718096;
-            --accent-color: #3182ce;
-            --accent-light: #ebf8ff;
-            --border-color: #e2e8f0;
-            --font-main: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-2: #20243a;
+            --border: rgba(255,255,255,0.07);
+            --text: #d1d5db;
+            --text-strong: #f3f4f6;
+            --text-muted: #6b7280;
+            --accent: #6366f1;
+            --accent-2: #818cf8;
+            --accent-light: rgba(99,102,241,0.08);
+            --accent-border: rgba(99,102,241,0.25);
+            --font: 'Inter', system-ui, sans-serif;
+            --radius: 14px;
+            --radius-sm: 8px;
         }
 
         /* =========================================
            Reset e Base
            ========================================= */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg-color);
-            color: var(--text-main);
-            line-height: 1.7;
-            font-size: 17px;
-            padding: 2rem 1rem;
+            font-family: var(--font);
+            background-color: var(--bg);
+            background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 60%);
+            color: var(--text);
+            line-height: 1.75;
+            font-size: 16px;
+            padding: 2rem 1rem 6rem;
         }
 
         /* =========================================
            Layout Principale
            ========================================= */
         .container {
-            max-width: 900px;
+            max-width: 860px;
             margin: 0 auto;
-            background-color: var(--paper-color);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
             padding: 4rem 5rem;
-            border-radius: 12px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
         }
 
+        /* =========================================
+           Back Nav
+           ========================================= */
+        .back-nav {
+            margin-bottom: 2.5rem;
+            animation: fadeDown 0.4s ease both;
+        }
+
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.88rem;
+            transition: color 0.2s, gap 0.2s;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 14px 7px 10px;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .back-nav a:hover { color: var(--accent-2); gap: 12px; border-color: var(--accent-border); }
+        .back-nav a svg { transition: transform 0.2s; }
+        .back-nav a:hover svg { transform: translateX(-3px); }
+
+        /* =========================================
+           Header
+           ========================================= */
         header {
             text-align: center;
             margin-bottom: 4rem;
-            padding-bottom: 2rem;
-            border-bottom: 2px solid var(--border-color);
-        }
-
-        h1 {
-            font-size: 2.2rem;
-            color: #1a202c;
-            margin-bottom: 0.5rem;
-            line-height: 1.3;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            animation: fadeDown 0.5s 0.05s ease both;
         }
 
         .subtitle {
-            color: var(--accent-color);
-            font-weight: 500;
-            font-size: 1.1rem;
+            display: inline-block;
+            color: var(--accent-2);
+            font-weight: 600;
+            font-size: 0.78rem;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            border-radius: 100px;
+            padding: 5px 16px;
+        }
+
+        h1 {
+            font-size: clamp(1.7rem, 4vw, 2.3rem);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
         }
 
         /* =========================================
-           Tipografia e Contenuti
+           Tipografia
            ========================================= */
+        section { animation: fadeUp 0.5s ease both; }
+        section:nth-child(1) { animation-delay: 0.1s; }
+        section:nth-child(2) { animation-delay: 0.15s; }
+        section:nth-child(3) { animation-delay: 0.2s; }
+        section:nth-child(4) { animation-delay: 0.25s; }
+        section:nth-child(5) { animation-delay: 0.3s; }
+        section:nth-child(6) { animation-delay: 0.35s; }
+        section:nth-child(7) { animation-delay: 0.4s; }
+        section:nth-child(8) { animation-delay: 0.45s; }
+
         h2 {
-            font-size: 1.5rem;
-            color: var(--accent-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-2);
             margin-top: 3.5rem;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 12px;
+            letter-spacing: -0.01em;
         }
 
         h2::before {
-            content: "";
+            content: '';
             display: inline-block;
-            width: 25px;
-            height: 3px;
-            background-color: var(--accent-color);
+            width: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
             border-radius: 2px;
+            flex-shrink: 0;
         }
 
-        p { margin-bottom: 1.5rem; }
+        p { margin-bottom: 1.25rem; color: var(--text); }
 
-        ul { margin-bottom: 1.5rem; padding-left: 1.5rem; }
-        li { margin-bottom: 0.5rem; }
+        ul, ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+        li { margin-bottom: 0.5rem; color: var(--text); }
 
-        strong { color: #1a202c; }
+        strong { color: var(--text-strong); font-weight: 600; }
+        em { color: #a5b4fc; font-style: italic; }
 
         /* =========================================
-           Componenti Specifici (Box, Highlight, Stack)
+           Componenti
            ========================================= */
         .highlight-box {
-            background-color: var(--accent-light);
-            border-left: 4px solid var(--accent-color);
-            padding: 1.5rem;
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            border-left: 3px solid var(--accent);
+            padding: 1.25rem 1.5rem;
             margin: 2rem 0;
-            border-radius: 0 8px 8px 0;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.95rem;
         }
 
         .highlight-box p:last-child { margin-bottom: 0; }
 
-        /* Grafica dei Livelli (Astrazione) */
+        /* Stack visuale */
         .stack-container {
             display: flex;
             flex-direction: column;
-            gap: 0.5rem;
+            gap: 4px;
             margin: 2rem 0;
-            text-align: center;
         }
 
         .stack-level {
-            background-color: #f7fafc;
-            border: 1px solid var(--border-color);
-            padding: 1rem;
-            border-radius: 6px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border);
+            padding: 0.9rem 1.25rem;
+            border-radius: var(--radius-sm);
             font-weight: 500;
-            color: #4a5568;
-            transition: all 0.2s ease;
+            font-size: 0.92rem;
+            color: var(--text-muted);
+            transition: all 0.25s ease;
+            cursor: default;
         }
 
         .stack-level:hover {
-            background-color: var(--accent-color);
-            color: white;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 6px rgba(49, 130, 206, 0.2);
+            background: rgba(99,102,241,0.1);
+            border-color: var(--accent-border);
+            color: var(--text-strong);
+            transform: translateX(6px);
         }
 
-        .stack-hw { background-color: #edf2f7; border-bottom: 4px solid #cbd5e0; }
+        .stack-hw {
+            background: rgba(255,255,255,0.05);
+            border-color: rgba(255,255,255,0.12);
+            color: var(--text);
+        }
 
-        /* Contenitore Immagini/SVG */
+        /* Figure container */
         .figure-container {
-            background: #ffffff;
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
             padding: 2rem;
             margin: 2.5rem 0;
             text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.02);
         }
 
         .figure-caption {
-            font-size: 0.9rem;
+            font-size: 0.83rem;
             color: var(--text-muted);
             margin-top: 1rem;
             font-style: italic;
         }
 
-        svg {
-            max-width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
+        svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+
+        /* =========================================
+           Animazioni
+           ========================================= */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         /* =========================================
-           Media Queries per Mobile
+           Media Queries
            ========================================= */
         @media (max-width: 768px) {
-            .container { padding: 2rem; }
-            h1 { font-size: 1.8rem; }
-            body { font-size: 16px; padding: 1rem 0.5rem; }
+            .container { padding: 2rem 1.5rem; border-radius: 14px; }
+            h1 { font-size: 1.6rem; }
+            body { font-size: 15px; padding: 1rem 0.5rem 4rem; }
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        
+
+        <div class="back-nav">
+            <a href="adeso.html">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Torna all'indice AESO
+            </a>
+        </div>
+
         <header>
             <div class="subtitle">Appunti di Informatica</div>
             <h1>Sintesi Approfondita:<br>Elaborazione dell'Informazione</h1>
@@ -193,7 +279,7 @@
             <section>
                 <h2>2. Il Concetto di Elaborazione dell'Informazione ed Algoritmo</h2>
                 <p>L'elaborazione dell'informazione è quel processo specifico attraverso cui un determinato esecutore compie una serie ben precisa di azioni su un insieme di dati o informazioni di partenza. Tutto questo avviene obbedendo rigorosamente a una procedura ben definita, con il fine ultimo di risolvere un determinato problema.</p>
-                
+
                 <div class="highlight-box">
                     <strong>Algoritmo:</strong> Una sequenza finita di azioni che permette di giungere alla soluzione di un problema in un tempo finito.
                 </div>
@@ -209,25 +295,25 @@
                     <!-- SVG: Analogia Cook Book -->
                     <svg viewBox="0 0 600 150" width="100%">
                         <!-- Frecce -->
-                        <path d="M 180 75 L 220 75" stroke="#cbd5e0" stroke-width="4" marker-end="url(#arrow)"/>
-                        <path d="M 380 75 L 420 75" stroke="#cbd5e0" stroke-width="4" marker-end="url(#arrow)"/>
+                        <path d="M 180 75 L 220 75" stroke="#4b5563" stroke-width="4" marker-end="url(#arrow)"/>
+                        <path d="M 380 75 L 420 75" stroke="#4b5563" stroke-width="4" marker-end="url(#arrow)"/>
                         <defs>
                             <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="3" orient="auto" markerUnits="strokeWidth">
-                                <path d="M0,0 L0,6 L9,3 z" fill="#cbd5e0" />
+                                <path d="M0,0 L0,6 L9,3 z" fill="#4b5563" />
                             </marker>
                         </defs>
                         <!-- Box 1 -->
-                        <rect x="20" y="35" width="160" height="80" rx="8" fill="#edf2f7" stroke="#cbd5e0" stroke-width="2"/>
-                        <text x="100" y="70" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">INGREDIENTI</text>
-                        <text x="100" y="90" font-family="sans-serif" font-size="12" fill="#718096" text-anchor="middle">(Dati di Input)</text>
+                        <rect x="20" y="35" width="160" height="80" rx="10" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="100" y="70" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#d1d5db" text-anchor="middle">INGREDIENTI</text>
+                        <text x="100" y="90" font-family="Inter,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle">(Dati di Input)</text>
                         <!-- Box 2 -->
-                        <rect x="220" y="35" width="160" height="80" rx="8" fill="#ebf8ff" stroke="#3182ce" stroke-width="2"/>
-                        <text x="300" y="70" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2b6cb0" text-anchor="middle">RICETTA</text>
-                        <text x="300" y="90" font-family="sans-serif" font-size="12" fill="#3182ce" text-anchor="middle">(Algoritmo)</text>
+                        <rect x="220" y="35" width="160" height="80" rx="10" fill="rgba(99,102,241,0.1)" stroke="rgba(99,102,241,0.35)" stroke-width="1.5"/>
+                        <text x="300" y="70" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#818cf8" text-anchor="middle">RICETTA</text>
+                        <text x="300" y="90" font-family="Inter,sans-serif" font-size="11" fill="#6366f1" text-anchor="middle">(Algoritmo)</text>
                         <!-- Box 3 -->
-                        <rect x="420" y="35" width="160" height="80" rx="8" fill="#f0fff4" stroke="#68d391" stroke-width="2"/>
-                        <text x="500" y="70" font-family="sans-serif" font-size="14" font-weight="bold" fill="#22543d" text-anchor="middle">PIATTO FINITO</text>
-                        <text x="500" y="90" font-family="sans-serif" font-size="12" fill="#38a169" text-anchor="middle">(Soluzione / Output)</text>
+                        <rect x="420" y="35" width="160" height="80" rx="10" fill="rgba(16,185,129,0.08)" stroke="rgba(16,185,129,0.3)" stroke-width="1.5"/>
+                        <text x="500" y="70" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#6ee7b7" text-anchor="middle">PIATTO FINITO</text>
+                        <text x="500" y="90" font-family="Inter,sans-serif" font-size="11" fill="#10b981" text-anchor="middle">(Soluzione / Output)</text>
                     </svg>
                     <div class="figure-caption">Fig 1. Rappresentazione concettuale: L'analogia con il libro di ricette evidenzia come l'esecutore debba seguire passaggi sequenziali sui dati per ottenere una soluzione.</div>
                 </div>
@@ -261,8 +347,7 @@
             <section>
                 <h2>5. Strutturazione ad Astrazione in Livelli</h2>
                 <p>Un sistema di elaborazione è organizzato secondo un'architettura gerarchica ad astrazione in livelli per colmare il divario tra il ragionamento umano e l'esecuzione nativa della macchina.</p>
-                
-                <!-- Stack visuale generato in HTML/CSS -->
+
                 <div class="stack-container">
                     <div class="stack-level" style="opacity: 0.6;">OO and Visual Language (es. C++, Java)</div>
                     <div class="stack-level" style="opacity: 0.7;">FORTRAN / C / Pascal</div>
@@ -281,7 +366,7 @@
                     <li><strong>Rappresentazione Analogica (Alto Livello):</strong> Bilancia a bracci o con ago (il movimento indica visivamente e con continuità l'entità del peso).</li>
                     <li><strong>Rappresentazione Digitale (Basso Livello):</strong> Bilancia con display numerico (espressa tramite cifre discrete come "0.0").</li>
                 </ul>
-                
+
                 <p>Per far interagire il mondo reale (analogico) e l'elaboratore (digitale), si usano convertitori:</p>
                 <ul>
                     <li><strong>Conversione A/D (Analogico/Digitale):</strong> Trasforma i segnali continui esterni in sequenze di bit (0 e 1).</li>
@@ -289,7 +374,7 @@
                 </ul>
             </section>
 
-            <!-- SEZIONE 8 (Accorpata) -->
+            <!-- SEZIONE 7 -->
             <section>
                 <h2>7. Rappresentazione Digitale Binaria e Segnali Elettrici</h2>
                 <p>L'elaboratore è un sistema digitale binario: le informazioni vengono discretizzate su <strong>due soli livelli</strong>. La grandezza fisica impiegata è la tensione elettrica:</p>
@@ -302,31 +387,31 @@
                     <!-- SVG: Onda Quadra -->
                     <svg viewBox="0 0 600 250" width="100%">
                         <!-- Assi -->
-                        <line x1="40" y1="200" x2="550" y2="200" stroke="#718096" stroke-width="2" />
-                        <line x1="40" y1="200" x2="40" y2="20" stroke="#718096" stroke-width="2" />
-                        <text x="560" y="205" font-family="sans-serif" font-size="14" fill="#718096">Tempo (t)</text>
-                        <text x="20" y="15" font-family="sans-serif" font-size="14" fill="#718096">Volt (V)</text>
-                        
+                        <line x1="40" y1="200" x2="550" y2="200" stroke="#374151" stroke-width="2" />
+                        <line x1="40" y1="200" x2="40" y2="20" stroke="#374151" stroke-width="2" />
+                        <text x="560" y="205" font-family="Inter,sans-serif" font-size="13" fill="#6b7280">Tempo (t)</text>
+                        <text x="20" y="15" font-family="Inter,sans-serif" font-size="13" fill="#6b7280">V</text>
+
                         <!-- Etichette Y -->
-                        <text x="15" y="200" font-family="sans-serif" font-size="14" fill="#718096">0V</text>
-                        <text x="15" y="150" font-family="sans-serif" font-size="14" fill="#718096">1V</text>
-                        <text x="15" y="100" font-family="sans-serif" font-size="14" fill="#718096">2V</text>
-                        <text x="15" y="50" font-family="sans-serif" font-size="14" fill="#718096">5V</text>
+                        <text x="18" y="204" font-family="Inter,sans-serif" font-size="12" fill="#6b7280">0V</text>
+                        <text x="18" y="154" font-family="Inter,sans-serif" font-size="12" fill="#6b7280">1V</text>
+                        <text x="18" y="104" font-family="Inter,sans-serif" font-size="12" fill="#6b7280">2V</text>
+                        <text x="18" y="54" font-family="Inter,sans-serif" font-size="12" fill="#6b7280">5V</text>
 
                         <!-- Zone -->
-                        <rect x="40" y="50" width="510" height="50" fill="#ebf8ff" opacity="0.5"/>
-                        <rect x="40" y="150" width="510" height="50" fill="#fefcbf" opacity="0.5"/>
-                        <text x="50" y="80" font-family="sans-serif" font-size="12" font-weight="bold" fill="#3182ce">Livello ALTO (Logico 1)</text>
-                        <text x="50" y="180" font-family="sans-serif" font-size="12" font-weight="bold" fill="#d69e2e">Livello BASSO (Logico 0)</text>
+                        <rect x="40" y="50" width="510" height="50" fill="rgba(99,102,241,0.07)" rx="0"/>
+                        <rect x="40" y="150" width="510" height="50" fill="rgba(245,158,11,0.06)" rx="0"/>
+                        <text x="50" y="80" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#818cf8">Livello ALTO (Logico 1)</text>
+                        <text x="50" y="180" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#f59e0b">Livello BASSO (Logico 0)</text>
 
                         <!-- Onda Segnale -->
-                        <path d="M 40 180 L 120 180 L 120 70 L 250 70 L 250 180 L 380 180 L 380 70 L 510 70 L 510 180" stroke="#e53e3e" stroke-width="4" fill="none" stroke-linejoin="round"/>
+                        <path d="M 40 180 L 120 180 L 120 70 L 250 70 L 250 180 L 380 180 L 380 70 L 510 70 L 510 180" stroke="#6366f1" stroke-width="3" fill="none" stroke-linejoin="round"/>
                     </svg>
                     <div class="figure-caption">Fig 2. Segnale onda quadra nel tempo: alternanza tra livello logico 1 e livello logico 0 entro fasce di tensione prestabilite.</div>
                 </div>
             </section>
 
-            <!-- SEZIONE 9 -->
+            <!-- SEZIONE 8 -->
             <section>
                 <h2>8. Motivazioni della Scelta del Sistema Binario</h2>
                 <p>Perché usare due livelli e non, ad esempio, cinque? Le ragioni ingegneristiche sono due:</p>
@@ -339,43 +424,34 @@
                     <!-- SVG: Tolleranza al rumore -->
                     <svg viewBox="0 0 600 250" width="100%">
                         <!-- Titoli -->
-                        <text x="150" y="25" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">SISTEMA A 2 LIVELLI (Binario)</text>
-                        <text x="450" y="25" font-family="sans-serif" font-size="14" font-weight="bold" fill="#2d3748" text-anchor="middle">SISTEMA A 5 LIVELLI</text>
-                        
+                        <text x="150" y="25" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#d1d5db" text-anchor="middle">SISTEMA A 2 LIVELLI (Binario)</text>
+                        <text x="450" y="25" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#d1d5db" text-anchor="middle">SISTEMA A 5 LIVELLI</text>
+
                         <!-- Linea div -->
-                        <line x1="300" y1="10" x2="300" y2="240" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="5,5" />
+                        <line x1="300" y1="10" x2="300" y2="240" stroke="rgba(255,255,255,0.07)" stroke-width="1" stroke-dasharray="5,5" />
 
                         <!-- Sinistra: 2 livelli -->
-                        <rect x="50" y="50" width="200" height="40" fill="#ebf8ff"/>
-                        <rect x="50" y="160" width="200" height="40" fill="#fefcbf"/>
-                        <text x="40" y="75" font-family="sans-serif" font-size="12" fill="#718096">1</text>
-                        <text x="40" y="185" font-family="sans-serif" font-size="12" fill="#718096">0</text>
+                        <rect x="50" y="50" width="200" height="40" fill="rgba(99,102,241,0.1)" rx="4"/>
+                        <rect x="50" y="160" width="200" height="40" fill="rgba(245,158,11,0.08)" rx="4"/>
+                        <text x="40" y="75" font-family="Inter,sans-serif" font-size="11" fill="#6b7280">1</text>
+                        <text x="40" y="185" font-family="Inter,sans-serif" font-size="11" fill="#6b7280">0</text>
                         <!-- Segnale disturbato sx -->
-                        <path d="M 50 180 Q 70 170 90 190 T 130 175 T 170 185 T 210 170 L 250 180" stroke="#e53e3e" stroke-width="2" fill="none"/>
-                        <!-- Freccia margine ampio -->
-                        <line x1="150" y1="95" x2="150" y2="155" stroke="#48bb78" stroke-width="3" marker-end="url(#arrow-green)" marker-start="url(#arrow-green-start)"/>
-                        <text x="160" y="130" font-family="sans-serif" font-size="11" fill="#48bb78" font-weight="bold">Margine Sicuro</text>
+                        <path d="M 50 180 Q 70 170 90 190 T 130 175 T 170 185 T 210 170 L 250 180" stroke="#6366f1" stroke-width="2" fill="none"/>
+                        <!-- Freccia margine -->
+                        <line x1="155" y1="95" x2="155" y2="155" stroke="#10b981" stroke-width="2"/>
+                        <text x="165" y="130" font-family="Inter,sans-serif" font-size="10" fill="#10b981" font-weight="600">Margine Sicuro</text>
 
                         <!-- Destra: 5 livelli -->
-                        <rect x="350" y="50" width="200" height="20" fill="#ebf8ff"/>
-                        <rect x="350" y="85" width="200" height="20" fill="#ebf8ff"/>
-                        <rect x="350" y="120" width="200" height="20" fill="#ebf8ff"/>
-                        <rect x="350" y="155" width="200" height="20" fill="#ebf8ff"/>
-                        <rect x="350" y="190" width="200" height="20" fill="#ebf8ff"/>
-                        <!-- Segnale disturbato dx (esce dalla fascia) -->
-                        <path d="M 350 165 Q 370 145 390 160 T 430 145 T 470 168 T 510 140 L 550 165" stroke="#e53e3e" stroke-width="2" fill="none"/>
-                        
-                        <circle cx="410" cy="149" r="6" fill="#e53e3e" />
-                        <text x="425" y="145" font-family="sans-serif" font-size="11" fill="#e53e3e" font-weight="bold">Errore! Scavalcata</text>
+                        <rect x="350" y="50" width="200" height="18" fill="rgba(99,102,241,0.08)" rx="3"/>
+                        <rect x="350" y="85" width="200" height="18" fill="rgba(99,102,241,0.08)" rx="3"/>
+                        <rect x="350" y="120" width="200" height="18" fill="rgba(99,102,241,0.08)" rx="3"/>
+                        <rect x="350" y="155" width="200" height="18" fill="rgba(99,102,241,0.08)" rx="3"/>
+                        <rect x="350" y="190" width="200" height="18" fill="rgba(99,102,241,0.08)" rx="3"/>
+                        <!-- Segnale disturbato dx -->
+                        <path d="M 350 165 Q 370 145 390 160 T 430 145 T 470 168 T 510 140 L 550 165" stroke="#ef4444" stroke-width="2" fill="none"/>
 
-                        <defs>
-                            <marker id="arrow-green" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto">
-                                <path d="M0,0 L0,6 L6,3 z" fill="#48bb78" />
-                            </marker>
-                            <marker id="arrow-green-start" markerWidth="6" markerHeight="6" refX="1" refY="3" orient="auto">
-                                <path d="M6,0 L6,6 L0,3 z" fill="#48bb78" />
-                            </marker>
-                        </defs>
+                        <circle cx="410" cy="149" r="5" fill="#ef4444" />
+                        <text x="420" y="145" font-family="Inter,sans-serif" font-size="10" fill="#ef4444" font-weight="600">Errore! Scavalcata</text>
                     </svg>
                     <div class="figure-caption">Fig 3. Effetto del rumore: nel sistema a 2 livelli la fascia di sicurezza è enorme, prevenendo la corruzione del dato. Nel sistema a più livelli, un piccolo picco genera un errore logico.</div>
                 </div>
