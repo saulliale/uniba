@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: Matematica Discreta - Insiemi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="matematicadiscreta.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice Matematica Discreta</a></div>
+<header><div class="subtitle">Lezione 1</div><h1>Teoria degli Insiemi</h1></header>
+<main>
+
+<section>
+<h2>1. Che cos'è un insieme</h2>
+<p>Un insieme è un <strong>concetto primitivo</strong>: non si può definire usando altre parole più semplici. Intuitivamente lo possiamo immaginare come una "famiglia" o un gruppo di oggetti, che chiamiamo <strong>elementi</strong>. Per convenzione i nomi degli insiemi si indicano con lettere maiuscole (come <span class="sym">A</span>), mentre gli elementi con lettere minuscole (come <span class="sym">a</span>). Se un oggetto fa parte di un insieme si usa il simbolo di appartenenza: <span class="sym">a ∈ A</span>.</p>
+<p>Gli insiemi numerici fondamentali sono:</p>
+<ul>
+<li><span class="sym">ℕ</span> numeri naturali (0, 1, 2, 3…) e <span class="sym">ℕ*</span> naturali positivi (senza lo zero);</li>
+<li><span class="sym">ℤ</span> numeri interi (negativi, zero e positivi);</li>
+<li><span class="sym">ℚ</span> numeri razionali (le frazioni);</li>
+<li><span class="sym">ℝ</span> numeri reali.</li>
+</ul>
+<div class="figure-container">
+<svg viewBox="0 0 600 270" width="100%">
+<ellipse cx="300" cy="135" rx="280" ry="125" fill="rgba(56,189,248,.07)" stroke="#38bdf8" stroke-width="1.5"/>
+<ellipse cx="300" cy="150" rx="215" ry="95" fill="rgba(16,185,129,.08)" stroke="#10b981" stroke-width="1.5"/>
+<ellipse cx="300" cy="162" rx="150" ry="65" fill="rgba(245,158,11,.09)" stroke="#f59e0b" stroke-width="1.5"/>
+<ellipse cx="300" cy="175" rx="85" ry="38" fill="rgba(99,102,241,.2)" stroke="#818cf8" stroke-width="1.5"/>
+<text x="300" y="35" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#7dd3fc" text-anchor="middle">ℝ  reali</text>
+<text x="300" y="87" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#6ee7b7" text-anchor="middle">ℚ  razionali</text>
+<text x="300" y="128" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#fcd34d" text-anchor="middle">ℤ  interi</text>
+<text x="300" y="180" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#c7d2fe" text-anchor="middle">ℕ  naturali</text>
+</svg>
+<div class="figure-caption">Fig 1. Gli insiemi numerici fondamentali rappresentati come diagrammi di Eulero-Venn annidati.</div>
+</div>
+</section>
+
+<section>
+<h2>2. Insieme vuoto e modi per descrivere un insieme</h2>
+<p>Esiste un insieme particolare, l'<strong>insieme vuoto</strong> (<span class="sym">∅</span>), l'unico a non contenere alcun elemento (ad esempio l'insieme dei numeri interi che sono contemporaneamente pari e dispari). Per descrivere un insieme si possono usare tre metodi:</p>
+<ul>
+<li>Elencare gli elementi racchiusi tra <strong>parentesi graffe</strong>.</li>
+<li>I <strong>diagrammi di Eulero-Venn</strong>: disegni a forma di cerchio o ovale in cui gli elementi vengono racchiusi visivamente.</li>
+<li>La <strong>proprietà caratteristica</strong>: una regola matematica che gli elementi devono rispettare, scritta nella forma <span class="sym">{x ∈ insieme : condizione}</span>.</li>
+</ul>
+</section>
+
+<section>
+<h2>3. Inclusione, uguaglianza e quantificatori</h2>
+<p>Un insieme <span class="sym">A</span> si dice <strong>incluso</strong> (o sottoinsieme) in <span class="sym">B</span> (<span class="sym">A ⊆ B</span>) se ogni elemento di <span class="sym">A</span> appartiene anche a <span class="sym">B</span>. L'<strong>inclusione propria</strong> (<span class="sym">A ⊂ B</span>) si ha quando <span class="sym">A</span> è dentro <span class="sym">B</span> ma esiste almeno un elemento di <span class="sym">B</span> che non si trova in <span class="sym">A</span>.</p>
+<div class="highlight-box"><strong>Uguaglianza:</strong> due insiemi sono uguali (<span class="sym">A = B</span>) quando contengono esattamente gli stessi elementi, cioè quando <span class="sym">A ⊆ B</span> e contemporaneamente <span class="sym">B ⊆ A</span>.</div>
+<p>Per abbreviare le frasi matematiche si usano i quantificatori logici:</p>
+<div class="table-container"><table>
+<thead><tr><th>Simbolo</th><th>Significato</th></tr></thead>
+<tbody>
+<tr><td class="sym">∀</td><td>per ogni</td></tr>
+<tr><td class="sym">∃</td><td>esiste</td></tr>
+<tr><td class="sym">⇔</td><td>se e solo se</td></tr>
+</tbody></table></div>
+<p>Vengono inoltre elencate le proprietà delle operazioni algebriche di base, come la proprietà commutativa e associativa.</p>
+</section>
+
+<section>
+<h2>4. Operazioni tra insiemi: intersezione, unione e complementare</h2>
+<ul>
+<li><strong>Intersezione (<span class="sym">∩</span>):</strong> gli elementi che appartengono sia ad <span class="sym">A</span> sia a <span class="sym">B</span>. Se non hanno elementi in comune l'intersezione è vuota (<span class="sym">A ∩ B = ∅</span>) e gli insiemi si dicono <strong>disgiunti</strong>.</li>
+<li><strong>Unione (<span class="sym">∪</span>):</strong> gli elementi che appartengono ad <span class="sym">A</span> oppure a <span class="sym">B</span> (o a entrambi). Valgono le leggi associative e distributive.</li>
+<li><strong>Complementare (<span class="sym">Bᶜ</span>):</strong> dato <span class="sym">B</span> contenuto in un insieme più grande <span class="sym">A</span>, è tutto ciò che sta in <span class="sym">A</span> ma non in <span class="sym">B</span>.</li>
+</ul>
+<div class="figure-container">
+<svg viewBox="0 0 600 190" width="100%">
+<defs><clipPath id="cA"><circle cx="78" cy="90" r="48"/></clipPath></defs>
+<g transform="translate(0,0)">
+<circle cx="78" cy="90" r="48" fill="none" stroke="#818cf8" stroke-width="2"/>
+<circle cx="130" cy="90" r="48" fill="rgba(99,102,241,.55)" stroke="#818cf8" stroke-width="2" clip-path="url(#cA)"/>
+<circle cx="130" cy="90" r="48" fill="none" stroke="#818cf8" stroke-width="2"/>
+<text x="38" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">A</text><text x="158" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">B</text>
+<text x="104" y="172" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#a5b4fc" text-anchor="middle">A ∩ B</text></g>
+<g transform="translate(200,0)">
+<circle cx="78" cy="90" r="48" fill="rgba(16,185,129,.4)" stroke="#10b981" stroke-width="2"/>
+<circle cx="130" cy="90" r="48" fill="rgba(16,185,129,.4)" stroke="#10b981" stroke-width="2"/>
+<text x="38" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">A</text><text x="158" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">B</text>
+<text x="104" y="172" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#6ee7b7" text-anchor="middle">A ∪ B</text></g>
+<g transform="translate(400,0)">
+<circle cx="78" cy="90" r="48" fill="rgba(245,158,11,.45)" stroke="#f59e0b" stroke-width="2"/>
+<circle cx="130" cy="90" r="48" fill="#14161f" stroke="#f59e0b" stroke-width="2"/>
+<text x="38" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">A</text><text x="158" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">B</text>
+<text x="104" y="172" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#fcd34d" text-anchor="middle">A ∖ B</text></g>
+</svg>
+<div class="figure-caption">Fig 2. Intersezione, unione e differenza: la parte colorata è il risultato dell'operazione.</div>
+</div>
+<div class="figure-container">
+<svg viewBox="0 0 320 190" width="100%">
+<rect x="20" y="15" width="280" height="150" rx="12" fill="rgba(99,102,241,.35)" stroke="#818cf8" stroke-width="2"/>
+<circle cx="160" cy="90" r="50" fill="#14161f" stroke="#818cf8" stroke-width="2"/>
+<text x="40" y="40" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">A</text>
+<text x="160" y="95" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#e5e7eb" text-anchor="middle">B</text>
+<text x="255" y="145" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#c7d2fe" text-anchor="middle">Bᶜ</text>
+</svg>
+<div class="figure-caption">Fig 3. Il complementare di B in A è la parte colorata: tutto ciò che sta in A ma non in B.</div>
+</div>
+</section>
+
+<section>
+<h2>5. Leggi di De Morgan e insieme differenza</h2>
+<p>Le Leggi di De Morgan spiegano come comportarsi con il complementare di un'unione o di un'intersezione:</p>
+<div class="highlight-box">
+<p><span class="sym">(B ∪ C)ᶜ = Bᶜ ∩ Cᶜ</span> &nbsp;— il complementare dell'unione è l'intersezione dei complementari.</p>
+<p><span class="sym">(B ∩ C)ᶜ = Bᶜ ∪ Cᶜ</span> &nbsp;— e viceversa.</p>
+</div>
+<p>Viene poi definito l'<strong>insieme differenza</strong> (<span class="sym">A ∖ B</span>): l'insieme di tutti gli elementi di <span class="sym">A</span> che non si trovano dentro <span class="sym">B</span>. Questo concetto generalizza la nozione di insieme complementare (Fig. 2, terzo schema).</p>
+</section>
+
+<section>
+<h2>6. Insieme delle parti e prodotto cartesiano</h2>
+<p><strong>Insieme delle parti (<span class="sym">ℬ(A)</span>):</strong> l'insieme formato da tutti i possibili sottoinsiemi di <span class="sym">A</span>, inclusi l'insieme vuoto e l'insieme stesso.</p>
+<div class="figure-container">
+<svg viewBox="0 0 600 190" width="100%">
+<rect x="215" y="10" width="170" height="42" rx="10" fill="rgba(99,102,241,.15)" stroke="rgba(99,102,241,.5)"/>
+<text x="300" y="36" font-family="Inter,sans-serif" font-size="14" fill="#c7d2fe" text-anchor="middle">A = {a, b}</text>
+<path d="M300 52 L300 78 M75 78 L525 78 M75 78 L75 100 M225 78 L225 100 M375 78 L375 100 M525 78 L525 100" stroke="#4b5563" stroke-width="1.5" fill="none"/>
+<g font-family="Inter,sans-serif" font-size="14" text-anchor="middle">
+<rect x="10" y="100" width="130" height="46" rx="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="75" y="129" fill="#d1d5db">∅</text>
+<rect x="160" y="100" width="130" height="46" rx="10" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.4)"/><text x="225" y="129" fill="#6ee7b7">{a}</text>
+<rect x="310" y="100" width="130" height="46" rx="10" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.4)"/><text x="375" y="129" fill="#fcd34d">{b}</text>
+<rect x="460" y="100" width="130" height="46" rx="10" fill="rgba(99,102,241,.15)" stroke="rgba(99,102,241,.5)"/><text x="525" y="129" fill="#c7d2fe">{a, b}</text>
+</g>
+<text x="300" y="177" font-family="Inter,sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">ℬ(A) = { ∅, {a}, {b}, {a, b} }</text>
+</svg>
+<div class="figure-caption">Fig 4. Esempio: tutti i sottoinsiemi di A = {a, b}, compresi l'insieme vuoto e A stesso.</div>
+</div>
+<p><strong>Prodotto cartesiano (<span class="sym">A × B</span>):</strong> l'insieme di tutte le possibili <strong>coppie ordinate</strong> <span class="sym">(a, b)</span>, dove il primo elemento appartiene ad <span class="sym">A</span> e il secondo a <span class="sym">B</span>. Negli appunti vengono fatti esempi pratici con numeri e piani cartesiani, oltre all'introduzione delle funzioni binarie (come l'addizione tra numeri naturali).</p>
+<div class="figure-container">
+<svg viewBox="0 0 400 230" width="100%">
+<line x1="50" y1="190" x2="370" y2="190" stroke="#374151" stroke-width="2"/><line x1="50" y1="190" x2="50" y2="20" stroke="#374151" stroke-width="2"/>
+<g stroke="rgba(255,255,255,.07)" stroke-dasharray="4"><line x1="130" y1="190" x2="130" y2="40"/><line x1="210" y1="190" x2="210" y2="40"/><line x1="290" y1="190" x2="290" y2="40"/><line x1="50" y1="140" x2="320" y2="140"/><line x1="50" y1="80" x2="320" y2="80"/></g>
+<g font-family="Inter,sans-serif" font-size="13" fill="#9ca3af" text-anchor="middle"><text x="130" y="210">1</text><text x="210" y="210">2</text><text x="290" y="210">3</text><text x="36" y="144">x</text><text x="36" y="84">y</text><text x="375" y="210" fill="#6b7280">A</text><text x="50" y="12" fill="#6b7280">B</text></g>
+<g fill="#818cf8"><circle cx="130" cy="140" r="6"/><circle cx="210" cy="140" r="6"/><circle cx="290" cy="140" r="6"/><circle cx="130" cy="80" r="6" fill="#10b981"/><circle cx="210" cy="80" r="6" fill="#10b981"/><circle cx="290" cy="80" r="6" fill="#10b981"/></g>
+<g font-family="Inter,sans-serif" font-size="11" fill="#c7d2fe"><text x="138" y="130">(1,x)</text><text x="218" y="130">(2,x)</text><text x="298" y="130">(3,x)</text><text x="138" y="70">(1,y)</text><text x="218" y="70">(2,y)</text><text x="298" y="70">(3,y)</text></g>
+</svg>
+<div class="figure-caption">Fig 5. Esempio: con A = {1, 2, 3} e B = {x, y}, il prodotto A × B è l'insieme delle 6 coppie ordinate (a, b).</div>
+</div>
+</section>
+
+</main>
+</div>
+<script src="motion.js"></script>
+</body>
+</html>

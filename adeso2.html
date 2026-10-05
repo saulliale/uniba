@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: AESO - Livelli e Linguaggi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul,ol{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="adeso.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice AESO</a></div>
+<header><div class="subtitle">Lezione 2</div><h1>Livelli e Linguaggi</h1></header>
+<main>
+
+<section>
+<h2>1. Rappresentazione binaria e unità di misura</h2>
+<p>All'interno di un computer le informazioni non vengono memorizzate come le leggiamo noi, ma attraverso una <strong>rappresentazione binaria</strong>, cioè basata su sequenze di bit. L'unità fondamentale di informazione è il <strong>BIT</strong> (<em>Binary Digit</em>), che può assumere soltanto due valori: <span class="sym">0</span> oppure <span class="sym">1</span>.</p>
+<p>Mettendo insieme <span class="sym">N</span> bit è possibile rappresentare un totale di <span class="sym">2<sup>N</sup></span> informazioni differenti. Con 2 bit, ad esempio, si ottengono 4 combinazioni: <span class="sym">00, 01, 10, 11</span>.</p>
+<div class="highlight-box"><strong>Quanti bit servono?</strong> Per rappresentare <span class="sym">K</span> informazioni diverse si cerca la potenza di 2 immediatamente successiva o uguale a <span class="sym">K</span> e si prende il suo esponente.</div>
+<div class="figure-container">
+<svg viewBox="0 0 600 230" width="100%">
+<g font-family="Inter,sans-serif" font-size="14" text-anchor="middle">
+<rect x="20" y="15" width="160" height="42" rx="10" fill="rgba(99,102,241,.15)" stroke="rgba(99,102,241,.5)"/><text x="100" y="41" fill="#c7d2fe" font-weight="600">1 bit → 2 valori</text>
+<rect x="20" y="75" width="160" height="42" rx="10" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.4)"/><text x="100" y="101" fill="#6ee7b7" font-weight="600">2 bit → 4 valori</text>
+<rect x="20" y="135" width="160" height="42" rx="10" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.4)"/><text x="100" y="161" fill="#fcd34d" font-weight="600">3 bit → 8 valori</text>
+<text x="100" y="205" fill="#6b7280" font-size="12">N bit → 2ᴺ valori</text>
+<g fill="#d1d5db">
+<rect x="220" y="15" width="60" height="42" rx="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="250" y="41">0</text>
+<rect x="290" y="15" width="60" height="42" rx="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="320" y="41">1</text>
+<rect x="220" y="75" width="60" height="42" rx="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="250" y="101">00</text>
+<rect x="290" y="75" width="60" height="42" rx="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="320" y="101">01</text>
+<rect x="360" y="75" width="60" height="42" rx="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="390" y="101">10</text>
+<rect x="430" y="75" width="60" height="42" rx="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="460" y="101">11</text>
+</g>
+<text x="410" y="161" fill="#6b7280" font-size="12">000, 001, 010, 011, 100, 101, 110, 111</text>
+</g>
+</svg>
+<div class="figure-caption">Fig 1. Il numero di combinazioni raddoppia a ogni bit aggiunto.</div>
+</div>
+<p>Vengono poi definiti i multipli del bit e i prefissi per le grandi quantità di dati, basati sulle potenze di 2:</p>
+<div class="table-container"><table>
+<thead><tr><th>Unità</th><th>Valore</th></tr></thead>
+<tbody>
+<tr><td><strong>Half-Byte</strong></td><td>4 bit</td></tr>
+<tr><td><strong>Byte</strong></td><td>8 bit</td></tr>
+<tr><td><strong>Word</strong></td><td>16, 32 o 64 bit, a seconda dell'architettura</td></tr>
+<tr><td><strong>Kilobyte (KB)</strong></td><td class="sym">1024 byte</td></tr>
+<tr><td><strong>Megabyte (MB)</strong></td><td class="sym">1024 KB</td></tr>
+<tr><td><strong>Gigabyte, Terabyte, Petabyte</strong></td><td>ogni unità vale 1024 volte la precedente</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2>2. Il divario tra uomo e macchina e le macchine virtuali</h2>
+<p>Esiste una grande distanza tra il <strong>linguaggio naturale</strong> e logico usato dall'uomo e il <strong>linguaggio binario</strong> (composto solo da zeri e uno) compreso dai circuiti elettronici del computer. Per colmare questo divario si introducono due concetti chiave:</p>
+<ol>
+<li><strong>Un livello intermedio di linguaggio</strong>: i linguaggi di programmazione, più vicini alla comprensione umana.</li>
+<li><strong>Una macchina virtuale</strong>: un livello intermedio in grado di interpretare quel nuovo linguaggio.</li>
+</ol>
+<p>La <strong>macchina reale</strong> (l'hardware) è quella fisicamente esistente ed efficiente, ma i vari strati software permettono all'utente di interagire con il computer in modo molto più semplice e astratto.</p>
+<div class="figure-container">
+<svg viewBox="0 0 600 150" width="100%">
+<g font-family="Inter,sans-serif" font-size="14" text-anchor="middle">
+<rect x="10" y="40" width="150" height="60" rx="12" fill="rgba(56,189,248,.08)" stroke="#38bdf8"/><text x="85" y="66" fill="#7dd3fc" font-weight="600">Uomo</text><text x="85" y="86" fill="#9ca3af" font-size="12">linguaggio naturale</text>
+<rect x="225" y="40" width="150" height="60" rx="12" fill="rgba(99,102,241,.15)" stroke="rgba(99,102,241,.5)"/><text x="300" y="66" fill="#c7d2fe" font-weight="600">Macchina virtuale</text><text x="300" y="86" fill="#9ca3af" font-size="12">linguaggio di programmazione</text>
+<rect x="440" y="40" width="150" height="60" rx="12" fill="rgba(245,158,11,.1)" stroke="#f59e0b"/><text x="515" y="66" fill="#fcd34d" font-weight="600">Macchina reale</text><text x="515" y="86" fill="#9ca3af" font-size="12">linguaggio binario</text>
+</g>
+<g stroke="#818cf8" stroke-width="2" fill="none"><line x1="165" y1="70" x2="220" y2="70"/><polyline points="212,64 220,70 212,76"/><line x1="380" y1="70" x2="435" y2="70"/><polyline points="427,64 435,70 427,76"/></g>
+</svg>
+<div class="figure-caption">Fig 2. Il livello intermedio e la macchina virtuale avvicinano l'uomo all'hardware.</div>
+</div>
+</section>
+
+<section>
+<h2>3. Traduzione dei programmi: compilazione e interpretazione</h2>
+<p>Poiché l'hardware capisce solo il linguaggio macchina, un programma scritto in un linguaggio di programmazione deve essere necessariamente <strong>tradotto</strong>. Questa traduzione può avvenire in due modi differenti:</p>
+<ul>
+<li><strong>Compilazione:</strong> un programma speciale chiamato <em>compilatore</em> traduce tutte le istruzioni del codice sorgente in un'unica soluzione, creando un nuovo file (il <strong>programma oggetto</strong>) che potrà poi essere eseguito. I programmi compilati offrono una velocità di esecuzione molto alta.</li>
+<li><strong>Interpretazione:</strong> un programma chiamato <em>interprete</em> prende un'istruzione alla volta, la traduce in linguaggio macchina e la esegue immediatamente, senza generare un programma oggetto. I programmi interpretati tendono a essere più lenti (specialmente dentro i cicli ripetitivi), ma rendono la ricerca e la correzione degli errori (<strong>messa a punto</strong>) molto più agevole e immediata.</li>
+</ul>
+<div class="figure-container">
+<svg viewBox="0 0 600 250" width="100%">
+<g font-family="Inter,sans-serif" font-size="13" text-anchor="middle">
+<text x="300" y="20" fill="#6ee7b7" font-weight="600">Compilazione</text>
+<rect x="10" y="35" width="130" height="46" rx="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="75" y="63" fill="#d1d5db">Codice sorgente</text>
+<rect x="190" y="35" width="130" height="46" rx="10" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.4)"/><text x="255" y="63" fill="#6ee7b7">Compilatore</text>
+<rect x="370" y="35" width="100" height="46" rx="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="420" y="63" fill="#d1d5db">Prog. oggetto</text>
+<rect x="500" y="35" width="90" height="46" rx="10" fill="rgba(99,102,241,.15)" stroke="rgba(99,102,241,.5)"/><text x="545" y="63" fill="#c7d2fe">Esecuzione</text>
+<text x="300" y="130" fill="#fcd34d" font-weight="600">Interpretazione</text>
+<rect x="10" y="145" width="130" height="46" rx="10" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="75" y="173" fill="#d1d5db">Codice sorgente</text>
+<rect x="190" y="145" width="280" height="46" rx="10" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.4)"/><text x="330" y="173" fill="#fcd34d">Interprete: traduce ed esegue un'istruzione alla volta</text>
+<rect x="500" y="145" width="90" height="46" rx="10" fill="rgba(99,102,241,.15)" stroke="rgba(99,102,241,.5)"/><text x="545" y="173" fill="#c7d2fe">Esecuzione</text>
+</g>
+<g stroke="#4b5563" stroke-width="1.5" fill="none"><line x1="140" y1="58" x2="188" y2="58"/><line x1="320" y1="58" x2="368" y2="58"/><line x1="470" y1="58" x2="498" y2="58"/><line x1="140" y1="168" x2="188" y2="168"/><line x1="470" y1="168" x2="498" y2="168"/></g>
+<text x="300" y="228" font-family="Inter,sans-serif" font-size="12" fill="#6b7280" text-anchor="middle">Nell'interpretazione non viene generato alcun programma oggetto</text>
+</svg>
+<div class="figure-caption">Fig 3. Due strategie di traduzione a confronto.</div>
+</div>
+<div class="table-container"><table>
+<thead><tr><th></th><th>Compilazione</th><th>Interpretazione</th></tr></thead>
+<tbody>
+<tr><td><strong>Traduzione</strong></td><td>tutto il sorgente in una volta</td><td>un'istruzione alla volta</td></tr>
+<tr><td><strong>Programma oggetto</strong></td><td>sì</td><td>no</td></tr>
+<tr><td><strong>Velocità</strong></td><td>molto alta</td><td>più lenta, soprattutto nei cicli</td></tr>
+<tr><td><strong>Messa a punto</strong></td><td>meno immediata</td><td>molto agevole</td></tr>
+</tbody></table></div>
+</section>
+
+<section>
+<h2>4. Linguaggi di alto e basso livello</h2>
+<p>I linguaggi di programmazione si dividono principalmente in due categorie:</p>
+<ul>
+<li><strong>Linguaggi di alto livello</strong> (simbolici e indipendenti dall'hardware): come <span class="sym">C</span>, <span class="sym">Java</span> o <span class="sym">Fortran</span>. Una sola istruzione scritta dall'utente viene tradotta in una sequenza complessa di istruzioni in linguaggio macchina (rapporto <strong>1 a molti</strong>).</li>
+<li><strong>Linguaggi di basso livello</strong> (dipendenti dall'hardware): come l'<span class="sym">Assembly</span>. Il rapporto di traduzione con il linguaggio macchina è diretto, cioè di tipo <strong>1 a 1</strong>.</li>
+</ul>
+<div class="figure-container">
+<svg viewBox="0 0 600 190" width="100%">
+<g font-family="Inter,sans-serif" font-size="13" text-anchor="middle">
+<text x="150" y="20" fill="#6ee7b7" font-weight="600">Alto livello</text>
+<rect x="100" y="35" width="100" height="40" rx="10" fill="rgba(16,185,129,.1)" stroke="rgba(16,185,129,.4)"/><text x="150" y="60" fill="#6ee7b7">1 istruzione</text>
+<g fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"><rect x="30" y="125" width="50" height="36" rx="8"/><rect x="95" y="125" width="50" height="36" rx="8"/><rect x="160" y="125" width="50" height="36" rx="8"/><rect x="225" y="125" width="50" height="36" rx="8"/></g>
+<g fill="#d1d5db" font-size="11"><text x="55" y="148">m1</text><text x="120" y="148">m2</text><text x="185" y="148">m3</text><text x="250" y="148">m4</text></g>
+<g stroke="#4b5563" stroke-width="1.5" fill="none"><line x1="150" y1="75" x2="55" y2="125"/><line x1="150" y1="75" x2="120" y2="125"/><line x1="150" y1="75" x2="185" y2="125"/><line x1="150" y1="75" x2="250" y2="125"/></g>
+<text x="450" y="20" fill="#fcd34d" font-weight="600">Basso livello (Assembly)</text>
+<rect x="400" y="35" width="100" height="40" rx="10" fill="rgba(245,158,11,.1)" stroke="rgba(245,158,11,.4)"/><text x="450" y="60" fill="#fcd34d">1 istruzione</text>
+<rect x="425" y="125" width="50" height="36" rx="8" fill="rgba(255,255,255,.04)" stroke="rgba(255,255,255,.15)"/><text x="450" y="148" fill="#d1d5db" font-size="11">m1</text>
+<line x1="450" y1="75" x2="450" y2="125" stroke="#4b5563" stroke-width="1.5"/>
+<text x="300" y="182" fill="#6b7280" font-size="12">m = istruzione in linguaggio macchina</text>
+</g>
+</svg>
+<div class="figure-caption">Fig 4. Rapporto di traduzione: 1 a molti (alto livello) e 1 a 1 (basso livello).</div>
+</div>
+</section>
+
+<section>
+<h2>5. La gerarchia dei livelli di un elaboratore</h2>
+<p>Un computer è strutturato come un <strong>sistema gerarchico a strati sovrapposti</strong>. Partendo dal basso troviamo:</p>
+<ol>
+<li><strong>Livello logico-digitale</strong> (hardware): le risorse fisiche ed elettroniche.</li>
+<li><strong>Livello di microarchitettura.</strong></li>
+<li><strong>Livello del linguaggio macchina.</strong></li>
+<li><strong>Livello del Sistema Operativo.</strong></li>
+<li><strong>Livello del linguaggio Assembly.</strong></li>
+<li><strong>Livello applicativo</strong> (linguaggi di alto livello e software utente): lo strato più alto, totalmente astratto e vicino alla logica umana.</li>
+</ol>
+<div class="highlight-box">Ogni livello <strong>nasconde la complessità</strong> di quello sottostante, offrendo una macchina virtuale sempre più semplice da gestire.</div>
+<div class="figure-container">
+<svg viewBox="0 0 600 340" width="100%">
+<g font-family="Inter,sans-serif" font-size="14" font-weight="600" text-anchor="middle">
+<rect x="110" y="10" width="380" height="44" rx="10" fill="rgba(56,189,248,.1)" stroke="#38bdf8"/><text x="300" y="37" fill="#7dd3fc">Livello 6 · Applicativo (alto livello)</text>
+<rect x="110" y="62" width="380" height="44" rx="10" fill="rgba(16,185,129,.1)" stroke="#10b981"/><text x="300" y="89" fill="#6ee7b7">Livello 5 · Linguaggio Assembly</text>
+<rect x="110" y="114" width="380" height="44" rx="10" fill="rgba(245,158,11,.1)" stroke="#f59e0b"/><text x="300" y="141" fill="#fcd34d">Livello 4 · Sistema Operativo</text>
+<rect x="110" y="166" width="380" height="44" rx="10" fill="rgba(99,102,241,.15)" stroke="#818cf8"/><text x="300" y="193" fill="#c7d2fe">Livello 3 · Linguaggio macchina</text>
+<rect x="110" y="218" width="380" height="44" rx="10" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.25)"/><text x="300" y="245" fill="#d1d5db">Livello 2 · Microarchitettura</text>
+<rect x="110" y="270" width="380" height="44" rx="10" fill="rgba(255,255,255,.05)" stroke="rgba(255,255,255,.25)"/><text x="300" y="297" fill="#d1d5db">Livello 1 · Logico-digitale (hardware)</text>
+</g>
+<g font-family="Inter,sans-serif" font-size="12" fill="#6b7280" text-anchor="middle"><text x="55" y="38">più astratto</text><text x="545" y="298">più fisico</text></g>
+</svg>
+<div class="figure-caption">Fig 5. I livelli di un elaboratore: ogni strato costruisce una macchina virtuale sopra quello sottostante.</div>
+</div>
+</section>
+
+<section>
+<h2>6. Architettura e organizzazione dell'elaboratore</h2>
+<p>Infine si distinguono due concetti fondamentali dei sistemi di elaborazione:</p>
+<div class="table-container"><table>
+<thead><tr><th></th><th>Architettura</th><th>Organizzazione</th></tr></thead>
+<tbody>
+<tr><td><strong>Di cosa si occupa</strong></td><td>Caratteristiche logiche del sistema visibili al programmatore (set di istruzioni macchina, numero di bit usati per i dati)</td><td>Implementazione pratica e fisica di unità operative, circuiti e collegamenti scelti per realizzare le funzioni</td></tr>
+<tr><td><strong>Cosa definisce</strong></td><td>Una famiglia di computer (es. la famiglia Intel x86)</td><td>Il modo concreto in cui l'architettura viene realizzata</td></tr>
+<tr><td><strong>Evoluzione</strong></td><td>Non cambia al cambiare della tecnologia</td><td>Si evolve e cambia continuamente insieme alla tecnologia</td></tr>
+</tbody></table></div>
+</section>
+
+</main>
+</div>
+<script src="motion.js"></script>
+</body>
+</html>
