@@ -80,3 +80,12 @@ html.leave body{opacity:0;transform:translateY(-10px);transition:opacity .28s ea
 @keyframes drift{from{transform:translate3d(-3%,-2%,0) scale(1)}to{transform:translate3d(3%,3%,0) scale(1.05)}}
 @media (max-width:768px){.container{backdrop-filter:none}.idx .card{padding:1.5rem}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}html.js .rv{opacity:1;transform:none;filter:none}}
+
+/* Home: logo e icone */
+.idx header.hero{text-align:center;border:0;padding:0;margin-bottom:4.5rem}
+.idx header.hero .sub{max-width:480px;margin:0 auto;font-size:1.05rem}
+.logo{width:124px;height:124px;display:block;margin:0 auto 1.75rem;object-fit:contain;filter:drop-shadow(0 12px 32px rgba(99,102,241,.5));animation:float 6s ease-in-out infinite}
+.idx .icon{width:56px;height:56px;border-radius:12px;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.22);display:flex;align-items:center;justify-content:center;margin-bottom:1.5rem;transition:transform .5s var(--ease),background .3s}
+.idx .icon svg{width:26px;height:26px;stroke:#818cf8;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.idx .card:hover .icon{transform:scale(1.1) rotate(-5deg);background:rgba(99,102,241,.2)}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
