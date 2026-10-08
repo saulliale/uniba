@@ -55,3 +55,37 @@
   });
   addEventListener('pageshow', () => r.classList.remove('leave'));
 })();
+
+/* Evidenzia la parola cercata dalla home della materia (?q=parola&c=inizio-blocco) */
+(() => {
+  const d = document, p = new URLSearchParams(location.search), q = p.get('q');
+  if (!q) return;
+  const fold = s => s.split('').map(c => { const n = c.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase(); return n.length === 1 ? n : c.toLowerCase().charAt(0); }).join('');
+  const terms = fold(q).split(/\s+/).filter(Boolean); if (!terms.length) return;
+  const root = d.querySelector('main') || d.body;
+  const w = d.createTreeWalker(root, NodeFilter.SHOW_TEXT, { acceptNode: n => n.parentElement && n.parentElement.closest('script,style,svg') ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_ACCEPT });
+  const nodes = []; while (w.nextNode()) nodes.push(w.currentNode);
+  const marks = [];
+  nodes.forEach(n => {
+    const t = n.nodeValue, f = fold(t), rs = [];
+    terms.forEach(x => { let i = f.indexOf(x); while (i > -1) { rs.push([i, i + x.length]); i = f.indexOf(x, i + x.length); } });
+    if (!rs.length) return;
+    rs.sort((a, b) => a[0] - b[0]);
+    const mg = []; rs.forEach(r => { const l = mg[mg.length - 1]; if (l && r[0] <= l[1]) l[1] = Math.max(l[1], r[1]); else mg.push(r.slice()); });
+    const fr = d.createDocumentFragment(); let pos = 0;
+    mg.forEach(([a, b]) => { fr.append(t.slice(pos, a)); const m = d.createElement('mark'); m.className = 'hit'; m.textContent = t.slice(a, b); fr.append(m); marks.push(m); pos = b; });
+    fr.append(t.slice(pos)); n.replaceWith(fr);
+  });
+  if (!marks.length) return;
+  const BL = 'p,li,td,th,h1,h2,h3,.figure-caption,.highlight-box,.code-block', c = (p.get('c') || '').trim();
+  let cur = Math.max(0, marks.findIndex(m => { const b = m.closest(BL); return b && fold(b.textContent).replace(/\s+/g, ' ').includes(c); }));
+  const bar = d.createElement('div'); bar.className = 'hitbar';
+  bar.innerHTML = '<span>«' + q.replace(/[<>&]/g, '') + '» · <b></b></span><button title="Precedente">‹</button><button title="Successiva">›</button><button title="Chiudi">✕</button>';
+  d.body.appendChild(bar);
+  const cnt = bar.querySelector('b'), [bp, bn, bx] = bar.querySelectorAll('button');
+  const go = i => { marks[cur].classList.remove('on'); cur = (i + marks.length) % marks.length; const m = marks[cur]; m.classList.add('on'); m.scrollIntoView({ behavior: 'smooth', block: 'center' }); cnt.textContent = (cur + 1) + '/' + marks.length; };
+  bp.onclick = () => go(cur - 1); bn.onclick = () => go(cur + 1);
+  bx.onclick = () => { marks.forEach(m => m.replaceWith(d.createTextNode(m.textContent))); bar.remove(); history.replaceState(null, '', location.pathname); };
+  d.addEventListener('keydown', e => { if (e.key === 'Escape') bx.click(); });
+  setTimeout(() => go(cur), 650);
+})();

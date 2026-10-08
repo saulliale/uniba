@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="theme.css">
 </head>
-<body class="idx">
+<body class="idx" data-subject="adeso">
     <div class="wrap">
         <nav>
             <a href="index.html" class="back-link">
@@ -21,33 +21,45 @@
             <h1>AESO</h1>
             <p class="sub">Architettura degli Elaboratori e Sistemi Operativi — Indice degli appunti</p>
         </header>
-        <main class="grid">
-            <a href="adeso1.html" class="card">
-                <div class="badge">Lezione 1</div>
-                <h2>Elaborazione dell'Informazione</h2>
-                <p>Concetti base dell'informatica, algoritmi, struttura hardware/software e rappresentazione binaria.</p>
-                <div class="foot">Leggi appunti <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-            </a>
-            <a href="adeso2.html" class="card">
-                <div class="badge">Lezione 2</div>
-                <h2>Livelli e Linguaggi</h2>
-                <p>Rappresentazione binaria, macchine virtuali, compilazione e interpretazione, linguaggi di alto e basso livello, gerarchia dei livelli.</p>
-                <div class="foot">Leggi appunti <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-            </a>
-            <a href="adeso3.html" class="card">
-                <div class="badge">Lezione 3</div>
-                <h2>Struttura dell'Elaboratore</h2>
-                <p>Funzioni dell'elaboratore, macchina di Von Neumann, ciclo di istruzione, architettura della CPU, registri, clock e prestazioni.</p>
-                <div class="foot">Leggi appunti <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-            </a>
-            <a href="adesolab1.html" class="card">
-                <div class="badge">Laboratorio 1</div>
-                <h2>Sistemi di Numerazione</h2>
-                <p>Concetto di rappresentazione, sistemi non posizionali (numeri romani) e sistemi posizionali con base e cifre.</p>
-                <div class="foot">Leggi appunti <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
-            </a>
+        <main>
+            <section class="grp">
+                <h3 class="grp-title">Lezioni</h3>
+                <div class="grid">
+                <a href="adeso/lezione/adeso1.html" class="card">
+                    <div class="badge">Lezione 1</div>
+                    <h2>Elaborazione dell'Informazione</h2>
+                    <p>Concetti base dell'informatica, algoritmi, struttura hardware/software e rappresentazione binaria.</p>
+                    <div class="foot">Leggi appunti <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+                </a>
+                <a href="adeso/lezione/adeso2.html" class="card">
+                    <div class="badge">Lezione 2</div>
+                    <h2>Livelli e Linguaggi</h2>
+                    <p>Rappresentazione binaria, macchine virtuali, compilazione e interpretazione, linguaggi di alto e basso livello, gerarchia dei livelli.</p>
+                    <div class="foot">Leggi appunti <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+                </a>
+                <a href="adeso/lezione/adeso3.html" class="card">
+                    <div class="badge">Lezione 3</div>
+                    <h2>Struttura dell'Elaboratore</h2>
+                    <p>Funzioni dell'elaboratore, macchina di Von Neumann, ciclo di istruzione, architettura della CPU, registri, clock e prestazioni.</p>
+                    <div class="foot">Leggi appunti <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+                </a>
+                </div>
+            </section>
+            <section class="grp">
+                <h3 class="grp-title">Laboratorio</h3>
+                <div class="grid">
+                <a href="adeso/lab/adesolab1.html" class="card">
+                    <div class="badge">Laboratorio 1</div>
+                    <h2>Sistemi di Numerazione</h2>
+                    <p>Concetto di rappresentazione, sistemi non posizionali (numeri romani) e sistemi posizionali con base e cifre.</p>
+                    <div class="foot">Leggi appunti <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg></div>
+                </a>
+                </div>
+            </section>
         </main>
     </div>
+    <script src="search-data.js"></script>
+    <script src="search.js"></script>
     <script src="motion.js"></script>
 </body>
 </html>
