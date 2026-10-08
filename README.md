@@ -1,0 +1,1 @@
+ad ogni modifica esegui questo: "python3 build_search.py"
