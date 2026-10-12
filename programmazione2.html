@@ -1,284 +1,95 @@
 <!DOCTYPE html>
 <html lang="it">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Indice Lezioni - Programmazione</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="theme.css">
-    <script src="motion.js"></script>
-    <style>
-        :root {
-            --bg: #0f1117;
-            --surface: #1a1d27;
-            --border: rgba(255,255,255,0.07);
-            --border-hover: rgba(99,102,241,0.5);
-            --text: #e8eaf0;
-            --text-muted: #6b7280;
-            --accent: #6366f1;
-            --accent-2: #818cf8;
-            --disabled-bg: #14161f;
-            --disabled-border: rgba(255,255,255,0.04);
-            --font: 'Inter', system-ui, sans-serif;
-            --radius: 16px;
-        }
-
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
-        body {
-            font-family: var(--font);
-            background-color: var(--bg);
-            background-image: radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99,102,241,0.1) 0%, transparent 60%);
-            color: var(--text);
-            line-height: 1.6;
-            min-height: 100vh;
-            padding: 3rem 1.5rem 5rem;
-            display: flex;
-            justify-content: center;
-        }
-
-        .dashboard-container { width: 100%; max-width: 1000px; }
-
-        nav { margin-bottom: 3rem; animation: fadeDown 0.5s ease both; }
-
-        .back-link {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-            color: var(--text-muted);
-            font-weight: 500;
-            font-size: 0.9rem;
-            transition: color 0.2s ease, gap 0.2s ease;
-            border: 1px solid var(--border);
-            border-radius: 100px;
-            padding: 8px 16px 8px 12px;
-            background: var(--surface);
-        }
-
-        .back-link:hover { color: var(--accent-2); gap: 12px; border-color: rgba(99,102,241,0.3); }
-        .back-link svg { transition: transform 0.2s ease; }
-        .back-link:hover svg { transform: translateX(-3px); }
-
-        header {
-            margin-bottom: 3.5rem;
-            padding-bottom: 2.5rem;
-            border-bottom: 1px solid var(--border);
-            animation: fadeDown 0.5s 0.1s ease both;
-        }
-
-        .header-tag {
-            display: inline-block;
-            background: rgba(99,102,241,0.12);
-            border: 1px solid rgba(99,102,241,0.25);
-            border-radius: 100px;
-            padding: 4px 14px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            color: var(--accent-2);
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            margin-bottom: 1rem;
-        }
-
-        h1 {
-            font-size: clamp(1.8rem, 4vw, 2.5rem);
-            font-weight: 700;
-            color: #fff;
-            letter-spacing: -0.03em;
-            margin-bottom: 0.5rem;
-        }
-
-        .subtitle { color: var(--text-muted); font-size: 1rem; }
-
-        .lessons-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
-            gap: 1.25rem;
-        }
-
-        .card {
-            background: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: var(--radius);
-            padding: 2rem;
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.35s cubic-bezier(.22,.68,0,1.2), box-shadow 0.35s ease, border-color 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            animation: fadeUp 0.5s ease both;
-        }
-
-        .card:nth-child(1) { animation-delay: 0.15s; }
-        .card:nth-child(2) { animation-delay: 0.25s; }
-        .card:nth-child(3) { animation-delay: 0.35s; }
-        .card:nth-child(4) { animation-delay: 0.45s; }
-
-        .card.active::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0;
-            width: 3px; height: 100%;
-            background: linear-gradient(180deg, var(--accent), var(--accent-2));
-        }
-
-        .card.active:hover {
-            transform: translateY(-5px);
-            border-color: var(--border-hover);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 0 0 1px rgba(99,102,241,0.12);
-        }
-
-        .card.disabled {
-            background: var(--disabled-bg);
-            border-color: var(--disabled-border);
-            cursor: not-allowed;
-            opacity: 0.55;
-        }
-
-        .lesson-badge {
-            display: inline-flex;
-            align-items: center;
-            background: rgba(99,102,241,0.1);
-            border: 1px solid rgba(99,102,241,0.2);
-            color: var(--accent-2);
-            font-size: 0.72rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1.2px;
-            padding: 4px 12px;
-            border-radius: 100px;
-            margin-bottom: 1.25rem;
-            align-self: flex-start;
-        }
-
-        .card.disabled .lesson-badge {
-            background: rgba(255,255,255,0.04);
-            border-color: rgba(255,255,255,0.06);
-            color: #4b5563;
-        }
-
-        .card h2 {
-            font-size: 1.15rem;
-            font-weight: 600;
-            color: #fff;
-            margin-bottom: 0.65rem;
-            line-height: 1.4;
-            letter-spacing: -0.02em;
-        }
-
-        .card.disabled h2 { color: #374151; }
-
-        .card p {
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            line-height: 1.65;
-            margin-bottom: 1.5rem;
-            flex-grow: 1;
-        }
-
-        .card.disabled p { color: #374151; }
-
-        .card-footer {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--accent-2);
-            transition: gap 0.25s ease;
-        }
-
-        .card-footer svg {
-            width: 15px; height: 15px;
-            stroke: var(--accent-2);
-            stroke-width: 2;
-            transition: transform 0.25s ease;
-        }
-
-        .card.active:hover .card-footer { gap: 12px; }
-        .card.active:hover .card-footer svg { transform: translateX(4px); }
-        .card.disabled .card-footer { color: #374151; }
-
-        @keyframes fadeDown {
-            from { opacity: 0; transform: translateY(-16px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-
-        @media (max-width: 768px) {
-            body { padding: 2rem 1rem 4rem; }
-            header { margin-bottom: 2.5rem; }
-            .card { padding: 1.5rem; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: Programmazione - Il costrutto while</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+.v{color:#6ee7b7;font-weight:600}.f{color:#fca5a5;font-weight:600}td{text-align:left}
+code{font-family:'JetBrains Mono','Courier New',monospace;font-size:.85em;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);color:#a5b4fc;padding:2px 7px;border-radius:5px}
+.code-block{background:#0d1117;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1.5rem 1.75rem;margin:1.75rem 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.88rem;line-height:1.65;overflow-x:auto;color:#abb2bf;white-space:pre;position:relative}
+.code-block::before{content:attr(data-lang);position:absolute;top:10px;right:14px;font-family:'Inter',sans-serif;font-size:.7rem;font-weight:700;color:#4b5563;text-transform:uppercase;letter-spacing:1px}
+.k{color:#c678dd}.s{color:#98c379}.n{color:#d19a66}.c{color:#5c6370;font-style:italic}.fn{color:#61afef}
+</style>
+<link rel="stylesheet" href="theme.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 </head>
 <body>
+<div class="container">
+<div class="back-nav"><a href="programmazione.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice Programmazione</a></div>
+<header><div class="subtitle">Lezione 2</div><h1>Il Costrutto while e gli Operatori in C</h1></header>
+<main>
+<section><h2>1. Il costrutto while</h2>
+<p>Il costrutto <code>while</code> è un <strong>ciclo</strong> che ripete l'esecuzione di un blocco di codice <strong>finché</strong> una determinata condizione risulta vera.</p>
+<p><strong>Sintassi:</strong></p>
+<div class="code-block" data-lang="C"><span class="k">while</span> (condizione) {
+    <span class="c">// codice</span>
+}</div>
+<div class="highlight-box">Alla fine della riga del <code>while</code> <strong>non</strong> va inserito alcun punto e virgola.</div>
+<p><strong>Nota importante:</strong> se la condizione di iterazione è falsa fin dall'inizio, il corpo del ciclo potrebbe non essere eseguito nemmeno una volta.</p>
+<div class="figure-container"><svg viewBox="0 0 600 210" width="100%"><defs><marker id="a1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#9ca3af"/></marker></defs><text x="300" y="20" font-family="Inter,sans-serif" font-size="12" fill="#9ca3af" text-anchor="middle">Il corpo viene eseguito solo finché la condizione è vera</text><rect x="15" y="40" width="150" height="56" rx="10" fill="#818cf8" fill-opacity=".14" stroke="#818cf8" stroke-width="1.8"/><text x="90.0" y="66.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">i = 1</text><text x="90.0" y="83.0" font-family="Inter,sans-serif" font-size="11" fill="#818cf8" text-anchor="middle">while (i &lt;= 3)</text><path d="M168 68 L212 68" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a1)"/><rect x="215" y="40" width="150" height="56" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.8"/><text x="290.0" y="66.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">condizione vera</text><text x="290.0" y="83.0" font-family="Inter,sans-serif" font-size="11" fill="#10b981" text-anchor="middle">il corpo viene eseguito</text><path d="M368 68 L412 68" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a1)"/><rect x="415" y="40" width="170" height="56" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.8"/><text x="500.0" y="66.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">si ripete</text><text x="500.0" y="83.0" font-family="Inter,sans-serif" font-size="11" fill="#10b981" text-anchor="middle">finché diventa falsa</text><rect x="15" y="125" width="150" height="56" rx="10" fill="#818cf8" fill-opacity=".14" stroke="#818cf8" stroke-width="1.8"/><text x="90.0" y="151.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">i = 10</text><text x="90.0" y="168.0" font-family="Inter,sans-serif" font-size="11" fill="#818cf8" text-anchor="middle">while (i &lt;= 3)</text><path d="M168 153 L212 153" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a1)"/><rect x="215" y="125" width="150" height="56" rx="10" fill="#f87171" fill-opacity=".14" stroke="#f87171" stroke-width="1.8"/><text x="290.0" y="151.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">condizione falsa</text><text x="290.0" y="168.0" font-family="Inter,sans-serif" font-size="11" fill="#f87171" text-anchor="middle">fin dall'inizio</text><path d="M368 153 L412 153" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a1)"/><rect x="415" y="125" width="170" height="56" rx="10" fill="#f87171" fill-opacity=".14" stroke="#f87171" stroke-width="1.8"/><text x="500.0" y="151.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">corpo mai eseguito</text><text x="500.0" y="168.0" font-family="Inter,sans-serif" font-size="11" fill="#f87171" text-anchor="middle">zero esecuzioni</text></svg><div class="figure-caption">Fig 1. La condizione viene controllata prima di ogni esecuzione del corpo.</div></div>
+<div class="code-block" data-lang="C"><span class="c">/* esempio illustrativo */</span>
+<span class="k">int</span> i = <span class="n">1</span>;
+<span class="k">while</span> (i &lt;= <span class="n">3</span>) {
+    <span class="fn">printf</span>(<span class="s">"%d\n"</span>, i);
+    i++;
+}</div></section>
+<section><h2>2. Casi particolari e condizioni complesse</h2>
+<p><strong>Cicli infiniti:</strong> si crea un ciclo infinito usando una condizione sempre vera, ad esempio <code>while (1)</code>. Può sembrare un errore, ma i cicli infiniti sono molto utili in certi contesti, come nella programmazione dei microcontrollori.</p>
+<div class="code-block" data-lang="C"><span class="k">while</span> (<span class="n">1</span>) {
+    <span class="c">// ciclo infinito: la condizione è sempre vera</span>
+}</div>
+<p><strong>Condizioni multiple:</strong> si possono combinare più condizioni nel <code>while</code> con gli operatori logici, in modo che il ciclo continui solo se tutte o alcune delle condizioni sono soddisfatte.</p>
+<div class="table-container"><table><thead><tr><th>Operatore</th><th>Significato</th><th>Il ciclo continua se…</th></tr></thead><tbody><tr><td><code>&amp;&amp;</code></td><td>AND logico</td><td>tutte le condizioni sono vere</td></tr><tr><td><code>||</code></td><td>OR logico</td><td>almeno una condizione è vera</td></tr></tbody></table></div>
+<div class="code-block" data-lang="C"><span class="k">while</span> (a &gt; <span class="n">0</span> &amp;&amp; b &gt; <span class="n">0</span>) {
+    <span class="c">// continua solo se ENTRAMBE le condizioni sono vere</span>
+}
 
-    <div class="dashboard-container">
-
-        <nav>
-            <a href="index.html" class="back-link">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                    <line x1="19" y1="12" x2="5" y2="12"></line>
-                    <polyline points="12 19 5 12 12 5"></polyline>
-                </svg>
-                Torna alla Home
-            </a>
-        </nav>
-
-        <header>
-            <div class="header-tag">Linguaggio C &amp; Algoritmi</div>
-            <h1>Programmazione</h1>
-            <p class="subtitle">Fondamenti di coding, algoritmi e Linguaggio C — Indice degli appunti</p>
-        </header>
-
-        <main class="lessons-grid">
-
-            <!-- LEZIONE 1 (Attiva) -->
-            <a href="programmazione1.html" class="card active">
-                <div class="lesson-badge">Lezione 1</div>
-                <h2>Introduzione al C</h2>
-                <p>Architettura di un programma, sintassi, tipi di dati, Input/Output (printf/scanf) e logica decisionale (if-else).</p>
-                <div class="card-footer">
-                    Leggi appunti
-                    <svg viewBox="0 0 24 24" fill="none"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-                </div>
-            </a>
-
-            <!-- LEZIONE 2 (Prossimamente) -->
-            <div class="card disabled">
-                <div class="lesson-badge">Lezione 2</div>
-                <h2>Costrutti Iterativi</h2>
-                <p>Gestione del flusso ciclico: istruzioni while, do-while, for e tecniche di iterazione strutturata.</p>
-                <div class="card-footer">Prossimamente...</div>
-            </div>
-
-            <!-- LEZIONE 3 (Prossimamente) -->
-            <div class="card disabled">
-                <div class="lesson-badge">Lezione 3</div>
-                <h2>Funzioni e Ricorsione</h2>
-                <p>Definizione delle funzioni, scope delle variabili, passaggio dei parametri per valore e funzioni ricorsive.</p>
-                <div class="card-footer">Prossimamente...</div>
-            </div>
-
-            <!-- LEZIONE 4 (Prossimamente) -->
-            <div class="card disabled">
-                <div class="lesson-badge">Lezione 4</div>
-                <h2>Array e Puntatori</h2>
-                <p>Strutture dati sequenziali, manipolazione di stringhe, indirizzi di memoria e aritmetica dei puntatori.</p>
-                <div class="card-footer">Prossimamente...</div>
-            </div>
-
-        </main>
-    </div>
-
-</body>
-</html>
+<span class="k">while</span> (a &gt; <span class="n">0</span> || b &gt; <span class="n">0</span>) {
+    <span class="c">// continua se ALMENO UNA condizione è vera</span>
+}</div></section>
+<section><h2>3. Rappresentazione: flow chart e pseudo-codice</h2>
+<p><strong>Nei diagrammi di flusso (flow chart)</strong> il costrutto si presenta con un blocco di decisione da cui parte il flusso che gestisce il controllo della condizione (Vero/Falso), mantenendo sempre un <strong>unico flusso in entrata</strong> e un <strong>unico flusso in uscita</strong>.</p>
+<div class="figure-container"><svg viewBox="0 0 600 290" width="100%"><defs><marker id="a2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#9ca3af"/></marker><marker id="a3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#10b981"/></marker><marker id="a4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f87171"/></marker></defs><path d="M200 10 L200 38" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a2)"/><text x="214" y="26" font-family="Inter,sans-serif" font-size="11" fill="#6b7280" text-anchor="start">unico flusso in entrata</text><polygon points="200,40 295,92 200,144 105,92" fill="rgba(99,102,241,.14)" stroke="#818cf8" stroke-width="1.8"/><text x="200" y="97" font-family="Inter,sans-serif" font-size="14" fill="#c7d2fe" text-anchor="middle">condizione</text><path d="M200 144 L200 188" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#a3)"/><text x="214" y="172" font-family="Inter,sans-serif" font-size="12" fill="#6ee7b7" text-anchor="start">VERO</text><rect x="120" y="190" width="160" height="48" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.8"/><text x="200.0" y="219.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">Corpo del ciclo</text><path d="M120 214 L50 214 L50 92 L103 92" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#a3)" stroke-dasharray="5 4"/><path d="M295 92 L420 92" stroke="#f87171" stroke-width="2" fill="none" marker-end="url(#a4)"/><text x="358" y="82" font-family="Inter,sans-serif" font-size="12" fill="#fca5a5" text-anchor="middle">FALSO</text><rect x="422" y="68" width="160" height="48" rx="10" fill="#f87171" fill-opacity=".14" stroke="#f87171" stroke-width="1.8"/><text x="502.0" y="97.0" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="middle">Istruzioni successive</text><text x="502" y="138" font-family="Inter,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle">unico flusso in uscita</text></svg><div class="figure-caption">Fig 2. Flow chart del while: il ramo VERO esegue il corpo e torna alla condizione, il ramo FALSO esce dal ciclo.</div></div>
+<p><strong>Nello pseudo-codice</strong> si usa un linguaggio informale ma rigoroso, comprensibile all'essere umano, che descrive la logica del procedimento senza legarsi alla sintassi di uno specifico linguaggio di programmazione.</p>
+<div class="code-block" data-lang="pseudo-codice">FINCHÉ (la condizione è vera)
+    esegui il corpo del ciclo</div></section>
+<section><h2>4. Operatori di assegnamento abbreviati</h2>
+<p>In C è possibile abbreviare le operazioni aritmetiche combinandole con l'assegnazione:</p>
+<div class="table-container"><table><thead><tr><th>Operatore</th><th>Cosa fa</th></tr></thead><tbody><tr><td><code>+=</code></td><td>memorizza a + b in a</td></tr><tr><td><code>-=</code></td><td>memorizza a − b in a</td></tr><tr><td><code>*=</code></td><td>memorizza a × b in a</td></tr><tr><td><code>/=</code></td><td>memorizza a / b in a</td></tr><tr><td><code>%=</code></td><td>memorizza il resto a % b in a</td></tr></tbody></table></div></section>
+<section><h2>5. Operatori di incremento e decremento</h2>
+<ul><li><strong>Postfissi</strong> (<code>a++</code>, <code>a--</code>): rendono disponibile il valore attuale della variabile e solo successivamente la incrementano o decrementano.</li>
+<li><strong>Prefissi</strong> (<code>++a</code>, <code>--a</code>): prima modificano (incrementano o decrementano) il valore della variabile e subito dopo lo rendono disponibile.</li></ul>
+<div class="figure-container"><svg viewBox="0 0 600 220" width="100%"><rect x="15" y="15" width="275" height="190" rx="14" fill="rgba(245,158,11,.07)" stroke="#f59e0b" stroke-width="1.6"/><text x="152" y="45" font-family="Inter,sans-serif" font-size="15" fill="#fcd34d" text-anchor="middle">Postfisso:  a++  /  a--</text><circle cx="35" cy="90" r="13" fill="#f59e0b" fill-opacity=".2" stroke="#f59e0b" stroke-width="1.6"/><text x="35" y="95" font-family="Inter,sans-serif" font-size="13" fill="#fff" text-anchor="middle">1</text><text x="59" y="95" font-family="Inter,sans-serif" font-size="13" fill="#e5e7eb" text-anchor="start">rende disponibile il valore attuale</text><circle cx="35" cy="140" r="13" fill="#f59e0b" fill-opacity=".2" stroke="#f59e0b" stroke-width="1.6"/><text x="35" y="145" font-family="Inter,sans-serif" font-size="13" fill="#fff" text-anchor="middle">2</text><text x="59" y="145" font-family="Inter,sans-serif" font-size="13" fill="#e5e7eb" text-anchor="start">poi incrementa / decrementa</text><text x="152" y="190" font-family="Inter,sans-serif" font-size="11.5" fill="#9ca3af" text-anchor="middle">es. a = 5  →  usa 5, poi a diventa 6</text><rect x="310" y="15" width="275" height="190" rx="14" fill="rgba(16,185,129,.07)" stroke="#10b981" stroke-width="1.6"/><text x="447" y="45" font-family="Inter,sans-serif" font-size="15" fill="#6ee7b7" text-anchor="middle">Prefisso:  ++a  /  --a</text><circle cx="330" cy="90" r="13" fill="#10b981" fill-opacity=".2" stroke="#10b981" stroke-width="1.6"/><text x="330" y="95" font-family="Inter,sans-serif" font-size="13" fill="#fff" text-anchor="middle">1</text><text x="354" y="95" font-family="Inter,sans-serif" font-size="13" fill="#e5e7eb" text-anchor="start">prima incrementa / decrementa</text><circle cx="330" cy="140" r="13" fill="#10b981" fill-opacity=".2" stroke="#10b981" stroke-width="1.6"/><text x="330" y="145" font-family="Inter,sans-serif" font-size="13" fill="#fff" text-anchor="middle">2</text><text x="354" y="145" font-family="Inter,sans-serif" font-size="13" fill="#e5e7eb" text-anchor="start">poi rende disponibile il valore</text><text x="447" y="190" font-family="Inter,sans-serif" font-size="11.5" fill="#9ca3af" text-anchor="middle">es. a = 5  →  a diventa 6, poi usa 6</text></svg><div class="figure-caption">Fig 3. La differenza tra postfisso e prefisso sta nell’ordine delle due operazioni.</div></div>
+<div class="code-block" data-lang="C"><span class="c">/* esempio illustrativo, con a = 5 */</span>
+b = a++;   <span class="c">// b vale 5, poi a diventa 6</span>
+b = ++a;   <span class="c">// a diventa 6, poi b vale 6</span></div></section>
+</main></div><script src="motion.js"></script></body></html>
