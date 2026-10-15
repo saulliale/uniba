@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: Programmazione - Il costrutto do-while</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+.v{color:#6ee7b7;font-weight:600}.f{color:#fca5a5;font-weight:600}td{text-align:left}
+code{font-family:'JetBrains Mono','Courier New',monospace;font-size:.85em;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);color:#a5b4fc;padding:2px 7px;border-radius:5px}
+.code-block{background:#0d1117;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1.5rem 1.75rem;margin:1.75rem 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.88rem;line-height:1.65;overflow-x:auto;color:#abb2bf;white-space:pre;position:relative}
+.code-block::before{content:attr(data-lang);position:absolute;top:10px;right:14px;font-family:'Inter',sans-serif;font-size:.7rem;font-weight:700;color:#4b5563;text-transform:uppercase;letter-spacing:1px}
+.k{color:#c678dd}.s{color:#98c379}.n{color:#d19a66}.c{color:#5c6370;font-style:italic}.fn{color:#61afef}
+</style>
+<link rel="stylesheet" href="theme.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="programmazione.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice Programmazione</a></div>
+<header><div class="subtitle">Lezione 3</div><h1>Il Costrutto do-while</h1></header>
+<main>
+<section><h2>1. Il costrutto do-while</h2>
+<p>Il costrutto <code>do-while</code> è una struttura di controllo iterativa alternativa al ciclo <code>while</code>. La sua caratteristica fondamentale è che la condizione di controllo viene valutata <strong>alla fine</strong> dell'esecuzione del corpo del ciclo (struttura a <strong>condizione post-test</strong> o a controllo in coda).</p>
+<p><strong>Sintassi:</strong></p>
+<div class="code-block" data-lang="C"><span class="k">do</span> {
+    <span class="c">// istruzioni da eseguire</span>
+} <span class="k">while</span> (condizione);</div>
+<div class="highlight-box">A differenza del normale ciclo <code>while</code>, alla fine dell'istruzione <code>while (condizione);</code> nel <code>do-while</code> è <strong>obbligatorio</strong> inserire il punto e virgola <code>;</code>.</div>
+<p>Poiché la verifica avviene solo dopo l'esecuzione del blocco interno, il corpo di un ciclo <code>do-while</code> viene eseguito <strong>sempre almeno una volta</strong>, indipendentemente dal valore iniziale della condizione.</p>
+<div class="figure-container"><svg viewBox="0 0 600 210" width="100%"><defs><marker id="a1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#9ca3af"/></marker></defs><text x="300" y="20" font-family="Inter,sans-serif" font-size="12" fill="#9ca3af" text-anchor="middle">Nel do-while l'esecuzione iniziale del corpo è SEMPRE garantita</text><rect x="15" y="40" width="160" height="56" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.8"/><text x="95.0" y="66.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">1ª Esecuzione</text><text x="95.0" y="83.0" font-family="Inter,sans-serif" font-size="11" fill="#10b981" text-anchor="middle">eseguito a prescindere</text><path d="M175 68 L218 68" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a1)"/><rect x="220" y="40" width="160" height="56" rx="10" fill="#818cf8" fill-opacity=".14" stroke="#818cf8" stroke-width="1.8"/><text x="300.0" y="66.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">Controllo finale</text><text x="300.0" y="83.0" font-family="Inter,sans-serif" font-size="11" fill="#818cf8" text-anchor="middle">while (condizione);</text><path d="M380 68 L422 68" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a1)"/><rect x="425" y="40" width="160" height="56" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.8"/><text x="505.0" y="66.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">Se VERO: ripete</text><text x="505.0" y="83.0" font-family="Inter,sans-serif" font-size="11" fill="#10b981" text-anchor="middle">Se FALSO: esce</text><rect x="15" y="125" width="160" height="56" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.8"/><text x="95.0" y="151.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">Condizione Falsa</text><text x="95.0" y="168.0" font-family="Inter,sans-serif" font-size="11" fill="#10b981" text-anchor="middle">fin dal principio</text><path d="M175 153 L218 153" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a1)"/><rect x="220" y="125" width="160" height="56" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.8"/><text x="300.0" y="151.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">1 Esecuzione</text><text x="300.0" y="168.0" font-family="Inter,sans-serif" font-size="11" fill="#10b981" text-anchor="middle">il corpo viene eseguito</text><path d="M380 153 L422 153" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a1)"/><rect x="425" y="125" width="160" height="56" rx="10" fill="#f87171" fill-opacity=".14" stroke="#f87171" stroke-width="1.8"/><text x="505.0" y="151.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">Termine ciclo</text><text x="505.0" y="168.0" font-family="Inter,sans-serif" font-size="11" fill="#f87171" text-anchor="middle">almeno 1 volta garantita</text></svg><div class="figure-caption">Fig 1. Flusso logico del do-while: la valutazione avviene dopo la prima esecuzione delle istruzioni.</div></div>
+<div class="code-block" data-lang="C"><span class="c">/* struttura base del do-while */</span>
+<span class="k">int</span> valore = <span class="n">10</span>;
+<span class="k">do</span> {
+    <span class="c">// Questo blocco viene eseguito 1 volta anche se la condizione è falsa</span>
+    <span class="fn">printf</span>(<span class="s">"Esecuzione in corso...\n"</span>);
+} <span class="k">while</span> (valore &lt; <span class="n">5</span>);</div></section>
+
+<section><h2>2. Confronto tra while e do-while</h2>
+<p>La scelta tra l'utilizzo del ciclo <code>while</code> e del ciclo <code>do-while</code> dipende da quando deve avvenire la verifica della condizione rispetto all'esecuzione delle istruzioni:</p>
+<div class="table-container"><table><thead><tr><th>Caratteristica</th><th>Ciclo <code>while</code></th><th>Ciclo <code>do-while</code></th></tr></thead><tbody><tr><td><strong>Momento del controllo</strong></td><td>Pre-test (in testa, prima di eseguire)</td><td>Post-test (in coda, dopo aver eseguito)</td></tr><tr><td><strong>Esecuzioni minime</strong></td><td><code>0</code> (può non essere eseguito mai)</td><td><code>1</code> (almeno un'esecuzione è garantita)</td></tr><tr><td><strong>Sintassi finale</strong></td><td>Nessun punto e virgola dopo la condizione</td><td>Punto e virgola obbligatorio: <code>while (condizione);</code></td></tr><tr><td><strong>Caso d'uso ideale</strong></td><td>Quando si deve verificare una condizione prima di iniziare</td><td>Quando l'azione iniziale deve produrre il dato da verificare</td></tr></tbody></table></div></section>
+
+<section><h2>3. Rappresentazione: flow chart e pseudo-codice</h2>
+<p><strong>Nei diagrammi di flusso (flow chart)</strong> del costrutto <code>do-while</code>, il flusso di esecuzione entra direttamente nel blocco delle istruzioni e solo successivamente passa al rombo di decisione. Se la condizione risulta <strong>Vera</strong>, la freccia torna indietro all'inizio del blocco istruzioni; se risulta <strong>Falsa</strong>, il ciclo termina e l'esecuzione prosegue verso il basso.</p>
+<div class="figure-container"><svg viewBox="0 0 600 310" width="100%"><defs><marker id="a2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#9ca3af"/></marker><marker id="a3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#10b981"/></marker><marker id="a4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f87171"/></marker></defs><path d="M200 10 L200 38" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a2)"/><text x="214" y="26" font-family="Inter,sans-serif" font-size="11" fill="#6b7280" text-anchor="start">flusso in entrata</text><rect x="120" y="40" width="160" height="48" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.8"/><text x="200.0" y="69.0" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">Corpo del ciclo</text><path d="M200 88 L200 138" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#a2)"/><polygon points="200,140 295,192 200,244 105,192" fill="rgba(99,102,241,.14)" stroke="#818cf8" stroke-width="1.8"/><text x="200" y="197" font-family="Inter,sans-serif" font-size="14" fill="#c7d2fe" text-anchor="middle">condizione</text><path d="M105 192 L50 192 L50 64 L103 64" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#a3)" stroke-dasharray="5 4"/><text x="40" y="130" font-family="Inter,sans-serif" font-size="12" fill="#6ee7b7" text-anchor="end">VERO</text><path d="M295 192 L420 192" stroke="#f87171" stroke-width="2" fill="none" marker-end="url(#a4)"/><text x="358" y="182" font-family="Inter,sans-serif" font-size="12" fill="#fca5a5" text-anchor="middle">FALSO</text><rect x="422" y="168" width="160" height="48" rx="10" fill="#f87171" fill-opacity=".14" stroke="#f87171" stroke-width="1.8"/><text x="502.0" y="197.0" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="middle">Istruzioni successive</text><text x="502" y="238" font-family="Inter,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle">flusso in uscita</text></svg><div class="figure-caption">Fig 2. Flow chart del do-while: il corpo viene eseguito prima della valutazione della condizione.</div></div>
+<p><strong>Nello pseudo-codice</strong> la struttura esprime chiaramente che la verifica avviene a posteriori:</p>
+<div class="code-block" data-lang="pseudo-codice">ESECUZIONE
+    esegui il corpo del ciclo
+FINCHÉ (la condizione è vera)</div></section>
+
+<section><h2>4. Quando utilizzare il do-while (Casi d'uso tipici)</h2>
+<p>Il costrutto <code>do-while</code> è la scelta ideale in tutti i contesti in cui un'operazione deve essere necessariamente compiuta almeno una prima volta prima di poterne valutare il risultato o l'esito. I contesti applicativi principali sono:</p>
+
+<ul>
+<li><strong>Convalida dei dati di input:</strong> Richiedere all'utente l'inserimento di un dato finché non viene fornito un valore corretto o conforme ai requisiti (es. inserimento di password, valori entro certi intervalli o numeri positivi).</li>
+<li><strong>Gestione di menu interattivi:</strong> Nei casi in cui si desidera mostrare all' utente un menu di opzioni almeno una volta e continuare a riproporlo finché l'utente non seleziona esplicitamente l'opzione di uscita.</li>
+<li><strong>Accesso a risorse e lettura di file/stream:</strong> Quando si accede a una risorsa o si legge un file e si deve garantire che almeno un tentativo di lettura avvenga prima di verificare il raggiungimento del termine del file (EOF) o la disponibilità della risorsa.</li>
+<li><strong>Generazione di valori casuali con soglia:</strong> Quando si vuole generare almeno un valore casuale e continuare la generazione finché non si soddisfa una specifica condizione di terminazione.</li>
+<li><strong>Verifica di eventi a posteriori e tentativi temporali:</strong> Quando un processo deve essere eseguito prima di verificare se le condizioni esterne sono cambiate, se è scaduto un timeout o se l'utente desidera ripetere una determinata elaborazione.</li>
+</ul></section>
+</main></div><script src="motion.js"></script></body></html>

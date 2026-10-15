@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: Matematica Discreta - Il Principio di Induzione</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul,ol{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="index.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice Matematica Discreta</a></div>
+<header><div class="subtitle">Lezione 5</div><h1>Il Principio di Induzione</h1></header>
+<main>
+
+<section><h2>1. Che cos'è il Principio di Induzione</h2>
+<p>Il <strong>Principio di Induzione</strong> è un fondamentale metodo di dimostrazione matematica utilizzato per provare la validità di una proposizione <span class="sym">P(n)</span> per ogni numero naturale <span class="sym">n ∈ ℕ</span> (o a partire da un determinato intero prefissato). Funziona secondo una logica a "effetto domino": dimostrato il primo tassello e la regola di caduta, tutti i tasselli successivi cadono di conseguenza.</p>
+<p>Esistono due formulazioni principali per applicare questo principio:</p>
+
+<div class="highlight-box">
+<p><strong>Prima Forma (Induzione Standard):</strong></p>
+<ol>
+    <li><strong>Caso base:</strong> Si verifica che la proposizione sia vera per il valore iniziale, tipicamente <span class="sym">P(0)</span> oppure <span class="sym">P(1)</span>.</li>
+    <li><strong>Passo induttivo:</strong> Si dimostra l'implicazione <span class="sym">P(k) ⟹ P(k + 1)</span>. Ovvero, assumendo come vera la proposizione per un generico intero <span class="sym">k</span> (<em>ipotesi induttiva</em>), si dimostra che essa deve valere necessariamente anche per il numero successivo <span class="sym">k + 1</span>.</li>
+</ol>
+</div>
+
+<div class="highlight-box">
+<p><strong>Seconda Forma (Induzione Forte):</strong></p>
+<ol>
+    <li><strong>Caso base:</strong> Si verifica il caso iniziale <span class="sym">P(0)</span>.</li>
+    <li><strong>Passo induttivo forte:</strong> Si dimostra che se la proposizione <span class="sym">P(i)</span> è vera per <em>tutti</em> i numeri compresi tra <span class="sym">0</span> e <span class="sym">k</span> (ossia <span class="sym">P(0), P(1), ..., P(k)</span> sono tutti veri), allora la proposizione vale anche per il successivo <span class="sym">k + 1</span>.</li>
+</ol>
+</div>
+<p>Entrambe le forme garantiscono che la proprietà <span class="sym">P(n)</span> valga per ogni <span class="sym">n ∈ ℕ</span>.</p>
+</section>
+
+<section><h2>2. Dimostrazione applicata: Cardinalità dell'Insieme delle Parti</h2>
+<p>Utilizziamo ora il principio di induzione per dimostrare una proprietà fondamentale della teoria degli insiemi: <strong>se un insieme finito <span class="sym">A</span> ha cardinalità <span class="sym">n</span>, il suo insieme delle parti <span class="sym">ℬ(A)</span> ha cardinalità pari a <span class="sym">2ⁿ</span></strong>.</p>
+
+<div class="highlight-box">
+<p><strong>Teorema:</strong> Per ogni insieme <span class="sym">A</span> con <span class="sym">|A| = n</span>, si ha <span class="sym">|ℬ(A)| = 2ⁿ</span>.</p>
+</div>
+
+<p><strong>1. Caso Base (<span class="sym">n = 0</span>):</strong></p>
+<p>Se <span class="sym">n = 0</span>, l'insieme <span class="sym">A</span> è l'insieme vuoto (<span class="sym">A = ∅</span>). L'unico sottoinsieme dell'insieme vuoto è l'insieme vuoto stesso, quindi l'insieme delle parti contiene un unico elemento:</p>
+<p><span class="sym">ℬ(∅) = {∅}  ⟹  |ℬ(∅)| = 1 = 2⁰</span></p>
+<p>La base dell'induzione è verificata.</p>
+
+<p><strong>2. Passo Induttivo:</strong></p>
+<p>Ipotizziamo che la formula sia vera per un generico insieme di <span class="sym">k</span> elementi, ovvero che un insieme con <span class="sym">k</span> elementi possieda esattamente <span class="sym">2ᵏ</span> sottoinsiemi (<em>ipotesi induttiva</em>).</p>
+<p>Consideriamo ora un insieme con <span class="sym">k + 1</span> elementi, che possiamo indicare con <span class="sym">A<sub>k+1</sub> = A<sub>k</sub> ∪ {x}</span>, dove <span class="sym">x ∉ A<sub>k</sub></span>.</p>
+<p>Possiamo suddividere i sottoinsiemi di <span class="sym">A<sub>k+1</sub></span> in due categorie distinte e disgiunte:</p>
+<ul>
+    <li><strong>Sottoinsiemi che NON contengono <span class="sym">x</span>:</strong> Questi coincidono esattamente con i sottoinsiemi del vecchio insieme <span class="sym">A<sub>k</sub></span>. Per l'ipotesi induttiva, ce ne sono esattamente <span class="sym">2ᵏ</span>.</li>
+    <li><strong>Sottoinsiemi che CONTENGONO <span class="sym">x</span>:</strong> Ognuno di questi si ottiene prendendo un sottoinsieme di <span class="sym">A<sub>k</sub></span> e aggiungendovi l'elemento <span class="sym">x</span>. Essendoci una corrispondenza uno a uno con i sottoinsiemi di <span class="sym">A<sub>k</sub></span>, anche questa categoria ne contiene esattamente <span class="sym">2ᵏ</span>.</li>
+</ul>
+
+<p>Sommando il numero di sottoinsiemi delle due categorie, otteniamo la cardinalità totale di <span class="sym">ℬ(A<sub>k+1</sub>)</span>:</p>
+<div class="highlight-box">
+<span class="sym">|ℬ(A<sub>k+1</sub>)| = 2ᵏ + 2ᵏ = 2 · 2ᵏ = 2<sup>k+1</sup></span>
+</div>
+
+<p><strong>Conclusione:</strong> Essendo verificati sia il caso base sia il passo induttivo, per il Principio di Induzione la formula <span class="sym">|ℬ(A)| = 2ⁿ</span> è vera per qualsiasi numero naturale <span class="sym">n</span>.</p>
+</section>
+
+</main>
+</div>
+<script src="motion.js"></script>
+</body>
+</html>

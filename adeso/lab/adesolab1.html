@@ -19,7 +19,7 @@ header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1p
 h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
 h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
 h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
-p{margin-bottom:1.25rem}ul{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+p{margin-bottom:1.25rem}ul,ol{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
 strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
 .sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
 .highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
@@ -34,6 +34,8 @@ th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-tr
 tr:last-child td{border-bottom:none}
 @media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
 .v{color:#6ee7b7;font-weight:600}.f{color:#fca5a5;font-weight:600}td,th{text-align:center}
+code{font-family:'JetBrains Mono','Courier New',monospace;font-size:.85em;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);color:#a5b4fc;padding:2px 7px;border-radius:5px}
+.code-block{background:#0d1117;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1.5rem 1.75rem;margin:1.75rem 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.88rem;line-height:1.65;overflow-x:auto;color:#abb2bf;white-space:pre;position:relative}
 </style>
 <link rel="stylesheet" href="../../theme.css">
 </head>
@@ -42,21 +44,127 @@ tr:last-child td{border-bottom:none}
 <div class="back-nav"><a href="../../adeso.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice AESO</a></div>
 <header><div class="subtitle">Laboratorio 1</div><h1>Sistemi di Numerazione</h1></header>
 <main>
-<section><h2>1. Il concetto di rappresentazione</h2>
-<p>Una <strong>rappresentazione</strong> è una relazione tra entità in cui un oggetto (il <em>rappresentante</em>) viene usato al posto di un altro (il <em>rappresentato</em>) all'interno di un determinato contesto. Si ricorre a una rappresentazione per precisi scopi, per rispettare determinati vincoli o per rendere pratico l'uso di un concetto astratto manipolandolo attraverso qualcos'altro.</p>
-<p>Uno stesso oggetto può essere rappresentato da rappresentanti diversi, a seconda dello scopo e dei vincoli da soddisfare. L'informazione può essere espressa a vari livelli: un <strong>livello alto</strong> è più vicino all'interpretazione umana (il peso come «70 kg» o «medio»), un <strong>livello basso</strong> è più vicino al sistema di elaborazione (una sequenza in linguaggio macchina come «01001110»).</p>
-<div class="figure-container"><svg viewBox="0 0 600 230" width="100%"><defs><marker id="m1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#818cf8"/></marker></defs><rect x="15" y="80" width="170" height="64" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.6"/><text x="31" y="117.0" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#e5e7eb">Peso di una persona</text><text x="100" y="168" font-family="Inter,sans-serif" font-size="11" fill="#6ee7b7" text-anchor="middle">rappresentato</text><path d="M190 100 L325 48" stroke="#818cf8" stroke-width="2" fill="none" marker-end="url(#m1)"/><path d="M190 112 L325 112" stroke="#818cf8" stroke-width="2" fill="none" marker-end="url(#m1)"/><path d="M190 126 L325 176" stroke="#818cf8" stroke-width="2" fill="none" marker-end="url(#m1)"/><rect x="330" y="25" width="255" height="46" rx="10" fill="#fcd34d" fill-opacity=".14" stroke="#fcd34d" stroke-width="1.6"/><text x="346" y="53.0" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">«medio»</text><text x="571" y="52.0" font-family="Inter,sans-serif" font-size="11" fill="#fcd34d" text-anchor="end">livello alto</text><rect x="330" y="90" width="255" height="46" rx="10" fill="#a5b4fc" fill-opacity=".14" stroke="#a5b4fc" stroke-width="1.6"/><text x="346" y="118.0" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">70 kg</text><text x="571" y="117.0" font-family="Inter,sans-serif" font-size="11" fill="#a5b4fc" text-anchor="end">livello alto</text><rect x="330" y="155" width="255" height="46" rx="10" fill="#f87171" fill-opacity=".14" stroke="#f87171" stroke-width="1.6"/><text x="346" y="183.0" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">01001110</text><text x="571" y="182.0" font-family="Inter,sans-serif" font-size="11" fill="#f87171" text-anchor="end">livello basso</text><text x="458" y="222" font-family="Inter,sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle">rappresentanti</text></svg><div class="figure-caption">Fig 1. Lo stesso rappresentato può avere più rappresentanti, a livelli diversi di astrazione.</div></div></section>
-<section><h2>2. I sistemi di numerazione e i sistemi non posizionali</h2>
-<p>Molte informazioni sono quantitative e quindi esprimibili in forma numerica per poter essere elaborate tramite operazioni. Un <strong>sistema di numerazione</strong> è una struttura matematica che permette di rappresentare i numeri attraverso dei simboli.</p>
-<p>Nei sistemi <strong>non posizionali</strong> (come i numeri romani) ogni simbolo ha un valore fisso, indipendente dalla posizione nella stringa. Il numero si ottiene applicando regole operative (addizione o sottrazione) ai simboli.</p>
+
+<section><h2>1. Il concetto di rappresentazione e i livelli</h2>
+<p>Una <strong>rappresentazione</strong> è una relazione tra entità in cui un oggetto (il <em>rappresentante</em>) viene impiegato al posto di un altro (il <em>rappresentato</em>) all'interno di uno specifico contesto. Si ricorre a una rappresentazione per tre motivi principali:</p>
+<ul>
+    <li><strong>Finalità:</strong> si ha uno scopo preciso da raggiungere.</li>
+    <li><strong>Vincoli:</strong> occorre rispettare determinate regole tecniche o fisiche.</li>
+    <li><strong>Praticità:</strong> permette di fare riferimento a un concetto astratto manipolandolo tramite un oggetto concreto.</li>
+</ul>
+<p>Uno stesso oggetto può disporre di più rappresentanti differenti in base alle esigenze. Inoltre, l'informazione può essere espressa a vari livelli di astrazione:</p>
+<ul>
+    <li><strong>Livello alto:</strong> Più vicino all'interpretazione umana. Ad esempio, l'informazione sul peso può essere scritta come <span class="sym">Peso := 70</span> oppure come <span class="sym">Peso (Nicola, medio)</span>.</li>
+    <li><strong>Livello basso:</strong> Più vicino al sistema di elaborazione elettronico. Ad esempio, la stessa informazione codificata sotto forma di stringa binaria in linguaggio macchina: <span class="sym">01000110</span>.</li>
+</ul>
+
+<div class="figure-container"><svg viewBox="0 0 600 230" width="100%"><defs><marker id="m1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#818cf8"/></marker></defs><rect x="15" y="80" width="170" height="64" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.6"/><text x="31" y="117.0" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#e5e7eb">Peso di una persona</text><text x="100" y="168" font-family="Inter,sans-serif" font-size="11" fill="#6ee7b7" text-anchor="middle">rappresentato</text><path d="M190 100 L325 48" stroke="#818cf8" stroke-width="2" fill="none" marker-end="url(#m1)"/><path d="M190 112 L325 112" stroke="#818cf8" stroke-width="2" fill="none" marker-end="url(#m1)"/><path d="M190 126 L325 176" stroke="#818cf8" stroke-width="2" fill="none" marker-end="url(#m1)"/><rect x="330" y="25" width="255" height="46" rx="10" fill="#fcd34d" fill-opacity=".14" stroke="#fcd34d" stroke-width="1.6"/><text x="346" y="53.0" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">«medio»</text><text x="571" y="52.0" font-family="Inter,sans-serif" font-size="11" fill="#fcd34d" text-anchor="end">livello alto</text><rect x="330" y="90" width="255" height="46" rx="10" fill="#a5b4fc" fill-opacity=".14" stroke="#a5b4fc" stroke-width="1.6"/><text x="346" y="118.0" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">70 kg</text><text x="571" y="117.0" font-family="Inter,sans-serif" font-size="11" fill="#a5b4fc" text-anchor="end">livello alto</text><rect x="330" y="155" width="255" height="46" rx="10" fill="#f87171" fill-opacity=".14" stroke="#f87171" stroke-width="1.6"/><text x="346" y="183.0" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#e5e7eb">01000110</text><text x="571" y="182.0" font-family="Inter,sans-serif" font-size="11" fill="#f87171" text-anchor="end">livello basso</text><text x="458" y="222" font-family="Inter,sans-serif" font-size="11" fill="#9ca3af" text-anchor="middle">rappresentanti</text></svg><div class="figure-caption">Fig 1. Lo stesso rappresentato può avere più rappresentanti a differenti livelli di astrazione.</div></div></section>
+
+<section><h2>2. Sistemi di numerazione non posizionali</h2>
+<p>Nei sistemi di numerazione <strong>non posizionali</strong>, ogni simbolo possiede un valore fisso, indipendente dalla posizione che occupa all'interno della stringa. Il classico esempio è costituito dai numeri romani:</p>
+
 <div class="table-container"><table><thead><tr><th>Simbolo</th><th>Valore</th></tr></thead><tbody><tr><td>I</td><td>1</td></tr><tr><td>V</td><td>5</td></tr><tr><td>X</td><td>10</td></tr><tr><td>L</td><td>50</td></tr></tbody></table></div>
-<div class="figure-container"><svg viewBox="0 0 600 200" width="100%"><rect x="95" y="30" width="65" height="65" rx="12" fill="#a5b4fc" fill-opacity=".14" stroke="#a5b4fc" stroke-width="1.8"/><text x="127" y="75" font-family="Inter,sans-serif" font-size="30" font-weight="700" fill="#e5e7eb" text-anchor="middle">L</text><text x="127" y="122" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#a5b4fc" text-anchor="middle">+50</text><rect x="180" y="30" width="65" height="65" rx="12" fill="#a5b4fc" fill-opacity=".14" stroke="#a5b4fc" stroke-width="1.8"/><text x="212" y="75" font-family="Inter,sans-serif" font-size="30" font-weight="700" fill="#e5e7eb" text-anchor="middle">X</text><text x="212" y="122" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#a5b4fc" text-anchor="middle">+10</text><rect x="265" y="30" width="65" height="65" rx="12" fill="#a5b4fc" fill-opacity=".14" stroke="#a5b4fc" stroke-width="1.8"/><text x="297" y="75" font-family="Inter,sans-serif" font-size="30" font-weight="700" fill="#e5e7eb" text-anchor="middle">X</text><text x="297" y="122" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#a5b4fc" text-anchor="middle">+10</text><rect x="350" y="30" width="65" height="65" rx="12" fill="#f87171" fill-opacity=".14" stroke="#f87171" stroke-width="1.8"/><text x="382" y="75" font-family="Inter,sans-serif" font-size="30" font-weight="700" fill="#e5e7eb" text-anchor="middle">I</text><text x="382" y="122" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#f87171" text-anchor="middle">−1</text><rect x="435" y="30" width="65" height="65" rx="12" fill="#6ee7b7" fill-opacity=".14" stroke="#6ee7b7" stroke-width="1.8"/><text x="467" y="75" font-family="Inter,sans-serif" font-size="30" font-weight="700" fill="#e5e7eb" text-anchor="middle">V</text><text x="467" y="122" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#6ee7b7" text-anchor="middle">+5</text><path d="M350 135 L350 142 L497 142 L497 135" stroke="#f87171" stroke-width="1.5" fill="none"/><text x="423" y="160" font-family="Inter,sans-serif" font-size="11" fill="#fca5a5" text-anchor="middle">I prima di V: si sottrae</text><text x="300" y="190" font-family="Inter,sans-serif" font-size="16" font-weight="700" fill="#fff" text-anchor="middle">LXXIV = 50 + 10 + 10 − 1 + 5 = 74</text></svg><div class="figure-caption">Fig 2. LXXIV: i valori dei simboli si sommano, tranne la I davanti alla V che si sottrae.</div></div>
-<div class="highlight-box">Questi sistemi rendono difficile effettuare operazioni e hanno una rappresentazione poco compatta.</div></section>
-<section><h2>3. I sistemi di numerazione posizionali</h2>
-<p>Nei sistemi <strong>posizionali</strong> (come il sistema decimale di uso quotidiano) il valore di un simbolo dipende dalla <strong>posizione</strong> che occupa nella stringa. Si parte da un numero <span class="sym">β > 1</span> chiamato <strong>base</strong> e da un insieme di <span class="sym">β</span> simboli, le <strong>cifre</strong>, da <span class="sym">0</span> a <span class="sym">β − 1</span>.</p>
-<p>In una stringa di cifre il simbolo più a destra è la <strong>cifra meno significativa</strong>, quello più a sinistra la <strong>cifra più significativa</strong>. Ogni cifra è moltiplicata per una potenza della base che dipende dalla sua posizione:</p>
-<div class="highlight-box">La cifra <span class="sym">c</span> nella posizione <span class="sym">j</span> vale <span class="sym">c × βʲ</span>.</div>
-<div class="figure-container"><svg viewBox="0 0 600 250" width="100%"><defs><marker id="m3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#6ee7b7"/></marker><marker id="m4" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#fcd34d"/></marker></defs><text x="170" y="38" font-family="Inter,sans-serif" font-size="12" fill="#9ca3af" text-anchor="middle">posizione j = 2</text><rect x="125" y="50" width="90" height="75" rx="12" fill="#6366f1" fill-opacity=".16" stroke="#818cf8" stroke-width="1.8"/><text x="170" y="102" font-family="Inter,sans-serif" font-size="38" font-weight="700" fill="#e5e7eb" text-anchor="middle">4</text><text x="170" y="150" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#a5b4fc" text-anchor="middle">4 × 10² = 400</text><text x="305" y="38" font-family="Inter,sans-serif" font-size="12" fill="#9ca3af" text-anchor="middle">posizione j = 1</text><rect x="260" y="50" width="90" height="75" rx="12" fill="#6366f1" fill-opacity=".16" stroke="#818cf8" stroke-width="1.8"/><text x="305" y="102" font-family="Inter,sans-serif" font-size="38" font-weight="700" fill="#e5e7eb" text-anchor="middle">7</text><text x="305" y="150" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#a5b4fc" text-anchor="middle">7 × 10¹ = 70</text><text x="440" y="38" font-family="Inter,sans-serif" font-size="12" fill="#9ca3af" text-anchor="middle">posizione j = 0</text><rect x="395" y="50" width="90" height="75" rx="12" fill="#6366f1" fill-opacity=".16" stroke="#818cf8" stroke-width="1.8"/><text x="440" y="102" font-family="Inter,sans-serif" font-size="38" font-weight="700" fill="#e5e7eb" text-anchor="middle">2</text><text x="440" y="150" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#a5b4fc" text-anchor="middle">2 × 10⁰ = 2</text><path d="M150 205 L150 130" stroke="#6ee7b7" stroke-width="2" fill="none" marker-end="url(#m3)"/><text x="150" y="222" font-family="Inter,sans-serif" font-size="12" fill="#6ee7b7" text-anchor="middle">cifra più significativa</text><path d="M420 205 L420 130" stroke="#fcd34d" stroke-width="2" fill="none" marker-end="url(#m4)"/><text x="420" y="222" font-family="Inter,sans-serif" font-size="12" fill="#fcd34d" text-anchor="middle">cifra meno significativa</text><text x="300" y="244" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#fff" text-anchor="middle">400 + 70 + 2 = 472</text></svg><div class="figure-caption">Fig 3. Esempio illustrativo in base 10 (β = 10): il valore del numero è la somma dei contributi delle cifre.</div></div>
-<div class="table-container"><table><thead><tr><th></th><th>Non posizionali</th><th>Posizionali</th></tr></thead><tbody><tr><td>Valore del simbolo</td><td>fisso</td><td>dipende dalla posizione</td></tr><tr><td>Esempio</td><td>numeri romani</td><td>sistema decimale</td></tr><tr><td>Calcoli</td><td>difficili</td><td>semplici e immediati</td></tr><tr><td>Rappresentazione</td><td>poco compatta</td><td>compatta</td></tr></tbody></table></div>
-<p>Il grande vantaggio dei sistemi posizionali è la semplicità e l'immediatezza nel fare calcoli e nel rappresentare qualsiasi quantità numerica in modo compatto.</p></section>
-</main></div><script src="../../motion.js"></script></body></html>
+
+<p>Il valore complessivo del numero si ottiene applicando regole operative di addizione o sottrazione tra i simboli adiacenti.</p>
+<p><strong>Esempio:</strong> La stringa romana <span class="sym">LXXIV</span> si interpreta come <span class="sym">50 + 10 + 10 − 1 + 5 = 74</span>.</p>
+
+<div class="figure-container"><svg viewBox="0 0 600 200" width="100%"><rect x="95" y="30" width="65" height="65" rx="12" fill="#a5b4fc" fill-opacity=".14" stroke="#a5b4fc" stroke-width="1.8"/><text x="127" y="75" font-family="Inter,sans-serif" font-size="30" font-weight="700" fill="#e5e7eb" text-anchor="middle">L</text><text x="127" y="122" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#a5b4fc" text-anchor="middle">+50</text><rect x="180" y="30" width="65" height="65" rx="12" fill="#a5b4fc" fill-opacity=".14" stroke="#a5b4fc" stroke-width="1.8"/><text x="212" y="75" font-family="Inter,sans-serif" font-size="30" font-weight="700" fill="#e5e7eb" text-anchor="middle">X</text><text x="212" y="122" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#a5b4fc" text-anchor="middle">+10</text><rect x="265" y="30" width="65" height="65" rx="12" fill="#a5b4fc" fill-opacity=".14" stroke="#a5b4fc" stroke-width="1.8"/><text x="297" y="75" font-family="Inter,sans-serif" font-size="30" font-weight="700" fill="#e5e7eb" text-anchor="middle">X</text><text x="297" y="122" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#a5b4fc" text-anchor="middle">+10</text><rect x="350" y="30" width="65" height="65" rx="12" fill="#f87171" fill-opacity=".14" stroke="#f87171" stroke-width="1.8"/><text x="382" y="75" font-family="Inter,sans-serif" font-size="30" font-weight="700" fill="#e5e7eb" text-anchor="middle">I</text><text x="382" y="122" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#f87171" text-anchor="middle">−1</text><rect x="435" y="30" width="65" height="65" rx="12" fill="#6ee7b7" fill-opacity=".14" stroke="#6ee7b7" stroke-width="1.8"/><text x="467" y="75" font-family="Inter,sans-serif" font-size="30" font-weight="700" fill="#e5e7eb" text-anchor="middle">V</text><text x="467" y="122" font-family="Inter,sans-serif" font-size="15" font-weight="600" fill="#6ee7b7" text-anchor="middle">+5</text><path d="M350 135 L350 142 L497 142 L497 135" stroke="#f87171" stroke-width="1.5" fill="none"/><text x="423" y="160" font-family="Inter,sans-serif" font-size="11" fill="#fca5a5" text-anchor="middle">I prima di V: si sottrae</text><text x="300" y="190" font-family="Inter,sans-serif" font-size="16" font-weight="700" fill="#fff" text-anchor="middle">LXXIV = 50 + 10 + 10 − 1 + 5 = 74</text></svg><div class="figure-caption">Fig 2. Interpretazione della stringa non posizionale LXXIV.</div></div>
+
+<div class="highlight-box">Svantaggi principali: i sistemi non posizionali risultano poco compatti ed è estremamente complesso eseguire calcoli algebrici mediante regole formali automatiche.</div></section>
+
+<section><h2>3. Sistemi di numerazione posizionali</h2>
+<p>Nei sistemi di numerazione <strong>posizionali</strong>, il valore associato a un simbolo dipende dalla posizione che esso occupa all'interno della stringa. Essi si definiscono a partire da un numero <span class="sym">β > 1</span> chiamato <strong>base</strong> e da un insieme di <span class="sym">β</span> simboli (chiamati <strong>cifre</strong>) che vanno da <span class="sym">0</span> fino a <span class="sym">β − 1</span>.</p>
+
+<p>Data una generica stringa di cifre con parte frazionaria <span class="sym">C<sub>n-1</sub>C<sub>n-2</sub>...C<sub>1</sub>C<sub>0</sub>.C<sub>-1</sub>C<sub>-2</sub>...C<sub>-m</sub></span>, il valore numerico si calcola tramite la formula generale:</p>
+<div class="highlight-box"><span class="sym">Valore = C<sub>n-1</sub>×β<sup>n-1</sup> + C<sub>n-2</sub>×β<sup>n-2</sup> + ... + C<sub>0</sub>×β⁰ + C<sub>-1</sub>×β⁻¹ + ... + C<sub>-m</sub>×β⁻ᵐ</span></div>
+
+<ul>
+    <li><strong>Cifra più significativa:</strong> È il simbolo più a sinistra nella stringa (peso più alto).</li>
+    <li><strong>Cifra meno significativa:</strong> È il simbolo più a destra nella stringa (peso più basso).</li>
+</ul>
+
+<p>I sistemi posizionali offrono due enormi vantaggi: la <strong>compattezza</strong> (la lunghezza delle stringhe per i numeri interi cresce in proporzione logaritmica) e l'<strong>operatività</strong> (le operazioni aritmetiche si eseguono facilmente sui simboli con regole procedurali).</p>
+
+<p><strong>I principali sistemi posizionali:</strong></p>
+<ul>
+    <li><strong>Sistema Decimale (Base 10):</strong> Utilizza i simboli da <span class="sym">0</span> a <span class="sym">9</span>.<br>Esempio: <span class="sym">2349 = 2×10³ + 3×10² + 4×10¹ + 9×10⁰</span>.</li>
+    <li><strong>Sistema Binario (Base 2):</strong> Impiegato nei computer, usa solo i simboli <span class="sym">0</span> e <span class="sym">1</span>.<br>Esempio: <span class="sym">10010₂ = 1×2⁴ + 0×2³ + 0×2² + 1×2¹ + 0×2⁰ = 16 + 2 = 18₁₀</span>.</li>
+    <li><strong>Sistema Ternario (Base 3):</strong> Usa i simboli <span class="sym">0</span>, <span class="sym">1</span> e <span class="sym">2</span>.<br>Esempio: <span class="sym">12012₃ = 1×3⁴ + 2×3³ + 0×3² + 1×3¹ + 2×3⁰ = 81 + 54 + 0 + 3 + 2 = 140₁₀</span>.</li>
+    <li><strong>Sistema Ottale (Base 8):</strong> Usa le cifre da <span class="sym">0</span> a <span class="sym">7</span>.<br>Esempio: <span class="sym">417₈ = 4×8² + 1×8¹ + 7×8⁰ = 256 + 8 + 7 = 271₁₀</span>.</li>
+    <li><strong>Sistema Esadecimale (Base 16):</strong> Molto usato nei linguaggi di programmazione (come C e Assembly), usa le cifre da <span class="sym">0</span> a <span class="sym">9</span> e le lettere da <span class="sym">A</span> a <span class="sym">F</span> (con <span class="sym">A=10, B=11, C=12, D=13, E=14, F=15</span>).<br>Esempio: <span class="sym">FA3₁₆ = 15×16² + 10×16¹ + 3×16⁰ = 3840 + 160 + 3 = 4003₁₀</span>.</li>
+</ul></section>
+
+<section><h2>4. Teorema di Rappresentazione e Completezza</h2>
+<p>Il <strong>Teorema di Rappresentazione</strong> stabilisce che, scelta una qualsiasi base <span class="sym">β > 1</span>, tutti i numeri naturali possono essere rappresentati in modo unico in un sistema di numerazione posizionale.</p>
+
+<div class="highlight-box"><p><strong>Attenzione alla completezza sui numeri frazionari:</strong></p><p>La rappresentabilità con un numero finito di cifre <strong>non è sempre garantita</strong> per i numeri non interi (con la virgola). La possibilità di rappresentare esattamente una frazione dipende dalla base scelta.</p></div>
+
+<p>Esempi di perdita di precisione o sequenze infinite:</p>
+<ul>
+    <li>Il numero decimale <span class="sym">1,2₁₀</span> non può essere convertito in binario con un numero finito di cifre, generando una sequenza periodica illimitata: <span class="sym">1,00110011...₂</span>.</li>
+    <li>La frazione ternaria <span class="sym">0,1₃</span> (pari a <span class="sym">1/3</span>) in decimale diventa il numero periodico <span class="sym">0,3333...₁₀</span>.</li>
+</ul></section>
+
+<section><h2>5. Conversioni tra Sistemi di Numerazione</h2>
+
+<p><strong>A. Conversione della parte intera (Metodo delle divisioni successive)</strong><br>
+Per convertire un numero intero decimale <span class="sym">x</span> in una nuova base <span class="sym">β</span>, si divide ripetutamente il numero per la base <span class="sym">β</span>, annotando i resti, fino a quando il quoziente diventa zero. La stringa finale si ottiene leggendo i resti in <strong>ordine inverso</strong> (dal basso verso l'alto).</p>
+
+<p>Esempio pratico: Convertire il numero decimale <span class="sym">124₁₀</span> in binario (<span class="sym">β = 2</span>):</p>
+<div class="code-block">124 / 2 = 62  (Resto: 0)  ▲ Cifra meno significativa
+ 62 / 2 = 31  (Resto: 0)  │
+ 31 / 2 = 15  (Resto: 1)  │
+ 15 / 2 = 7   (Resto: 1)  │
+  7 / 2 = 3   (Resto: 1)  │
+  3 / 2 = 1   (Resto: 1)  │
+  1 / 2 = 0   (Resto: 1)  │ Cifra più significativa
+
+Risultato: (1111100)₂</div>
+
+<p><strong>B. Conversione della parte non intera (Metodo delle moltiplicazioni successive)</strong><br>
+Per la parte frazionaria <span class="sym">y</span>, si moltiplica ripetutamente la parte frazionaria per la base <span class="sym">β</span>, estraendo ogni volta la parte intera del risultato come cifra della nuova stringa, continuando fino a ottenere zero o la precisione desiderata.</p>
+
+<p>Esempio pratico: Convertire la parte frazionaria <span class="sym">0,625₁₀</span> in binario:</p>
+<div class="code-block">0,625 × 2 = 1,250  ➔ parte intera: 1 (residuo: 0,250)  ▼ Prima cifra dopo la virgola
+0,250 × 2 = 0,500  ➔ parte intera: 0 (residuo: 0,500)  │
+0,500 × 2 = 1,000  ➔ parte intera: 1 (residuo: 0,000)  ▼ Ultima cifra
+
+Risultato: (0,101)₂</div>
+
+<p><strong>C. Conversione rapida tra basi potenze l'una dell'altra (<span class="sym">β₂ = β₁ᵏ</span>)</strong><br>
+Quando due basi sono legate da una potenza intera (come binario <span class="sym">β₁ = 2</span> ed esadecimale <span class="sym">β₂ = 16 = 2⁴</span>), è possibile convertire le stringhe senza passare dal sistema decimale:</p>
+
+<ul>
+    <li><strong>Da Binario ad Esadecimale:</strong> Si raggruppano le cifre binarie in blocchi da 4 bit partendo dalla virgola verso destra e verso sinistra (aggiungendo zeri di riempimento alle estremità se necessario) e si converte ciascun blocco nel corrispondente simbolo esadecimale.<br>
+    <em>Esempio:</em> Convertire <span class="sym">(111101,011001)₂</span> in base 16:
+    <div class="code-block">Raggruppamento in blocchi di 4:  0011 | 1101 . 0110 | 0100
+Conversione simboli:               3  |  D   .   6  |  4
+
+Risultato: (3D6,4)₁₆</div></li>
+    <li><strong>Da Esadecimale a Binario:</strong> Si sostituisce direttamente ciascun singolo simbolo esadecimale nel rispettivo gruppo di 4 bit binarie.<br>
+    <em>Esempio:</em> Convertire <span class="sym">(AB81)₁₆</span> in binario:
+    <div class="code-block">Simboli:    A    |    B    |    8    |    1
+Binario:  1010   |  1011   |  1000   |  0001
+
+Risultato: (1010101110000001)₂</div></li>
+</ul></section>
+
+<section><h2>6. Operazioni nei Sistemi Posizionali</h2>
+<p>Le quattro operazioni aritmetiche fondamentali (somma, sottrazione, prodotto e divisione) si possono eseguire direttamente in qualsiasi sistema di numerazione posizionale. Si applicano le medesime regole di incolonnamento, riporto e prestito usate nel sistema decimale, operando però con i simboli e la base di riferimento.</p>
+
+<p><strong>Esempio di somma in base 2:</strong></p>
+<p>Calcoliamo la somma <span class="sym">10011,11₂ + 110,10₂</span>:</p>
+
+<div class="code-block">   [riporti]  1 1 1 1 1
+              1 0 0 1 1 , 1 1  +
+                1 1 0 , 1 0  =
+              ─────────────────
+              1 1 0 1 0 , 0 1₂</div>
+
+<div class="highlight-box">In base 2, le regole essenziali per l'addizione sono: <span class="sym">0+0=0</span>, <span class="sym">0+1=1</span>, <span class="sym">1+1=0</span> con riporto di <span class="sym">1</span>, e <span class="sym">1+1+1=1</span> con riporto di <span class="sym">1</span>.</div></section>
+
+</main>
+</div>
+<script src="../../motion.js"></script>
+</body>
+</html>

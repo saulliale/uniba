@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: Matematica Discreta - Cardinalità e Insiemi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="matematicadiscreta.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice Matematica Discreta</a></div>
+<header><div class="subtitle">Lezione 4</div><h1>Cardinalità e Insiemi Infiniti</h1></header>
+<main>
+
+<section><h2>1. Contare</h2>
+<p>Due insiemi <span class="sym">A</span> e <span class="sym">B</span> si dicono <strong>equipotenti</strong> (cioè hanno la stessa cardinalità o la stessa potenza) se è possibile trovare una <strong>funzione biettiva</strong> che li collega. Questo significa stabilire una corrispondenza perfetta "uno a uno" tra i loro elementi:</p>
+<div class="highlight-box"><span class="sym">f: A → B</span> (biettiva) ⟹ <span class="sym">A</span> e <span class="sym">B</span> sono equipotenti.</div>
+<p>Ad esempio, l'insieme dei numeri naturali <span class="sym">ℕ</span> e l'insieme dei numeri pari sono equipotenti, poiché possiamo associare ogni numero naturale <span class="sym">n</span> al numero pari <span class="sym">2n</span> senza tralasciare alcun elemento da ambo le parti.</p>
+
+<p><strong>Insiemi finiti e notazione</strong><br>
+Per indicare insiemi finiti di riferimento, si usa la notazione <span class="sym">J<sub>n</sub> = {1, 2, ..., n}</span> al variare di <em>n</em> nei numeri naturali positivi. Un insieme non vuoto <span class="sym">A</span> si dice <strong>finito</strong> se è equipotente a un certo <span class="sym">J<sub>n</sub></span>. In tal caso, il numero <em>n</em> rappresenta la sua <strong>cardinalità</strong>, scritta come:</p>
+<div class="highlight-box"><span class="sym">|A| = n</span></div>
+<p>Per convenzione, l'insieme vuoto è considerato finito e ha cardinalità zero (<span class="sym">|∅| = 0</span>).</p>
+
+<p><strong>Confronto tra cardinalità</strong><br>
+Viene inoltre introdotto il simbolo di minore o uguale (<span class="sym">≤</span>) per indicare quando un insieme ha una cardinalità inferiore o uguale a un altro: si scrive <span class="sym">|A| ≤ |B|</span> se esiste una <strong>funzione iniettiva</strong> da <span class="sym">A</span> in <span class="sym">B</span> (ovvero se <span class="sym">B</span> è "abbastanza grande" da contenere una copia distinta di ogni elemento di <span class="sym">A</span>).</p></section>
+
+<section><h2>2. Caratterizzazione degli insiemi finiti e infiniti</h2>
+<p>La cardinalità ci permette di distinguere rigorosamente gli insiemi finiti da quelli infiniti analizzando come si comportano rispetto ai loro sottoinsiemi.</p>
+<p>Un insieme è <strong>finito</strong> se e solo se rispetta queste due condizioni:</p>
+<ul>
+    <li>Non può essere messo in corrispondenza biunivoca con un suo <strong>sottoinsieme proprio</strong> (cioè una parte di se stesso).</li>
+    <li>Non esiste alcuna funzione che va dall'insieme in se stesso che sia <strong>iniettiva ma non suriettiva</strong>.</li>
+</ul>
+
+<p>Al contrario, gli <strong>insiemi infiniti</strong> (che hanno cardinalità infinita, indicata con <span class="sym">+∞</span>) hanno proprietà apparentemente paradossali e godono esattamente della caratteristica opposta:</p>
+<div class="highlight-box">Un insieme infinito <strong>può</strong> essere messo in corrispondenza biunivoca con un suo sottoinsieme proprio, oppure ammette funzioni da se stesso in se stesso che sono iniettive ma non suriettive.</div>
+
+<p><strong>Esempi fondamentali:</strong></p>
+<ul>
+    <li><strong>I numeri naturali e i numeri pari:</strong> Come accennato prima, <span class="sym">ℕ</span> e l'insieme dei numeri pari <span class="sym">P</span> hanno la stessa cardinalità infinita, nonostante <span class="sym">P</span> sia un sottoinsieme proprio di <span class="sym">ℕ</span>.</li>
+    <li><strong>I numeri naturali e i numeri interi:</strong> Negli appunti si dimostra che <span class="sym">ℕ</span> e l'insieme dei numeri interi <span class="sym">ℤ</span> sono equipotenti. Questo si ottiene usando particolari funzioni definite "a pezzi" (es. mappando i pari sui positivi e i dispari sui negativi).</li>
+    <li><strong>I numeri reali:</strong> Non tutti gli insiemi infiniti sono equipotenti tra loro. Viene ricordato, ad esempio, che l'insieme dei numeri reali <span class="sym">ℝ</span> <strong>non è numerabile</strong>, il che significa che la sua cardinalità è strettamente maggiore (un infinito "più grande") rispetto a quella dei numeri naturali.</li>
+</ul></section>
+
+</main>
+</div>
+<script src="motion.js"></script>
+</body>
+</html>

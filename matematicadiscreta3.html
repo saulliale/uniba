@@ -104,4 +104,75 @@ tr:last-child td{border-bottom:none}
 <li><span class="sym">(f ∘ g)(x) = f(x²) = x² + 1</span></li>
 </ul>
 <p>Le due composte sono diverse: la composizione <strong>non è commutativa</strong>, quindi l'ordine conta.</p></section>
+<section><h2>10. Proprietà della composizione</h2>
+<p>La composizione non è commutativa, ma gode di altre proprietà fondamentali che permettono di manipolare le espressioni senza cambiarne il significato.</p>
+
+<p><strong>Proprietà associativa.</strong> Date tre funzioni componibili <span class="sym">f: A → B</span>, <span class="sym">g: B → C</span> e <span class="sym">h: C → D</span>, il modo in cui si raggruppano le parentesi non cambia il risultato:</p>
+<div class="highlight-box"><span class="sym">h ∘ (g ∘ f) = (h ∘ g) ∘ f</span></div>
+<p>In entrambi i casi si applica prima <em>f</em>, poi <em>g</em>, infine <em>h</em>: si può quindi scrivere semplicemente <span class="sym">h ∘ g ∘ f</span> senza ambiguità.</p>
+
+<p><strong>Comportamento con la funzione identità.</strong> La funzione identità si comporta come elemento neutro rispetto alla composizione. Per <span class="sym">f: A → B</span> valgono:</p>
+<div class="highlight-box"><p><span class="sym">f ∘ id<sub>A</sub> = f</span></p><p><span class="sym">id<sub>B</sub> ∘ f = f</span></p></div>
+<p>Comporre una funzione con l'identità del suo dominio o del suo codominio la lascia invariata.</p>
+
+<div class="figure-container"><svg viewBox="0 0 600 150" width="100%"><defs><marker id="cp1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#818cf8"/></marker></defs><g font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#e5e7eb" text-anchor="middle"><ellipse cx="95" cy="70" rx="48" ry="34" fill="rgba(99,102,241,.07)" stroke="#818cf8" stroke-width="1.5"/><text x="95" y="75">A</text><ellipse cx="300" cy="70" rx="48" ry="34" fill="rgba(16,185,129,.06)" stroke="#10b981" stroke-width="1.5"/><text x="300" y="75">B</text><ellipse cx="505" cy="70" rx="48" ry="34" fill="rgba(245,158,11,.06)" stroke="#f59e0b" stroke-width="1.5"/><text x="505" y="75">C</text></g><path d="M145 70 L244 70" stroke="#818cf8" stroke-width="2.2" fill="none" marker-end="url(#cp1)"/><path d="M350 70 L449 70" stroke="#818cf8" stroke-width="2.2" fill="none" marker-end="url(#cp1)"/><path d="M95 108 Q300 152 505 108" stroke="#f59e0b" stroke-width="2" stroke-dasharray="5 4" fill="none" marker-end="url(#cp1)"/><g font-family="Inter,sans-serif" font-size="13" fill="#a5b4fc" text-anchor="middle"><text x="195" y="60">f</text><text x="400" y="60">g</text><text x="300" y="146" fill="#fcd34d">h ∘ g ∘ f</text></g></svg><div class="figure-caption">Fig 10. L'associatività permette di comporre f, g e h nell'ordine naturale, senza dipendere dalle parentesi.</div></div>
+
+<p><strong>Cosa si conserva componendo.</strong> Le proprietà di iniettività, suriettività e biettività si trasmettono alla funzione composta:</p>
+<div class="table-container"><table><thead><tr><th>Se f : A → B e g : B → C sono…</th><th>allora g ∘ f : A → C è…</th></tr></thead><tbody><tr><td>entrambe <strong>iniettive</strong></td><td><strong>iniettiva</strong></td></tr><tr><td>entrambe <strong>suriettive</strong></td><td><strong>suriettiva</strong></td></tr><tr><td>entrambe <strong>biettive</strong></td><td><strong>biettiva</strong></td></tr></tbody></table></div>
+<p>Vale in particolare il caso più utile: la composta di due funzioni biettive è ancora biettiva. Il viceversa non vale in generale: dalla iniettività di <span class="sym">g ∘ f</span> si deduce che <em>f</em> è iniettiva, ma non necessariamente che lo sia <em>g</em>.</p></section>
+
+<section><h2>11. La funzione inversa</h2>
+<p>Data una funzione <span class="sym">f: A → B</span>, si dice che <em>f</em> è <strong>invertibile</strong> se esiste una funzione <span class="sym">g: B → A</span> che, composta con <em>f</em> in un verso o nell'altro, restituisce sempre la funzione identità:</p>
+<div class="highlight-box"><p><span class="sym">g ∘ f = id<sub>A</sub></span>&nbsp;&nbsp;&nbsp;e&nbsp;&nbsp;&nbsp;<span class="sym">f ∘ g = id<sub>B</sub></span></p></div>
+<p>In parole semplici: <em>g</em> disfa esattamente ciò che <em>f</em> ha fatto, riportando ogni elemento al punto di partenza. Quando una tale funzione esiste, essa è <strong>unica</strong> e viene indicata con il simbolo <span class="sym">f⁻¹: B → A</span>, chiamata <strong>funzione inversa</strong> di <em>f</em>.</p>
+
+<div class="figure-container"><svg viewBox="0 0 600 280" width="100%"><defs><marker id="ivf" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#10b981"/></marker><marker id="ivg" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f59e0b"/></marker></defs><ellipse cx="140" cy="125" rx="82" ry="92" fill="rgba(99,102,241,.07)" stroke="#818cf8" stroke-width="1.5"/><ellipse cx="460" cy="125" rx="82" ry="92" fill="rgba(16,185,129,.06)" stroke="#10b981" stroke-width="1.5"/><text x="140" y="20" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#a5b4fc" text-anchor="middle">A</text><text x="460" y="20" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#6ee7b7" text-anchor="middle">B</text><path d="M160 75 L440 75" stroke="#10b981" stroke-width="2.2" fill="none" marker-end="url(#ivf)"/><path d="M160 125 L440 125" stroke="#10b981" stroke-width="2.2" fill="none" marker-end="url(#ivf)"/><path d="M160 175 L440 175" stroke="#10b981" stroke-width="2.2" fill="none" marker-end="url(#ivf)"/><path d="M470 208 Q300 262 130 208" stroke="#f59e0b" stroke-width="2" stroke-dasharray="6 4" fill="none" marker-end="url(#ivg)"/><g font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#e5e7eb" text-anchor="middle"><circle cx="140" cy="75" r="17" fill="#818cf8" fill-opacity=".2" stroke="#818cf8" stroke-width="2"/><text x="140" y="80">1</text><circle cx="140" cy="125" r="17" fill="#818cf8" fill-opacity=".2" stroke="#818cf8" stroke-width="2"/><text x="140" y="130">2</text><circle cx="140" cy="175" r="17" fill="#818cf8" fill-opacity=".2" stroke="#818cf8" stroke-width="2"/><text x="140" y="180">3</text><circle cx="460" cy="75" r="17" fill="#10b981" fill-opacity=".2" stroke="#10b981" stroke-width="2"/><text x="460" y="80">a</text><circle cx="460" cy="125" r="17" fill="#10b981" fill-opacity=".2" stroke="#10b981" stroke-width="2"/><text x="460" y="130">b</text><circle cx="460" cy="175" r="17" fill="#10b981" fill-opacity=".2" stroke="#10b981" stroke-width="2"/><text x="460" y="180">c</text></g><text x="300" y="66" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#6ee7b7" text-anchor="middle">f</text><text x="300" y="256" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#fcd34d" text-anchor="middle">f⁻¹</text></svg><div class="figure-caption">Fig 11. Una funzione biettiva e la sua inversa: le frecce di f⁻¹ riportano ogni elemento di B al suo unico antecedente in A.</div></div>
+
+<p>Il risultato centrale della lezione è il seguente <strong>teorema di caratterizzazione</strong>:</p>
+<div class="highlight-box"><p>Una funzione <span class="sym">f: A → B</span> è <strong>invertibile se e solo se è biettiva</strong> (cioè iniettiva e suriettiva).</p></div>
+<p>Il motivo è intuitivo: per poter tornare indietro servono due garanzie. La <strong>suriettività</strong> assicura che ogni elemento di <span class="sym">B</span> abbia almeno un antecedente (nessun elemento resta scoperto, quindi <span class="sym">f⁻¹</span> è definita su tutto <span class="sym">B</span>); l'<strong>iniettività</strong> assicura che quell'antecedente sia uno solo (nessuna ambiguità nella scelta).</p></section>
+
+<section><h2>12. Determinare e verificare l'inversa</h2>
+<p>Quando la funzione è biettiva, la sua inversa si trova per via algebrica con un procedimento in due passi:</p>
+<ul>
+<li>si scrive l'equazione <span class="sym">y = f(x)</span>;</li>
+<li>si ricava <em>x</em> in funzione di <em>y</em>, ottenendo così la legge <span class="sym">x = f⁻¹(y)</span>.</li>
+</ul>
+
+<p><strong>Esempio 1 — funzione lineare.</strong> Sia <span class="sym">f: ℝ → ℝ</span> con <span class="sym">f(x) = (x + 1)/3</span>. Posto <span class="sym">y = (x + 1)/3</span>, moltiplicando per 3 si ha <span class="sym">3y = x + 1</span> e quindi <span class="sym">x = 3y − 1</span>. Dunque:</p>
+<div class="highlight-box"><span class="sym">f⁻¹(q) = 3(q − 1) = 3q − 3</span></div>
+<p>La funzione è biettiva (lineare con coefficiente angolare non nullo), quindi l'inversa esiste ed è unica.</p>
+
+<p><strong>Esempio 2 — funzioni non invertibili.</strong> Non tutte le funzioni ammettono inversa. Negli appunti si analizzano due situazioni tipiche di fallimento:</p>
+<ul>
+<li><strong>manca la suriettività:</strong> se un elemento del codominio non è immagine di nessuno, <span class="sym">f⁻¹</span> non saprebbe dove mandarlo (es. lo zero escluso dal codominio);</li>
+<li><strong>manca l'iniettività:</strong> se due elementi distinti hanno la stessa immagine, l'antecedente non sarebbe unico e <span class="sym">f⁻¹</span> non sarebbe una funzione (es. <span class="sym">f(x) = x²</span> su <span class="sym">ℝ</span>, perché <span class="sym">f(−2) = f(2) = 4</span>).</li>
+</ul>
+
+<p><strong>Proprietà dell'inversa.</strong> Valgono le seguenti regole, molto usate negli esercizi:</p>
+<div class="highlight-box"><p><strong>Involutività:</strong> <span class="sym">(f⁻¹)⁻¹ = f</span> — l'inversa dell'inversa riporta alla funzione di partenza.</p><p><strong>Inversa della composta:</strong> <span class="sym">(g ∘ f)⁻¹ = f⁻¹ ∘ g⁻¹</span> — l'ordine delle funzioni si <em>inverte</em>.</p></div>
+<p>La seconda regola si ricorda facilmente pensando a cosa accade quando ci si toglie prima le scarpe e poi i calzini: per tornare indietro bisogna rimettersi prima i calzini e poi le scarpe, cioè invertire l'ordine delle operazioni.</p>
+
+<p>Infine, verificare che due funzioni siano l'una l'inversa dell'altra è immediato: basta controllare che le due composte <span class="sym">g ∘ f</span> e <span class="sym">f ∘ g</span> restituiscano entrambe l'identità sui rispettivi insiemi.</p></section>
+<section><h2>13. Insiemi equipotenti e cardinalità</h2>
+<p>Il concetto di funzione biettiva ci permette di formalizzare in modo rigoroso l'idea del <strong>"contare"</strong>. Due insiemi <span class="sym">A</span> e <span class="sym">B</span> si dicono <strong>equipotenti</strong> (ovvero che hanno la stessa cardinalità o la stessa potenza) se è possibile stabilire una corrispondenza perfetta "uno a uno" tra i loro elementi.</p>
+<div class="highlight-box">Due insiemi <span class="sym">A</span> e <span class="sym">B</span> sono equipotenti se esiste una funzione biettiva <span class="sym">f: A → B</span>.</div>
+<p>Per definire il numero di elementi di un insieme finito, introduciamo un insieme di riferimento standard: <span class="sym">J<sub>n</sub> = {1, 2, ..., n}</span>, al variare di <em>n</em> nei numeri naturali positivi.</p>
+<p>Un insieme non vuoto <span class="sym">A</span> si dice <strong>finito</strong> se è equipotente a un certo <span class="sym">J<sub>n</sub></span>. In tal caso, il numero <em>n</em> rappresenta la sua <strong>cardinalità</strong> (il numero dei suoi elementi), che si indica con la notazione:</p>
+<div class="highlight-box"><span class="sym">|A| = n</span></div>
+<p>Per convenzione, l'insieme vuoto è considerato un insieme finito e la sua cardinalità è pari a zero: <span class="sym">|∅| = 0</span>.</p>
+<p>Le funzioni ci permettono anche di confrontare la "grandezza" degli insiemi senza doverne contare gli elementi uno ad uno. Diciamo che la cardinalità di <span class="sym">A</span> è minore o uguale a quella di <span class="sym">B</span>, e scriviamo <span class="sym">|A| ≤ |B|</span>, se esiste una funzione <strong>iniettiva</strong> da <span class="sym">A</span> in <span class="sym">B</span> (il che significa che <span class="sym">B</span> ha abbastanza "spazio" per accogliere ogni elemento di <span class="sym">A</span> senza sovrapposizioni).</p></section>
+
+<section><h2>14. Caratterizzazione degli insiemi finiti e infiniti</h2>
+<p>La definizione basata sulle funzioni porta a conseguenze affascinanti quando cerchiamo di separare gli insiemi finiti da quelli infiniti. Un insieme è <strong>finito</strong> se e solo se gode delle seguenti proprietà logiche:</p>
+<div class="highlight-box"><p>• Non può <strong>mai</strong> essere messo in corrispondenza biunivoca con un suo <strong>sottoinsieme proprio</strong> (una parte di se stesso).</p>
+<p>• Non esiste alcuna funzione dall'insieme in se stesso che sia iniettiva ma <em>non</em> suriettiva.</p></div>
+<p>Al contrario, gli insiemi <strong>infiniti</strong> (che hanno cardinalità infinita, indicata con <span class="sym">+∞</span>) si comportano in modo del tutto controintuitivo e godono della proprietà esattamente opposta: <strong>possono essere messi in corrispondenza biunivoca con un loro sottoinsieme proprio</strong>, oppure ammettono funzioni da se stessi in se stessi che sono iniettive ma non suriettive.</p>
+
+<p><strong>Esempi notevoli sugli insiemi infiniti:</strong></p>
+<ul>
+<li>L'insieme dei numeri naturali <span class="sym">ℕ</span> e l'insieme dei numeri pari <span class="sym">P</span>. Pur essendo i pari solo una parte dei naturali (<span class="sym">P ⊂ ℕ</span>), i due insiemi sono equipotenti! Esiste infatti una funzione biettiva (come <span class="sym">f(n) = 2n</span>) che li collega uno a uno. Entrambi condividono la stessa cardinalità infinita.</li>
+<li>Allo stesso modo, è possibile dimostrare che l'insieme dei numeri naturali <span class="sym">ℕ</span> e l'insieme dei numeri interi <span class="sym">ℤ</span> (che include anche i negativi) sono equipotenti. Negli appunti questo si dimostra costruendo una particolare funzione "a pezzi" che alterna l'assegnazione tra numeri positivi e negativi.</li>
+<li><strong>Non tutti gli infiniti sono uguali.</strong> L'insieme dei numeri reali <span class="sym">ℝ</span> <strong>non è numerabile</strong>: la sua infinità è "più grande" (o di ordine superiore) rispetto a quella di <span class="sym">ℕ</span>, e non c'è modo di metterli in corrispondenza biunivoca.</li>
+</ul></section>
 </main></div><script src="motion.js"></script></body></html>
