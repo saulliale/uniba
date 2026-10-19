@@ -164,3 +164,35 @@ mark.hit.on{background:rgba(251,191,36,.6);box-shadow:0 0 0 2px rgba(251,191,36,
   .idx .card:hover::before{opacity:0}
   .social a:hover{transform:none}
 }
+/* ===== Card 3D all'hover (solo mouse) ===== */
+@media (hover:hover) and (pointer:fine){
+  .idx .grid{perspective:1200px}
+  .idx .card{
+    transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty,0px)) scale(var(--s,1));
+    will-change:transform;
+  }
+  .idx .card:hover{
+    --ty:-8px;--s:1.03;
+    transform:perspective(900px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) translateY(var(--ty)) scale(var(--s));
+    box-shadow:0 40px 80px rgba(0,0,0,.55),0 0 0 1px rgba(124,131,255,.3),0 0 60px rgba(99,102,241,.18)!important;
+  }
+  /* mentre il mouse si muove: risposta rapida; all'uscita: ritorno morbido (transizione base) */
+  .idx .card.tilt{
+    transition:transform .12s ease-out,box-shadow .5s var(--ease),border-color .35s!important;
+  }
+  /* l'icona "stacca" dalla card */
+  .idx .card:hover .icon{transform:translateY(-4px) scale(1.12) rotate(-5deg)}
+}
+/* ===== Logo 3D ===== */
+.idx header.hero{perspective:900px}
+.logo{
+  transform-style:preserve-3d;
+  transform:rotateX(calc(var(--ny,0) * -16deg)) rotateY(calc(var(--nx,0) * 22deg));
+  transition:transform .18s ease-out,filter .25s ease-out;
+  filter:drop-shadow(calc(var(--nx,0) * -16px) calc(12px + var(--ny,0) * -10px) 32px rgba(99,102,241,.5));
+  /* il float usa "translate" così non confligge con il transform del tilt */
+  animation:floatT 6s ease-in-out infinite;
+  cursor:pointer;
+  will-change:transform;
+}
+@keyframes floatT{0%,100%{translate:0 0}50%{translate:0 -8px}}

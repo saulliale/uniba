@@ -45,6 +45,45 @@
     c.style.setProperty('--mx', ((ev.clientX - b.left) / b.width * 100) + '%');
     c.style.setProperty('--my', ((ev.clientY - b.top) / b.height * 100) + '%');
   }));
+    // Tilt 3D delle card
+  if (matchMedia('(hover:hover) and (pointer:fine)').matches && !reduce) {
+    const MAX = 9; // gradi di inclinazione massima
+    d.querySelectorAll('.card').forEach(c => {
+      c.addEventListener('mouseenter', () => c.classList.add('tilt'));
+      c.addEventListener('mousemove', ev => {
+        const b = c.getBoundingClientRect();
+        const x = (ev.clientX - b.left) / b.width - .5;
+        const y = (ev.clientY - b.top) / b.height - .5;
+        c.style.setProperty('--ry', (x * MAX * 2) + 'deg');
+        c.style.setProperty('--rx', (-y * MAX * 2) + 'deg');
+      });
+      c.addEventListener('mouseleave', () => {
+        c.classList.remove('tilt');
+        c.style.setProperty('--rx', '0deg');
+        c.style.setProperty('--ry', '0deg');
+      });
+    });
+  }
+    // Logo 3D: segue il mouse + giro al click
+  const logo = d.querySelector('.logo');
+  if (logo && !reduce && matchMedia('(hover:hover) and (pointer:fine)').matches) {
+    const clamp = v => Math.max(-1, Math.min(1, v));
+    addEventListener('mousemove', ev => {
+      const b = logo.getBoundingClientRect();
+      logo.style.setProperty('--nx', clamp((ev.clientX - (b.left + b.width / 2)) / (innerWidth / 2)));
+      logo.style.setProperty('--ny', clamp((ev.clientY - (b.top + b.height / 2)) / (innerHeight / 2)));
+    }, { passive: true });
+    d.addEventListener('mouseleave', () => {
+      logo.style.setProperty('--nx', 0);
+      logo.style.setProperty('--ny', 0);
+    });
+    logo.addEventListener('click', () => {
+      logo.animate(
+        [{ rotate: 'y 0deg' }, { rotate: 'y 360deg' }],
+        { duration: 900, easing: 'cubic-bezier(.16,1,.3,1)' }
+      );
+    });
+  }
 
   // Transizione morbida tra pagine
   d.addEventListener('click', ev => {
