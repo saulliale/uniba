@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: Programmazione - Il costrutto for</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+.v{color:#6ee7b7;font-weight:600}.f{color:#fca5a5;font-weight:600}td{text-align:left}
+code{font-family:'JetBrains Mono','Courier New',monospace;font-size:.85em;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);color:#a5b4fc;padding:2px 7px;border-radius:5px}
+.code-block{background:#0d1117;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1.5rem 1.75rem;margin:1.75rem 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.88rem;line-height:1.65;overflow-x:auto;color:#abb2bf;white-space:pre;position:relative}
+.code-block::before{content:attr(data-lang);position:absolute;top:10px;right:14px;font-family:'Inter',sans-serif;font-size:.7rem;font-weight:700;color:#4b5563;text-transform:uppercase;letter-spacing:1px}
+.k{color:#c678dd}.s{color:#98c379}.n{color:#d19a66}.c{color:#5c6370;font-style:italic}.fn{color:#61afef}
+</style>
+<link rel="stylesheet" href="theme.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="programmazione.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice Programmazione</a></div>
+<header><div class="subtitle">Lezione 4</div><h1>Il Costrutto for</h1></header>
+<main>
+
+<section><h2>1. I tipi di dato in C</h2>
+<p>Prima di introdurre il ciclo <code>for</code> è utile richiamare come il linguaggio C classifica i dati, perché la variabile di controllo del ciclo deve essere dichiarata con un tipo ben preciso. I tipi di dato in C si dividono in <strong>tre categorie principali</strong>:</p>
+
+<p><strong>Tipi primitivi.</strong> Comprendono i dati fondamentali come <code>char</code> (caratteri), <code>int</code> (interi), <code>float</code> e <code>double</code> (numeri con la virgola a singola o doppia precisione) e <code>void</code> (assenza di tipo). Nella dichiarazione, tutte le parole chiave devono essere scritte <strong>rigorosamente in minuscolo</strong>.</p>
+
+<p><strong>Tipi derivati.</strong> Includono elementi strutturati come gli <em>Array</em>, i <em>Pointer</em> (puntatori) e le <em>Function</em> (funzioni).</p>
+
+<p><strong>Tipi definiti dall'utente.</strong> Permettono di creare strutture personalizzate tramite <code>enum</code> (enumerazioni), <code>Structure</code> (strutture) e <code>Union</code> (unioni).</p>
+
+<div class="table-container"><table><thead><tr><th>Categoria</th><th>Tipi inclusi</th><th>Note</th></tr></thead><tbody><tr><td><strong>Primitivi</strong></td><td><code>char</code>, <code>int</code>, <code>float</code>, <code>double</code>, <code>void</code></td><td>Keyword tutte in minuscolo</td></tr><tr><td><strong>Derivati</strong></td><td>Array, Pointer, Function</td><td>Costruiti a partire dai primitivi</td></tr><tr><td><strong>Definiti dall'utente</strong></td><td><code>enum</code>, <code>Structure</code>, <code>Union</code></td><td>Strutture personalizzate</td></tr></tbody></table></div>
+
+<p>Esistono inoltre varianti basate sulla <strong>dimensione</strong> e sulla <strong>presenza o meno del segno</strong> (come <code>short</code>, <code>long</code>, <code>unsigned int</code>), e <strong>tipi booleani</strong> (<code>_Bool</code> o <code>bool</code>, includendo la libreria <code>&lt;stdbool.h&gt;</code>) che gestiscono i valori di verità <code>true</code> (1) e <code>false</code> (0).</p>
+
+<p>È possibile inoltre assegnare un nuovo nome (un <strong>alias</strong>) a un tipo di dato esistente utilizzando l'istruzione <code>typedef</code>. Per la gestione di indici e dimensioni di oggetti in memoria, si utilizza spesso il tipo <code>size_t</code>, che garantisce l'utilizzo di un formato adeguato all'architettura hardware impiegata.</p>
+
+<div class="code-block" data-lang="C"><span class="c">/* tipi primitivi */</span>
+<span class="k">int</span> eta = <span class="n">25</span>;
+<span class="k">float</span> altezza = <span class="n">1.75f</span>;
+<span class="k">double</span> precisione = <span class="n">3.141592653589793</span>;
+<span class="k">char</span> iniziale = <span class="s">'A'</span>;
+
+<span class="c">/* varianti dimensionali e segno */</span>
+<span class="k">short</span> piccolo = <span class="n">-100</span>;
+<span class="k">long</span> grande = <span class="n">1000000L</span>;
+<span class="k">unsigned int</span> senza_segno = <span class="n">42</span>;
+
+<span class="c">/* tipi booleani (con &lt;stdbool.h&gt;) */</span>
+#<span class="k">include</span> <span class="s">&lt;stdbool.h&gt;</span>
+<span class="k">bool</span> attivo = <span class="k">true</span>;    <span class="c">// equivale a 1</span>
+<span class="k">bool</span> spento = <span class="k">false</span>;   <span class="c">// equivale a 0</span>
+
+<span class="c">/* typedef: alias di un tipo esistente */</span>
+<span class="k">typedef</span> <span class="k">unsigned int</span> uint;
+uint numero = <span class="n">42</span>;
+
+<span class="c">/* size_t: indici e dimensioni in memoria */</span>
+<span class="k">size_t</span> lunghezza = <span class="n">1024</span>;</div>
+</section>
+
+<section><h2>2. Il costrutto for: struttura e sintassi</h2>
+<p>Il ciclo <code>for</code> è un'istruzione di <strong>iterazione</strong> che si utilizza tipicamente quando è noto <em>a priori</em> il numero di volte in cui il blocco di codice deve essere eseguito. La sua sintassi prevede tre elementi fondamentali racchiusi tra parentesi e separati da punto e virgola:</p>
+
+<div class="code-block" data-lang="C"><span class="k">for</span> (inizializzazione; condizione; istruzione_finale) {
+    <span class="c">// corpo del ciclo</span>
+}</div>
+
+<div class="highlight-box">
+<p><strong>1. Istruzione di inizializzazione:</strong> definisce e imposta la variabile di controllo (es. <code>int i = 0</code>).</p>
+<p><strong>2. Condizione:</strong> l'espressione che viene verificata prima di ogni iterazione; se è vera, il ciclo continua.</p>
+<p><strong>3. Istruzione finale:</strong> l'operazione eseguita alla fine di ogni giro, solitamente l'incremento o decremento della variabile (es. <code>i++</code>).</p>
+</div>
+
+<p>Il flusso logico è quindi: si esegue una sola volta l'<strong>inizializzazione</strong>, poi si valuta la <strong>condizione</strong>; se è vera si esegue il <strong>corpo</strong>, poi l'<strong>istruzione finale</strong> e si torna a valutare la condizione; se è falsa si esce dal ciclo.</p>
+
+<div class="code-block" data-lang="C"><span class="c">/* esempio: stampa dei numeri da 0 a 9 */</span>
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; <span class="n">10</span>; i++) {
+    <span class="fn">printf</span>(<span class="s">"%d\n"</span>, i);
+}</div>
+
+<p>Nell'esempio: <code>int i = 0</code> è l'inizializzazione, <code>i &lt; 10</code> è la condizione, <code>i++</code> è l'istruzione finale. Il corpo viene eseguito per <code>i = 0, 1, 2, …, 9</code>, ossia <strong>10 volte</strong> in totale.</p>
+</section>
+
+<section><h2>3. Visibilità della variabile di controllo</h2>
+<p>La <strong>visibilità</strong> (scope) della variabile di controllo dipende da <em>dove</em> viene dichiarata:</p>
+
+<ul>
+<li><strong>Dichiarata direttamente all'interno delle parentesi del <code>for</code>:</strong> la sua validità resta confinata <strong>esclusivamente all'interno del corpo del loop</strong>. Fuori dal ciclo la variabile non esiste più.</li>
+<li><strong>Dichiarata all'esterno del ciclo:</strong> rimane <strong>accessibile anche dopo</strong> la fine del ciclo, conservando l'ultimo valore assunto.</li>
+</ul>
+
+<div class="code-block" data-lang="C"><span class="c">/* Caso 1: variabile dichiarata DENTRO il for */</span>
+<span class="k">for</span> (<span class="k">int</span> i = <span class="n">0</span>; i &lt; <span class="n">10</span>; i++) {
+    <span class="fn">printf</span>(<span class="s">"%d\n"</span>, i);
+}
+<span class="c">// i NON è più visibile qui: usarla causerebbe un errore</span>
+
+<span class="c">/* Caso 2: variabile dichiarata FUORI dal for */</span>
+<span class="k">int</span> j;
+<span class="k">for</span> (j = <span class="n">0</span>; j &lt; <span class="n">10</span>; j++) {
+    <span class="fn">printf</span>(<span class="s">"%d\n"</span>, j);
+}
+<span class="c">// j è ancora visibile e, dopo il ciclo, vale 10</span>
+<span class="fn">printf</span>(<span class="s">"j = %d\n"</span>, j);</div>
+
+<p>La prima forma è quella <strong>preferibile</strong> quando la variabile serve solo come contatore, perché riduce al minimo lo scope e rende il codice più leggibile. La seconda forma è utile quando il valore finale della variabile deve essere riutilizzato dopo il ciclo.</p></section>
+
+<section><h2>4. Flow chart e derivazione dal while</h2>
+<p>Dal punto di vista logico, il ciclo <code>for</code> <strong>non possiede un diagramma di flusso (flow chart) dedicato</strong>: deriva direttamente dalla struttura del ciclo <code>while</code>, inserendo l'<strong>istruzione preparatoria</strong> (l'inizializzazione) subito prima dell'inizio del controllo condizionale. In altre parole, il <code>for</code> è un <code>while</code> con l'inizializzazione "incorporata" prima del controllo e l'istruzione finale "incorporata" alla fine di ogni iterazione.</p>
+
+<div class="figure-container"><svg viewBox="0 0 620 380" width="100%"><defs><marker id="fa1" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#9ca3af"/></marker><marker id="fa2" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#10b981"/></marker><marker id="fa3" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#f87171"/></marker></defs>
+<path d="M250 10 L250 32" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#fa1)"/>
+<rect x="140" y="34" width="220" height="48" rx="10" fill="#6366f1" fill-opacity=".14" stroke="#818cf8" stroke-width="1.8"/>
+<text x="250" y="58" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="middle">Inizializzazione</text>
+<text x="250" y="74" font-family="Inter,sans-serif" font-size="10" fill="#c7d2fe" text-anchor="middle">int i = 0</text>
+<path d="M250 82 L250 108" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#fa1)"/>
+<polygon points="250,110 355,155 250,200 145,155" fill="rgba(99,102,241,.14)" stroke="#818cf8" stroke-width="1.8"/>
+<text x="250" y="158" font-family="Inter,sans-serif" font-size="13" fill="#c7d2fe" text-anchor="middle">condizione</text>
+<text x="250" y="172" font-family="Inter,sans-serif" font-size="10" fill="#c7d2fe" text-anchor="middle">i &lt; 10</text>
+<path d="M250 200 L250 225" stroke="#10b981" stroke-width="2" fill="none" marker-end="url(#fa2)"/>
+<text x="265" y="218" font-family="Inter,sans-serif" font-size="11" fill="#6ee7b7" text-anchor="start">VERO</text>
+<rect x="140" y="227" width="220" height="48" rx="10" fill="#10b981" fill-opacity=".14" stroke="#10b981" stroke-width="1.8"/>
+<text x="250" y="255" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="middle">Corpo del ciclo</text>
+<path d="M250 275 L250 300" stroke="#9ca3af" stroke-width="2" fill="none" marker-end="url(#fa1)"/>
+<rect x="140" y="302" width="220" height="48" rx="10" fill="#f59e0b" fill-opacity=".14" stroke="#f59e0b" stroke-width="1.8"/>
+<text x="250" y="328" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="middle">Istruzione finale</text>
+<text x="250" y="344" font-family="Inter,sans-serif" font-size="10" fill="#fcd34d" text-anchor="middle">i++</text>
+<path d="M140 326 L85 326 L85 155 L143 155" stroke="#f59e0b" stroke-width="2" fill="none" marker-end="url(#fa1)" stroke-dasharray="6 4"/>
+<text x="85" y="255" font-family="Inter,sans-serif" font-size="11" fill="#fcd34d" text-anchor="middle" transform="rotate(-90 85 255)">ritorno al controllo</text>
+<path d="M355 155 L455 155" stroke="#f87171" stroke-width="2" fill="none" marker-end="url(#fa3)"/>
+<text x="405" y="147" font-family="Inter,sans-serif" font-size="11" fill="#fca5a5" text-anchor="middle">FALSO</text>
+<rect x="457" y="132" width="90" height="46" rx="10" fill="#f87171" fill-opacity=".14" stroke="#f87171" stroke-width="1.8"/>
+<text x="502" y="160" font-family="Inter,sans-serif" font-size="12" font-weight="700" fill="#e5e7eb" text-anchor="middle">Esci</text>
+</svg><div class="figure-caption">Fig 1. Flow chart del for: l'inizializzazione precede il controllo, poi si alternano corpo e istruzione finale fino a quando la condizione diventa falsa.</div></div>
+
+<p>Il confronto con il <code>while</code> rende evidente la derivazione:</p>
+
+<div class="table-container"><table><thead><tr><th>Aspetto</th><th>Ciclo <code>while</code></th><th>Ciclo <code>for</code></th></tr></thead><tbody><tr><td><strong>Inizializzazione</strong></td><td>Istruzione separata, prima del ciclo</td><td>Incorporata nell'header del <code>for</code></td></tr><tr><td><strong>Controllo</strong></td><td>Pre-test (prima del corpo)</td><td>Pre-test (prima del corpo)</td></tr><tr><td><strong>Istruzione finale</strong></td><td>Scritta manualmente nel corpo</td><td>Incorporata nell'header del <code>for</code></td></tr><tr><td><strong>Flow chart</strong></td><td>Dedicato</td><td>Derivato dal <code>while</code></td></tr><tr><td><strong>Uso tipico</strong></td><td>Numero di iterazioni non noto</td><td>Numero di iterazioni noto a priori</td></tr></tbody></table></div>
+
+<p>In pratica, ogni <code>for</code> può essere riscritto come <code>while</code> spostando l'inizializzazione prima del ciclo e l'istruzione finale alla fine del corpo. Il <code>for</code> è quindi una <strong>forma compatta e leggibile</strong> del <code>while</code>, particolarmente comoda quando tutte e tre le parti del ciclo sono legate alla stessa variabile di controllo.</p></section>
+
+</main></div><script src="motion.js"></script></body></html>

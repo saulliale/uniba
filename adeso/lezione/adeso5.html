@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintesi: Memorie, Registri e RAM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+    <script src="../../motion.js"></script>
+    <style>
+        /* =========================================
+           Variabili di Stile (coerenti con adeso1.html)
+           ========================================= */
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-2: #20243a;
+            --border: rgba(255,255,255,0.07);
+            --text: #d1d5db;
+            --text-strong: #f3f4f6;
+            --text-muted: #6b7280;
+            --accent: #6366f1;
+            --accent-2: #818cf8;
+            --accent-light: rgba(99,102,241,0.08);
+            --accent-border: rgba(99,102,241,0.25);
+            --font: 'Inter', system-ui, sans-serif;
+            --radius: 14px;
+            --radius-sm: 8px;
+        }
+
+        /* =========================================
+           Reset e Base
+           ========================================= */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--bg);
+            background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 60%);
+            color: var(--text);
+            line-height: 1.75;
+            font-size: 16px;
+            padding: 2rem 1rem 6rem;
+        }
+
+        /* =========================================
+           Layout Principale
+           ========================================= */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4rem 5rem;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+        }
+
+        /* =========================================
+           Back Nav
+           ========================================= */
+        .back-nav {
+            margin-bottom: 2.5rem;
+            animation: fadeDown 0.4s ease both;
+        }
+
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.88rem;
+            transition: color 0.2s, gap 0.2s;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 14px 7px 10px;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .back-nav a:hover { color: var(--accent-2); gap: 12px; border-color: var(--accent-border); }
+        .back-nav a svg { transition: transform 0.2s; }
+        .back-nav a:hover svg { transform: translateX(-3px); }
+
+        /* =========================================
+           Header
+           ========================================= */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            animation: fadeDown 0.5s 0.05s ease both;
+        }
+
+        .subtitle {
+            display: inline-block;
+            color: var(--accent-2);
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            border-radius: 100px;
+            padding: 5px 16px;
+        }
+
+        h1 {
+            font-size: clamp(1.7rem, 4vw, 2.3rem);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
+        }
+
+        /* =========================================
+           Tipografia
+           ========================================= */
+        section { animation: fadeUp 0.5s ease both; }
+        section:nth-child(1) { animation-delay: 0.1s; }
+        section:nth-child(2) { animation-delay: 0.15s; }
+        section:nth-child(3) { animation-delay: 0.2s; }
+        section:nth-child(4) { animation-delay: 0.25s; }
+        section:nth-child(5) { animation-delay: 0.3s; }
+        section:nth-child(6) { animation-delay: 0.35s; }
+
+        h2 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--accent-2);
+            margin-top: 3.5rem;
+            margin-bottom: 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            letter-spacing: -0.01em;
+        }
+
+        h2::before {
+            content: '';
+            display: inline-block;
+            width: 20px;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent-2));
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        p { margin-bottom: 1.25rem; color: var(--text); }
+
+        ul, ol { margin-bottom: 1.25rem; padding-left: 1.5rem; }
+        li { margin-bottom: 0.5rem; color: var(--text); }
+
+        strong { color: var(--text-strong); font-weight: 600; }
+        em { color: #a5b4fc; font-style: italic; }
+        .sym { font-family: 'JetBrains Mono', monospace; font-size: 0.9em; color: #c7d2fe; white-space: nowrap; }
+
+        /* =========================================
+           Componenti
+           ========================================= */
+        .highlight-box {
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            border-left: 3px solid var(--accent);
+            padding: 1.25rem 1.5rem;
+            margin: 2rem 0;
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+            font-size: 0.95rem;
+        }
+
+        .highlight-box p:last-child { margin-bottom: 0; }
+
+        /* Figure container */
+        .figure-container {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            padding: 2rem;
+            margin: 2.5rem 0;
+            text-align: center;
+        }
+
+        .figure-caption {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        svg { max-width: 100%; height: auto; display: block; margin: 0 auto; }
+
+        /* Tabella */
+        .table-container {
+            overflow-x: auto;
+            margin: 1.75rem 0;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { padding: 0.85rem 1.1rem; border-bottom: 1px solid var(--border); text-align: left; font-size: 0.9rem; }
+        th { background: rgba(255,255,255,0.03); color: var(--text-strong); font-size: 0.82rem; text-transform: uppercase; letter-spacing: 0.8px; }
+        tr:last-child td { border-bottom: none; }
+
+        /* =========================================
+           Animazioni
+           ========================================= */
+        @keyframes fadeDown {
+            from { opacity: 0; transform: translateY(-14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* =========================================
+           Media Queries
+           ========================================= */
+        @media (max-width: 768px) {
+            .container { padding: 2rem 1.5rem; border-radius: 14px; }
+            h1 { font-size: 1.6rem; }
+            body { font-size: 15px; padding: 1rem 0.5rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <div class="back-nav">
+            <a href="../../adeso.html">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="19" y1="12" x2="5" y2="12"></line>
+                    <polyline points="12 19 5 12 12 5"></polyline>
+                </svg>
+                Torna all'indice AESO
+            </a>
+        </div>
+
+        <header>
+            <div class="subtitle">Lezione 5</div>
+            <h1>Memorie, Registri e RAM</h1>
+        </header>
+
+        <main>
+            <!-- SEZIONE 1 -->
+            <section>
+                <h2>1. Caratteristiche generali delle memorie</h2>
+                <p>Le memorie di un sistema di elaborazione si distinguono in base a diverse caratteristiche fondamentali:</p>
+                <ul>
+                    <li><strong>Capacità:</strong> la quantità di informazioni che possono contenere, misurata in Byte, KB, MB, GB, ecc.</li>
+                    <li><strong>Tempo di accesso:</strong> il tempo necessario per compiere un'operazione di lettura o scrittura, espresso in nanosecondi, microsecondi o millisecondi.</li>
+                    <li><strong>Metodo di accesso:</strong> come vengono raggiunti i dati.</li>
+                    <li><strong>Unità di trasferimento:</strong> quanti bit vengono spostati insieme.</li>
+                    <li><strong>Organizzazione:</strong> la struttura interna della memoria.</li>
+                    <li><strong>Locazione:</strong> la posizione fisica rispetto alla CPU.</li>
+                </ul>
+
+                <p>In base a capacità e velocità, le memorie si dispongono in una <strong>gerarchia a piramide</strong>. Partendo dall'alto troviamo i <strong>registri</strong> (piccolissimi, velocissimi e costosi), seguiti dalla <strong>memoria cache</strong>, dalla <strong>memoria centrale (RAM)</strong>, e infine in basso dai <strong>dischi magnetici e ottici</strong> (enormi ma molto più lenti).</p>
+                
+                <p>A seconda di dove si trovano fisicamente, si dividono in:</p>
+                <ul>
+                    <li><strong>Memorie interne alla CPU:</strong> i registri;</li>
+                    <li><strong>Memorie interne:</strong> RAM e cache;</li>
+                    <li><strong>Memorie esterne:</strong> memorie di massa (dischi).</li>
+                </ul>
+
+                <div class="figure-container">
+                    <svg viewBox="0 0 600 280" width="100%">
+                        <!-- Piramide -->
+                        <polygon points="300,20 240,80 360,80" fill="rgba(99,102,241,0.15)" stroke="#818cf8" stroke-width="1.5"/>
+                        <polygon points="240,80 200,140 400,140 360,80" fill="rgba(99,102,241,0.12)" stroke="#818cf8" stroke-width="1.5"/>
+                        <polygon points="200,140 150,200 450,200 400,140" fill="rgba(99,102,241,0.09)" stroke="#818cf8" stroke-width="1.5"/>
+                        <polygon points="150,200 90,260 510,260 450,200" fill="rgba(99,102,241,0.06)" stroke="#818cf8" stroke-width="1.5"/>
+                        
+                        <!-- Testi -->
+                        <text x="300" y="55" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#e5e7eb" text-anchor="middle">Registri</text>
+                        <text x="300" y="115" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#e5e7eb" text-anchor="middle">Cache</text>
+                        <text x="300" y="175" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#e5e7eb" text-anchor="middle">RAM (Memoria Centrale)</text>
+                        <text x="300" y="235" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#e5e7eb" text-anchor="middle">Dischi Magnetici e Ottici</text>
+
+                        <!-- Frecce Capacità/Velocità -->
+                        <path d="M 540 20 L 540 260" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowPyr)"/>
+                        <text x="555" y="130" font-family="Inter,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" transform="rotate(90 555 130)">Aumento Capacità</text>
+                        
+                        <path d="M 60 260 L 60 20" stroke="#6b7280" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arrowPyr2)"/>
+                        <text x="45" y="130" font-family="Inter,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle" transform="rotate(-90 45 130)">Aumento Velocità / Costo</text>
+
+                        <defs>
+                            <marker id="arrowPyr" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#6b7280"/></marker>
+                            <marker id="arrowPyr2" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#6b7280"/></marker>
+                        </defs>
+                    </svg>
+                    <div class="figure-caption">Fig 1. Gerarchia delle memorie: più si sale, più la memoria è veloce, costosa e di piccola capacità.</div>
+                </div>
+            </section>
+
+            <!-- SEZIONE 2 -->
+            <section>
+                <h2>2. I Registri</h2>
+                <p>I <strong>registri</strong> sono memorie ad altissima velocità situate direttamente all'interno della CPU. Vengono utilizzati per memorizzare risultati temporanei e informazioni di controllo necessarie all'esecuzione delle singole istruzioni.</p>
+                
+                <ul>
+                    <li><strong>Capacità e unità di trasferimento:</strong> pari a una <em>word</em> (solitamente 16, 32 o 64 bit).</li>
+                    <li><strong>Tempo di accesso:</strong> dell'ordine di pochissimi nanosecondi, alla stessa velocità del processore.</li>
+                    <li><strong>Caratteristiche fisiche:</strong> sono realizzati con circuiti elettronici di tipo <em>flip-flop</em> e sono memorie <strong>volatili</strong>, cioè perdono tutto il loro contenuto quando viene tolta l'alimentazione elettrica.</li>
+                </ul>
+                <p>Il processore ne contiene un numero variabile a seconda dell'architettura (come il registro <strong>PC</strong> o il registro <strong>IR</strong>).</p>
+            </section>
+
+            <!-- SEZIONE 3 -->
+            <section>
+                <h2>3. La Memoria Principale o RAM</h2>
+                <p>La memoria principale, nota come <strong>RAM</strong> (Random Access Memory), è una memoria interna all'elaboratore ma esterna al processore, con una capacità attuale dell'ordine di qualche Gigabyte.</p>
+                
+                <ul>
+                    <li><strong>Organizzazione:</strong> è strutturata come una matrice di celle. Ciascuna locazione è formata da un certo numero di bit (tipicamente 8 bit per un Byte o 16 bit per una word) ed è identificata univocamente da un numero chiamato <strong>indirizzo</strong>.</li>
+                    <li><strong>Metodo di accesso:</strong> si parla di <strong>accesso diretto</strong> o <strong>accesso casuale</strong> (Random Access). Ciò significa che il tempo necessario per accedere a un qualsiasi dato in memoria è costante e non dipende dalla posizione in cui il dato si trova.</li>
+                    <li><strong>Natura volatile:</strong> anche la RAM è una memoria volatile, per cui spegnendo il computer i dati svaniscono.</li>
+                </ul>
+            </section>
+
+            <!-- SEZIONE 4 -->
+            <section>
+                <h2>4. Tecnologie di RAM: SRAM e DRAM</h2>
+                <p>La memoria RAM si divide principalmente in due tecnologie costruttive:</p>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tecnologia</th>
+                                <th>Come memorizza i bit</th>
+                                <th>Caratteristiche</th>
+                                <th>Utilizzo</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>SRAM</strong> (Static RAM)</td>
+                                <td>Circuiti logici di tipo <em>flip-flop</em>.</td>
+                                <td>Tempi di accesso molto rapidi e bassi consumi.</td>
+                                <td>Memorie cache.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DRAM</strong> (Dynamic RAM)</td>
+                                <td>Carica elettrica all'interno di condensatori.</td>
+                                <td>Richiede un "refresh" (aggiornamento) frequente. Celle molto più semplici e piccole, più densa ed economica rispetto alla SRAM.</td>
+                                <td>Memoria centrale.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- SEZIONE 5 -->
+            <section>
+                <h2>5. Indirizzamento e Operazioni di Lettura/Scrittura</h2>
+                <p>L'elemento base della memoria è la <strong>cella</strong>, capace di mantenere due stati stabili (<span class="sym">0</span> o <span class="sym">1</span>) e di consentire operazioni di lettura e scrittura. Se un indirizzo è composto da <span class="sym">k</span> bit, è possibile indirizzare un totale di <span class="sym">2<sup>k</sup></span> locazioni distinte (chiamate <strong>spazio di indirizzamento</strong>), numerate da <span class="sym">0</span> a <span class="sym">2<sup>k</sup> - 1</span>.</p>
+                <div class="highlight-box">
+                    <p><strong>Viceversa:</strong> per indirizzare <span class="sym">N</span> locazioni servono <span class="sym">⌈log<sub>2</sub> N⌉</span> bit.</p>
+                </div>
+
+                <p>L'interazione tra la CPU e la RAM avviene tramite due registri dedicati del processore:</p>
+                <ul>
+                    <li><strong>MAR</strong> (Memory Address Register): contiene l'indirizzo della locazione di memoria a cui si vuole accedere.</li>
+                    <li><strong>MDR</strong> o <strong>MBR</strong> (Memory Data/Buffer Register): contiene il dato che è stato letto dalla memoria o che deve essere scritto al suo interno.</li>
+                </ul>
+
+                <div class="figure-container">
+                    <svg viewBox="0 0 600 240" width="100%">
+                        <!-- CPU Box -->
+                        <rect x="40" y="30" width="200" height="180" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="140" y="55" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="middle">CPU</text>
+                        
+                        <!-- MAR Box -->
+                        <rect x="60" y="80" width="160" height="40" rx="6" fill="rgba(99,102,241,0.15)" stroke="#818cf8" stroke-width="1.5"/>
+                        <text x="140" y="105" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#c7d2fe" text-anchor="middle">MAR (Indirizzo)</text>
+                        
+                        <!-- MDR Box -->
+                        <rect x="60" y="150" width="160" height="40" rx="6" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+                        <text x="140" y="175" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#6ee7b7" text-anchor="middle">MDR (Dato)</text>
+
+                        <!-- RAM Box -->
+                        <rect x="380" y="30" width="180" height="180" rx="10" fill="rgba(255,255,255,0.03)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+                        <text x="470" y="55" font-family="Inter,sans-serif" font-size="13" font-weight="700" fill="#e5e7eb" text-anchor="middle">RAM</text>
+
+                        <!-- Frecce di connessione -->
+                        <!-- Bus Indirizzi -->
+                        <path d="M 220 100 L 380 100" stroke="#818cf8" stroke-width="2.5" fill="none" marker-end="url(#arrowBus)"/>
+                        <text x="300" y="90" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#818cf8" text-anchor="middle">Bus degli Indirizzi</text>
+
+                        <!-- Bus Dati -->
+                        <path d="M 220 170 L 380 170" stroke="#10b981" stroke-width="2.5" fill="none" marker-end="url(#arrowBus)"/>
+                        <text x="300" y="160" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#10b981" text-anchor="middle">Bus dei Dati</text>
+                        
+                        <defs>
+                            <marker id="arrowBus" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#6b7280"/></marker>
+                        </defs>
+                    </svg>
+                    <div class="figure-caption">Fig 2. Interazione CPU-RAM: il MAR invia l'indirizzo, l'MDR scambia il dato. Il tutto è coordinato dall'Unità di Controllo (CU).</div>
+                </div>
+
+                <p>Sotto il controllo dell'<strong>Unità di Controllo (CU)</strong>, avvengono le due operazioni fondamentali:</p>
+                <ul>
+                    <li><strong>Operazione di lettura (read):</strong> si copia il contenuto della cella indirizzata dal MAR dentro l'MDR.</li>
+                    <li><strong>Operazione di scrittura (write):</strong> si copia il dato dall'MDR alla cella di memoria specificata dal MAR.</li>
+                </ul>
+            </section>
+
+        </main>
+    </div>
+
+</body>
+</html>

@@ -85,6 +85,56 @@ strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
 <p><strong>Conclusione:</strong> Essendo verificati sia il caso base sia il passo induttivo, per il Principio di Induzione la formula <span class="sym">|ℬ(A)| = 2ⁿ</span> è vera per qualsiasi numero naturale <span class="sym">n</span>.</p>
 </section>
 
+<section><h2>3. Esempio: la somma dei numeri naturali</h2>
+<p>Vediamo ora un'applicazione pratica del principio di induzione su una formula famosissima in matematica: la somma di tutti i numeri naturali da <span class="sym">0</span> fino a un generico <span class="sym">n</span>, scritta tramite il simbolo di sommatoria (<span class="sym">Σ</span>), è sempre uguale a <span class="sym">n(n+1)/2</span> per ogni <span class="sym">n ∈ ℕ</span>.</p>
+
+<div class="highlight-box">
+<p><strong>Teorema:</strong> Per ogni <span class="sym">n ∈ ℕ</span> vale</p>
+<p><span class="sym">∑<sub>i=0</sub><sup>n</sup> i = 0 + 1 + 2 + … + n = n(n+1)/2</span></p>
+</div>
+
+<p>Per dimostrare che questa regola vale <em>sempre</em>, si utilizza la dimostrazione per induzione divisa nei due passi fondamentali.</p>
+
+<h3>Passo 1 — La base dell'induzione</h3>
+<p>Il primo passo consiste nel verificare se la formula è vera per il caso più piccolo, ovvero quando <span class="sym">n = 0</span> (cioè si verifica che <span class="sym">P(0)</span> è vera).</p>
+<ul>
+    <li>Se sommiamo i numeri naturali minori o uguali a <span class="sym">0</span>, il risultato è semplicemente <span class="sym">0</span>.</li>
+    <li>Sostituendo <span class="sym">n = 0</span> all'interno della formula algebrica <span class="sym">n(n+1)/2</span>, otteniamo <span class="sym">0·(0+1)/2 = 0</span>.</li>
+</ul>
+<p>Poiché i due risultati coincidono, la base dell'induzione è verificata ed è vera.</p>
+
+<h3>Passo 2 — Il passo induttivo</h3>
+<p>Il secondo passo consiste nell'<strong>assumere che la formula sia vera per un generico numero <span class="sym">k</span></strong> (questa viene chiamata <em>ipotesi induttiva</em>):</p>
+<div class="highlight-box">
+<p><strong>Ipotesi induttiva — <span class="sym">P(k)</span>:</strong></p>
+<p><span class="sym">0 + 1 + 2 + … + k = k(k+1)/2</span></p>
+</div>
+<p>e nel <strong>dimostrare che, di conseguenza, la formula deve essere vera anche per il numero successivo</strong>, ovvero <span class="sym">k + 1</span>:</p>
+<div class="highlight-box">
+<p><strong>Tesi da dimostrare — <span class="sym">P(k+1)</span>:</strong></p>
+<p><span class="sym">0 + 1 + 2 + … + (k+1) = (k+1)(k+2)/2</span></p>
+</div>
+
+<h3>Lo sviluppo algebrico</h3>
+<p>Per dimostrare il passo induttivo, si parte dalla somma fino a <span class="sym">k + 1</span>, che può essere scritta separando l'ultimo elemento:</p>
+<div class="highlight-box">
+<span class="sym">(0 + 1 + 2 + … + k) + (k+1)</span>
+</div>
+<p>A questo punto si sfrutta l'ipotesi induttiva, sostituendo la prima parte tra parentesi con la formula di <span class="sym">k</span>:</p>
+<div class="highlight-box">
+<span class="sym">k(k+1)/2 + (k+1)</span>
+</div>
+<p>Si esegue il denominatore comune (<span class="sym">2</span>):</p>
+<div class="highlight-box">
+<span class="sym">[ k(k+1) + 2(k+1) ] / 2</span>
+</div>
+<p>Raccogliendo a fattor comune il termine <span class="sym">(k+1)</span>, si ottiene:</p>
+<div class="highlight-box">
+<span class="sym">(k+1)(k+2)/2</span>
+</div>
+<p>Questo risultato è esattamente la formula di partenza in cui al posto di <span class="sym">n</span> è stato inserito <span class="sym">k + 1</span>. Ne consegue che <span class="sym">P(k+1)</span> è vera, confermando definitivamente per induzione che la proprietà vale per qualsiasi numero <span class="sym">n ∈ ℕ</span>.</p>
+</section>
+
 </main>
 </div>
 <script src="motion.js"></script>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: Matematica Discreta - Successioni e Sommatorie</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul,ol{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+td,th{text-align:center}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="matematicadiscreta.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice Matematica Discreta</a></div>
+<header><div class="subtitle">Lezione 6</div><h1>Successioni e Sommatorie</h1></header>
+<main>
+
+<section><h2>1. Che cos'è una successione</h2>
+<p>Negli insiemi, come <span class="sym">{a, b, c}</span>, l'ordine degli elementi non conta: <span class="sym">{a, b, c} = {a, c, b}</span>. In una <strong>successione</strong>, invece, vogliamo <em>ordinare</em> gli elementi etichettandoli con i numeri naturali, in modo che ogni elemento abbia una posizione precisa.</p>
+<p>Formalmente, una successione è una <strong>funzione</strong> che associa a ogni numero naturale un elemento di un insieme <span class="sym">A</span>:</p>
+<div class="highlight-box"><span class="sym">f: ℕ → A</span></div>
+<p>e si indica con la notazione <span class="sym">{aₙ}<sub>n∈ℕ</sub></span>, dove <span class="sym">aₙ = f(n)</span> è il termine di indice <span class="sym">n</span>.</p>
+
+<div class="figure-container"><svg viewBox="0 0 600 180" width="100%"><defs><marker id="sqi" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0,0 L0,6 L8,3 z" fill="#818cf8"/></marker></defs><line x1="70" y1="110" x2="540" y2="110" stroke="#6b7280" stroke-width="1.5" marker-end="url(#sqi)"/><g font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#c7d2fe" text-anchor="middle"><text x="100" y="140">a₀</text><text x="180" y="140">a₁</text><text x="260" y="140">a₂</text><text x="340" y="140">a₃</text><text x="420" y="140">a₄</text><text x="500" y="140">a₅</text></g><g font-family="Inter,sans-serif" font-size="11" fill="#6b7280" text-anchor="middle"><text x="100" y="155">0</text><text x="180" y="155">1</text><text x="260" y="155">2</text><text x="340" y="155">3</text><text x="420" y="155">4</text><text x="500" y="155">5</text></g><g><circle cx="100" cy="110" r="6" fill="#818cf8"/><circle cx="180" cy="110" r="6" fill="#818cf8"/><circle cx="260" cy="110" r="6" fill="#818cf8"/><circle cx="340" cy="110" r="6" fill="#818cf8"/><circle cx="420" cy="110" r="6" fill="#818cf8"/><circle cx="500" cy="110" r="6" fill="#818cf8"/></g><text x="300" y="35" font-family="Inter,sans-serif" font-size="12" fill="#9ca3af" text-anchor="middle">indice n →</text><text x="300" y="60" font-family="Inter,sans-serif" font-size="12" fill="#9ca3af" text-anchor="middle">valore aₙ = f(n)</text><text x="300" y="175" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#a5b4fc" text-anchor="middle">Una successione etichetta gli elementi di A con i numeri naturali</text></svg><div class="figure-caption">Fig 1. Ad ogni indice n ∈ ℕ corrisponde un termine aₙ della successione.</div></div>
+
+<p>Negli appunti vengono mostrati vari esempi:</p>
+<ul>
+<li><strong>successione dei numeri naturali:</strong> <span class="sym">aₙ = n</span>, ossia <span class="sym">0, 1, 2, 3, 4, …</span>;</li>
+<li><strong>successione dei reciproci dei numeri pari:</strong> <span class="sym">aₙ = 1/(2n)</span>;</li>
+<li><strong>successioni definite per passi</strong>, in cui ogni termine è descritto tramite i precedenti.</li>
+</ul></section>
+
+<section><h2>2. Definizione per ricorrenza</h2>
+<p>Una successione si dice <strong>definita per ricorrenza</strong> (o per induzione) quando vengono dati:</p>
+<ul>
+<li>i <strong>valori iniziali</strong> (per esempio il primo termine <span class="sym">a₀</span>);</li>
+<li>una <strong>legge</strong> che permette di calcolare i termini successivi in base a quelli precedenti.</li>
+</ul>
+<p>Negli appunti vengono presentati importanti esempi di successioni definite per ricorrenza:</p>
+
+<div class="table-container"><table><thead><tr><th>Tipo di successione</th><th>Legge di ricorrenza</th></tr></thead><tbody><tr><td><strong>Progressione geometrica</strong></td><td><span class="sym">aₙ = d · aₙ₋₁</span></td></tr><tr><td><strong>Progressione aritmetica</strong></td><td><span class="sym">aₙ = aₙ₋₁ + d</span></td></tr><tr><td><strong>Numeri fattoriali</strong></td><td><span class="sym">n!</span> — prodotto dei primi n interi positivi</td></tr></tbody></table></div>
+
+<p>In una <strong>progressione geometrica</strong> ogni termine si ottiene dal precedente moltiplicando per una <em>ragione</em> costante <span class="sym">d</span>; in una <strong>progressione aritmetica</strong> ogni termine si ottiene dal precedente sommando una <em>differenza</em> costante <span class="sym">d</span>. Il <strong>fattoriale</strong> <span class="sym">n!</span> è invece un esempio classico di quantità definita tramite un prodotto via via crescente.</p></section>
+
+<section><h2>3. Formula chiusa</h2>
+<p>Una <strong>formula chiusa</strong> è una formula matematica che esprime direttamente il termine <span class="sym">aₙ</span> usando <em>solo</em> la variabile <span class="sym">n</span>, senza dover calcolare tutti i passaggi precedenti. In pratica, mentre una definizione per ricorrenza obbliga a costruire la successione termine per termine, una formula chiusa permette di saltare direttamente al valore desiderato.</p>
+
+<p>Negli appunti viene dimostrata <strong>per induzione</strong> la formula chiusa della <strong>progressione geometrica</strong>:</p>
+<div class="highlight-box"><span class="sym">aₙ = x · dⁿ</span></div>
+<p>dove <span class="sym">x</span> è il termine iniziale e <span class="sym">d</span> è la ragione costante. La dimostrazione ripercorre la struttura vista nella Lezione 5: si verifica il caso base (per <span class="sym">n = 0</span> la formula deve dare <span class="sym">a₀ = x</span>) e si mostra che, se la formula vale per <span class="sym">k</span>, allora vale anche per <span class="sym">k+1</span> moltiplicando per la ragione <span class="sym">d</span>.</p></section>
+
+<section><h2>4. Esercizi e altre formule chiuse</h2>
+<p>Nelle pagine successive degli appunti vengono proposti esercizi per ricavare formule chiuse partendo da leggi di ricorrenza. In particolare si ottengono:</p>
+<ul>
+<li>la formula chiusa della <strong>progressione aritmetica</strong>: <span class="sym">aₙ = x + n·d</span>, dove <span class="sym">x</span> è il termine iniziale e <span class="sym">d</span> è la differenza costante;</li>
+<li>la formula della <strong>somma dei primi n numeri naturali</strong>: <span class="sym">n(n+1)/2</span>.</li>
+</ul>
+<p>Questi risultati mostrano il legame tra ricorrenza, induzione e formula chiusa: la ricorrenza descrive <em>come</em> si costruisce la successione, la formula chiusa descrive <em>direttamente</em> il suo termine generico, e l'induzione è lo strumento che permette di dimostrare che le due descrizioni coincidono.</p></section>
+
+<section><h2>5. La successione di Fibonacci e la sezione aurea</h2>
+<p>Un caso celebre e affascinante è la <strong>successione di Fibonacci</strong>, definita per ricorrenza nel modo seguente:</p>
+<div class="highlight-box"><p><span class="sym">f₀ = 0</span></p><p><span class="sym">f₁ = 1</span></p><p><span class="sym">fₙ = fₙ₋₁ + fₙ₋₂ &nbsp;&nbsp; per n &gt; 1</span></p></div>
+<p>Ogni termine, dal terzo in poi, è la somma dei due termini precedenti. I primi valori sono:</p>
+<div class="table-container"><table><thead><tr><th><span class="sym">n</span></th><th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th><th>8</th><th>…</th></tr></thead><tbody><tr><td><span class="sym">fₙ</span></td><td>0</td><td>1</td><td>1</td><td>2</td><td>3</td><td>5</td><td>8</td><td>13</td><td>21</td><td>…</td></tr></tbody></table></div>
+
+<p>Nonostante la definizione sia puramente ricorsiva, la successione di Fibonacci ammette anche una <strong>formula chiusa</strong>, che però coinvolge un numero irrazionale legato alla <strong>sezione aurea</strong>:</p>
+<div class="highlight-box"><span class="sym">φ = (1 + √5) / 2</span></div>
+<p>Questo mostra un fatto notevole: una successione definita con soli numeri interi e una semplice somma ha una descrizione diretta che passa attraverso un numero irrazionale. È uno dei tanti motivi per cui la successione di Fibonacci è così studiata e compare in contesti molto diversi della matematica.</p></section>
+
+<section><h2>6. Le sommatorie</h2>
+<p>Il simbolo di <strong>sommatoria</strong> (<span class="sym">Σ</span>) serve a indicare in modo compatto la somma dei termini di una successione. Scrivere:</p>
+<div class="highlight-box"><span class="sym">∑<sub>i=0</sub><sup>n</sup> aᵢ</span></div>
+<p>significa sommare i primi <span class="sym">n+1</span> termini della successione:</p>
+<div class="highlight-box"><span class="sym">∑<sub>i=0</sub><sup>n</sup> aᵢ = a₀ + a₁ + a₂ + … + aₙ</span></div>
+<p>L'indice <span class="sym">i</span> è una variabile "muta": serve solo a scandire i termini, e il suo nome non ha importanza. Il valore in basso (<span class="sym">i = 0</span>) è il valore iniziale dell'indice; quello in alto (<span class="sym">n</span>) è il valore finale.</p></section>
+
+<section><h2>7. Proprietà delle sommatorie</h2>
+<p>Gli appunti elencano le proprietà fondamentali del simbolo di sommatoria, utili per manipolare le espressioni e semplificare i calcoli:</p>
+
+<div class="highlight-box">
+<p><strong>1. Invarianza rispetto al nome dell'indice.</strong> L'ordine (cioè il nome) degli indici di sommatoria non cambia il risultato:</p>
+<p><span class="sym">∑<sub>i=0</sub><sup>n</sup> aᵢ = ∑<sub>j=0</sub><sup>n</sup> aⱼ</span></p>
+</div>
+
+<div class="highlight-box">
+<p><strong>2. Spezzare o riordinare gli indici.</strong> È possibile cambiare l'indice di partenza o riscriverlo (per esempio con uno shift) senza alterare la somma, purché gli estremi vengano aggiornati di conseguenza.</p>
+</div>
+
+<div class="highlight-box">
+<p><strong>3. Somma di una costante.</strong> La somma di una costante <span class="sym">q</span> ripetuta <span class="sym">n+1</span> volte è pari a <span class="sym">(n+1) · q</span>:</p>
+<p><span class="sym">∑<sub>i=0</sub><sup>n</sup> q = (n+1) · q</span></p>
+</div>
+
+<div class="highlight-box">
+<p><strong>4. Raccolta delle costanti.</strong> Si possono portare le costanti fuori dal segno di sommatoria:</p>
+<p><span class="sym">∑ q · aᵢ = q · ∑ aᵢ</span></p>
+</div>
+
+<div class="highlight-box">
+<p><strong>5. Sommatoria di una somma.</strong> La sommatoria di una somma è uguale alla somma delle sommatorie:</p>
+<p><span class="sym">∑ (aᵢ + bᵢ) = ∑ aᵢ + ∑ bᵢ</span></p>
+</div>
+
+<div class="highlight-box">
+<p><strong>6. Suddivisione in due parti.</strong> Se <span class="sym">m ≤ n</span>, è possibile suddividere una sommatoria in due parti consecutive, con l'indice che si muove su intervalli diversi:</p>
+<p><span class="sym">∑<sub>i=0</sub><sup>n</sup> aᵢ = ∑<sub>i=0</sub><sup>m</sup> aᵢ + ∑<sub>i=m+1</sub><sup>n</sup> aᵢ</span></p>
+</div>
+
+<p>Queste proprietà tornano utili in moltissime dimostrazioni per induzione, dove si cerca di ricondurre la somma fino a <span class="sym">n+1</span> alla somma fino a <span class="sym">n</span> più un termine aggiuntivo.</p></section>
+
+
+</main></div><script src="motion.js"></script></body></html>
