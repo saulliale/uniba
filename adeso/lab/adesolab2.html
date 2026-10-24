@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: AESO Laboratorio - Aritmetica Finita e Rappresentazione dell'Informazione</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:#e5e7eb;line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul,ol{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+.v{color:#6ee7b7;font-weight:600}.f{color:#fca5a5;font-weight:600}td,th{text-align:center}
+code{font-family:'JetBrains Mono','Courier New',monospace;font-size:.85em;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);color:#a5b4fc;padding:2px 7px;border-radius:5px}
+.code-block{background:#0d1117;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1.5rem 1.75rem;margin:1.75rem 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.88rem;line-height:1.65;overflow-x:auto;color:#abb2bf;white-space:pre;position:relative}
+</style>
+<link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="../../adeso.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice AESO</a></div>
+<header><div class="subtitle">Laboratorio 2</div><h1>Aritmetica Finita e Rappresentazione dell'Informazione</h1></header>
+<main>
+
+<section>
+<h2>1. Aritmetica Reale vs Aritmetica Finita</h2>
+<p><strong>Aritmetica reale:</strong> i numeri sono <strong>illimitati</strong>, a <strong>precisione infinita</strong> e godono di proprietà perfette come la <strong>chiusura</strong> rispetto alle operazioni, la proprietà <strong>associativa</strong> e la proprietà <strong>distributiva</strong>.</p>
+<p><strong>Aritmetica finita:</strong> le risorse di rappresentazione sono <strong>limitate</strong>, perciò si lavora con <strong>intervalli definiti</strong> e <strong>numeri a precisione finita</strong>. Di conseguenza, perde le proprietà algebriche classiche (ad esempio, le proprietà associative o distributive non valgono più allo stesso modo).</p>
+<p><strong>Errori tipici dell'aritmetica finita:</strong></p>
+<ul>
+<li><strong>Overflow:</strong> si verifica quando il risultato di un'operazione supera il valore massimo rappresentabile (es. <span class="sym">600 + 600 = 1200</span> in un sistema a 3 cifre decimali).</li>
+<li><strong>Underflow:</strong> si verifica quando il risultato scende al di sotto del valore minimo gestibile, come nel caso di numeri troppo piccoli o negativi non previsti (es. <span class="sym">003 − 005 = −2</span>).</li>
+</ul>
+</section>
+
+<section>
+<h2>2. L'Aritmetica Finita Binaria dell'Elaboratore</h2>
+<p>I computer utilizzano un'aritmetica finita di tipo <strong>binario</strong> per due motivi fondamentali legati ai vincoli hardware:</p>
+<ul>
+<li><strong>Semplicità:</strong> i componenti elettronici operano in modo molto efficiente gestendo due soli stati fisici (differenze di potenziale elettrico).</li>
+<li><strong>Affidabilità:</strong> l'uso di un sistema a 2 livelli assicura una separazione massima tra le bande di valori, riducendo al minimo la probabilità che il rumore o i disturbi elettrici alterino l'informazione (cosa che invece sarebbe molto più rischiosa in sistemi multi-livello).</li>
+</ul>
+</section>
+
+<section>
+<h2>3. Unità di Misura e Tabella delle Informazioni</h2>
+<p>Le informazioni nei sistemi digitali sono rappresentate tramite <strong>stringhe di bit</span> (<span class="sym">0</span> e <span class="sym">1</span>). Con <span class="sym">n</span> bit è possibile codificare <span class="sym">2<sup>n</sup></span> informazioni distinte:</p>
+<div class="table-container"><table>
+<thead><tr><th>Bit</th><th>Informazioni distinte</th></tr></thead>
+<tbody>
+<tr><td class="sym">1 bit</td><td><span class="sym">2¹ = 2</span></td></tr>
+<tr><td class="sym">2 bit</td><td><span class="sym">2² = 4</span></td></tr>
+<tr><td class="sym">3 bit</td><td><span class="sym">2³ = 8</span></td></tr>
+<tr><td class="sym">4 bit</td><td><span class="sym">2⁴ = 16</span></td></tr>
+<tr><td class="sym">8 bit (1 Byte)</td><td><span class="sym">2⁸ = 256</span></td></tr>
+<tr><td class="sym">16 bit (2 Byte o 1 word)</td><td><span class="sym">2¹⁶ = 65.536</span></td></tr>
+</tbody></table></div>
+<p><strong>I prefissi e le potenze di 2:</strong> nel mondo informatico i multipli si basano sulle <strong>potenze di 2</strong> (e non sulle potenze decimali di 10):</p>
+<div class="table-container"><table>
+<thead><tr><th>Unità</th><th>Valore</th><th>Corrisponde a</th></tr></thead>
+<tbody>
+<tr><td class="sym">1 KiloByte (KB)</td><td><span class="sym">2¹⁰ byte = 1024 byte</span></td><td>circa mille</td></tr>
+<tr><td class="sym">1 MegaByte (MB)</td><td><span class="sym">2²⁰ byte = 1024 KB</span></td><td>circa un milione</td></tr>
+<tr><td class="sym">1 GigaByte (GB)</td><td><span class="sym">2³⁰ byte = 1024 MB</span></td><td>circa un miliardo</td></tr>
+<tr><td class="sym">1 TeraByte (TB)</td><td><span class="sym">2⁴⁰ byte = 1024 GB</span></td><td>circa mille miliardi</td></tr>
+</tbody></table></div>
+<p><span class="muted">Nota: esistono anche i prefissi binari specifici come KibiByte, MebiByte, GibiByte e TebiByte.</span></p>
+</section>
+
+<section>
+<h2>4. Numeri Naturali (Interi Senza Segno) in Aritmetica Finita</h2>
+<p>Un numero naturale viene rappresentato in macchina mediante una <strong>stringa a lunghezza fissa di <span class="sym">n</span> bit</span> (<span class="sym">a<sub>n−1</sub>a<sub>n−2</sub>…a₁a₀</span>), determinata dalla dimensione dei registri o delle parole di memoria. Il suo valore si calcola come:</p>
+<div class="highlight-box"><span class="sym">A = Σ<sub>i=0</sub><sup>n−1</sup> 2ⁱ · aᵢ</span></div>
+<p><strong>Intervallo di rappresentabilità:</strong> con <span class="sym">n</span> bit si possono rappresentare i numeri compresi tra <span class="sym">0</span> e <span class="sym">2<sup>n</sup> − 1</span>.</p>
+<p><strong>Esempio con <span class="sym">n = 4</span> bit:</strong> il numero minimo è <span class="sym">(0000)₂ = 0</span> e il massimo è <span class="sym">(1111)₂ = 15</span>.</p>
+<p><strong>Gestione delle operazioni:</strong> se il risultato di un calcolo supera il limite massimo (<span class="sym">&gt; 2<sup>n</sup> − 1</span>) si genera un errore di <strong>overflow</strong>, mentre se scende sotto lo zero si genera un errore di <strong>underflow</strong>.</p>
+</section>
+
+<section>
+<h2>5. Introduzione ai Numeri Relativi in Aritmetica Finita</h2>
+<p>Un <strong>numero relativo</strong> (un intero con segno) viene rappresentato all'interno di una stringa di bit a lunghezza fissa. L'intervallo di valori rappresentabili dipende strettamente dal <strong>tipo di codifica adottata</strong> e dal numero <span class="sym">n</span> di bit impiegati. Poiché le risorse sono limitate, è necessario riservare una parte della stringa (solitamente il <strong>bit più significativo</strong>) per indicare il segno del numero (<span class="sym">0</span> per il positivo, <span class="sym">1</span> per il negativo).</p>
+<p>I metodi principali analizzati sono quattro: <strong>Modulo e Segno</strong>, <strong>Complemento a 1</strong>, <strong>Complemento a 2</strong> e <strong>Rappresentazione con Eccesso</strong>.</p>
+</section>
+
+<section>
+<h2>6. I Quattro Metodi di Rappresentazione</h2>
+
+<h3>A. Modulo e Segno (MS)</h3>
+<p><strong>Come funziona:</strong> il bit più significativo indica il segno (<span class="sym">0 = +</span>, <span class="sym">1 = −</span>); i restanti <span class="sym">n−1</span> bit contengono il valore assoluto del numero scritto in binario puro.</p>
+<div class="highlight-box"><strong>Intervallo di rappresentabilità (su <span class="sym">n</span> bit):</strong> da <span class="sym">−(2<sup>n−1</sup> − 1)</span> a <span class="sym">2<sup>n−1</sup> − 1</span>.</div>
+<p><strong>Problemi e limiti:</strong> presenta una <strong>doppia rappresentazione dello zero</strong> (uno positivo e uno negativo, es. <span class="sym">+0</span> e <span class="sym">−0</span>) e rende molto complessa la gestione hardware delle operazioni di somma e sottrazione.</p>
+
+<h3>B. Complemento a 1 (C1)</h3>
+<p><strong>Come funziona:</strong> i numeri negativi si ottengono calcolando la differenza del corrispondente valore positivo rispetto alla stringa composta da tutti <span class="sym">1</span> (<span class="sym">11…1</span>), che corrisponde operativamente a <strong>invertire tutti i bit</strong> del numero (gli <span class="sym">0</span> diventano <span class="sym">1</span> e viceversa).</p>
+<div class="highlight-box"><strong>Intervallo di rappresentabilità (su <span class="sym">n</span> bit):</strong> da <span class="sym">−(2<sup>n−1</sup> − 1)</span> a <span class="sym">2<sup>n−1</sup> − 1</span>.</div>
+<p><strong>Vantaggi e svantaggi:</strong> permette di trasformare la sottrazione in un'operazione di somma (aggiungendo il bit di riporto finale al risultato), ma mantiene l'ambiguità della <strong>doppia rappresentazione dello zero</strong>.</p>
+
+<h3>C. Complemento a 2 (C2)</h3>
+<p><strong>Come funziona:</strong> è lo standard più utilizzato nei sistemi di elaborazione moderni. I valori negativi si ricavano prendendo il complemento a 1 del numero positivo e aggiungendo <span class="sym">1</span>. Geometricamente i numeri si dispongono su una struttura circolare (<strong>ruota dei numeri</strong>).</p>
+<div class="highlight-box"><strong>Intervallo di rappresentabilità (su <span class="sym">n</span> bit):</strong> da <span class="sym">−2<sup>n−1</sup></span> a <span class="sym">2<sup>n−1</sup> − 1</span> (l'intervallo è asimmetrico, con un numero negativo in più).</div>
+<p><strong>Vantaggi principali:</strong> esiste un'unica rappresentazione dello zero (<span class="sym">0000</span>), la sottrazione si esegue come una normale somma algebrica e il bit di riporto in eccesso viene semplicemente trascurato senza calcoli extra.</p>
+
+<h3>D. Rappresentazione con Eccesso</h3>
+<p><strong>Come funziona:</strong> sposta l'intervallo dei numeri relativi nel dominio dei numeri positivi aggiungendo un valore fisso detto <strong>eccesso</strong> (spesso pari a <span class="sym">2<sup>n−1</sup></span>) al numero da codificare.</p>
+<div class="highlight-box"><strong>Caratteristica:</strong> se l'eccesso scelto è <span class="sym">2<sup>n−1</sup></span>, l'intervallo coperto è identico a quello del complemento a 2 (<span class="sym">[−2<sup>n−1</sup>, 2<sup>n−1</sup>−1]</span>), ma la rappresentazione corrisponde esattamente a quella del complemento a 2 con il bit di segno invertito.</div>
+</section>
+
+</main>
+</div>
+<script src="../../motion.js"></script>
+</body>
+</html>

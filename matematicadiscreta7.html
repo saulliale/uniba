@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: Matematica Discreta - Combinatoria</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:#e5e7eb;line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul,ol{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="matematicadiscreta.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice Matematica Discreta</a></div>
+<header><div class="subtitle">Lezione 7</div><h1>Combinatoria</h1></header>
+<main>
+
+<section>
+<h2>1. L'idea di base e la Regola della Somma</h2>
+<p>La combinatoria parte da un'idea semplice: dati due insiemi finiti <span class="sym">A</span> e <span class="sym">B</span>, vogliamo studiare la <strong>cardinalità</strong> (il numero di elementi) di nuovi insiemi ottenuti a partire da essi. In altre parole, ci chiediamo: "<strong>in quanti modi posso scegliere un singolo elemento</strong> tra questi insiemi?".</p>
+<div class="highlight-box"><strong>Regola della somma:</strong> se abbiamo due insiemi finiti <span class="sym">A</span> e <span class="sym">B</span> che sono <strong>disgiunti</strong> (cioè non hanno nessun elemento in comune, quindi <span class="sym">A ∩ B = ∅</span>), allora la cardinalità della loro unione è semplicemente la somma delle loro cardinalità:</div>
+<div class="highlight-box" style="margin-top:0"><span class="sym">| A ∪ B | = | A | + | B |</span></div>
+<p>Più in generale, se abbiamo una serie di insiemi a due a due disgiunti (<span class="sym">A₁, A₂, …, Aₘ</span>), la cardinalità della loro unione è la somma di tutte le singole cardinalità:</p>
+<div class="highlight-box"><span class="sym">| A₁ ∪ A₂ ∪ … ∪ Aₘ | = | A₁ | + | A₂ | + … + | Aₘ |</span></div>
+</section>
+
+<section>
+<h2>2. Il Teorema di Inclusione-Esclusione per due insiemi</h2>
+<p>Cosa succede se gli insiemi <strong>non sono disgiunti</strong>, cioè hanno elementi in comune? Se sommiamo semplicemente le cardinalità di <span class="sym">| A |</span> e <span class="sym">| B |</span>, gli elementi che stanno nell'intersezione <span class="sym">A ∩ B</span> verrebbero contati due volte. Per correggere questo errore si applica la formula generale:</p>
+<div class="highlight-box"><span class="sym">| A ∪ B | = | A | + | B | − | A ∩ B |</span></div>
+<p>Negli appunti viene fatto un esempio pratico con le <strong>penne</strong>: se abbiamo penne rosse e penne blu che in parte si sovrappongono, per trovare il totale degli elementi uniti bisogna sommare i singoli gruppi e sottrarre quelli contati due volte nell'intersezione.</p>
+<div class="figure-container">
+<svg viewBox="0 0 600 190" width="100%">
+<defs><clipPath id="cA2"><circle cx="78" cy="90" r="48"/></clipPath></defs>
+<g transform="translate(0,0)">
+<circle cx="78" cy="90" r="48" fill="none" stroke="#818cf8" stroke-width="2"/>
+<circle cx="130" cy="90" r="48" fill="rgba(99,102,241,.55)" stroke="#818cf8" stroke-width="2" clip-path="url(#cA2)"/>
+<circle cx="130" cy="90" r="48" fill="none" stroke="#818cf8" stroke-width="2"/>
+<text x="38" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">A</text><text x="158" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">B</text>
+<text x="104" y="172" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#a5b4fc" text-anchor="middle">A ∩ B (contati due volte)</text></g>
+<g transform="translate(200,0)">
+<circle cx="78" cy="90" r="48" fill="rgba(16,185,129,.4)" stroke="#10b981" stroke-width="2"/>
+<circle cx="130" cy="90" r="48" fill="rgba(16,185,129,.4)" stroke="#10b981" stroke-width="2"/>
+<text x="38" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">A</text><text x="158" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">B</text>
+<text x="104" y="172" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#6ee7b7" text-anchor="middle">A ∪ B</text></g>
+<g transform="translate(400,0)">
+<circle cx="78" cy="90" r="48" fill="rgba(245,158,11,.45)" stroke="#f59e0b" stroke-width="2"/>
+<circle cx="130" cy="90" r="48" fill="#14161f" stroke="#f59e0b" stroke-width="2"/>
+<text x="38" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">A</text><text x="158" y="94" font-family="Inter,sans-serif" font-size="15" fill="#e5e7eb">B</text>
+<text x="104" y="172" font-family="Inter,sans-serif" font-size="14" font-weight="600" fill="#fcd34d" text-anchor="middle">A ∖ B</text></g>
+</svg>
+<div class="figure-caption">Fig 1. Se A e B si sovrappongono, |A ∪ B| = |A| + |B| − |A ∩ B|: si sottrae l'intersezione contata due volte.</div>
+</div>
+</section>
+
+<section>
+<h2>3. Estensione a tre insiemi e l'Esercizio degli studenti</h2>
+<p>Il principio si estende anche a tre insiemi finiti <span class="sym">A</span>, <span class="sym">B</span>, <span class="sym">C</span>. La formula per calcolare l'unione di tre insiemi tiene conto di tutte le intersezioni a coppie e dell'intersezione comune a tutti e tre:</p>
+<div class="highlight-box"><span class="sym">| A ∪ B ∪ C | = | A | + | B | + | C | − | A ∩ B | − | A ∩ C | − | B ∩ C | + | A ∩ B ∩ C |</span></div>
+<p>La dimostrazione geometrica e logica (tramite i <strong>diagrammi di Venn</strong>) spiega che l'intersezione tripla viene prima aggiunta, poi tolta nelle intersezioni a coppie, e infine va riaggiunta alla fine perché era stata "eliminata" del tutto.</p>
+<p>Nella stessa pagina viene risolto un esercizio applicato sugli <strong>studenti di Bari e Brindisi</strong> con determinate caratteristiche (occhi chiari/scuri), sfruttando proprio queste formule di conteggio.</p>
+<div class="figure-container">
+<svg viewBox="0 0 600 330" width="100%">
+<ellipse cx="210" cy="160" rx="110" ry="95" fill="none" stroke="#818cf8" stroke-width="2"/>
+<ellipse cx="390" cy="160" rx="110" ry="95" fill="none" stroke="#10b981" stroke-width="2"/>
+<ellipse cx="300" cy="255" rx="110" ry="95" fill="none" stroke="#f59e0b" stroke-width="2"/>
+<text x="120" y="90" font-family="Inter,sans-serif" font-size="16" fill="#c7d2fe">A</text>
+<text x="480" y="90" font-family="Inter,sans-serif" font-size="16" fill="#6ee7b7">B</text>
+<text x="300" y="330" font-family="Inter,sans-serif" font-size="16" fill="#fcd34d" text-anchor="middle">C</text>
+<text x="300" y="168" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#a5b4fc" text-anchor="middle">A ∩ B ∩ C</text>
+</svg>
+<div class="figure-caption">Fig 2. Diagramma di Venn per tre insiemi: l'intersezione centrale comune a tutti e tre viene aggiunta, sottratta nelle coppie e infine riaggiunta.</div>
+</div>
+</section>
+
+<section>
+<h2>4. La Regola del Prodotto</h2>
+<p>Infine, viene introdotta la <strong>Regola del Prodotto</strong>, che si usa quando dobbiamo calcolare la cardinalità del <strong>prodotto cartesiano</strong> tra due insiemi <span class="sym">A × B</span>. Se l'insieme <span class="sym">A</span> ha <span class="sym">n</span> elementi e l'insieme <span class="sym">B</span> ha <span class="sym">m</span> elementi, abbiamo <span class="sym">n</span> modi per scegliere un elemento di <span class="sym">A</span> e <span class="sym">m</span> modi per scegliere un elemento di <span class="sym">B</span>.</p>
+<p>Il numero totale delle coppie possibili (le scelte totali) è dato dal prodotto delle cardinalità:</p>
+<div class="highlight-box"><span class="sym">| A × B | = n · m = | A | · | B |</span></div>
+</section>
+
+</main>
+</div>
+<script src="motion.js"></script>
+</body>
+</html>
