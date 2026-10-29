@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: Matematica Discreta - Combinazioni e Disposizioni</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:#e5e7eb;line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul,ol{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+</style>
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="matematicadiscreta.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice Matematica Discreta</a></div>
+<header><div class="subtitle">Lezione 8</div><h1>Combinazioni e Disposizioni</h1></header>
+<main>
+
+<section>
+<h2>1. Disposizioni Semplici (Senza Ripetizione)</h2>
+<p>Vogliamo determinare in quanti modi si possono scegliere <span class="sym">k</span> elementi distinti da un insieme <span class="sym">A</span> di <span class="sym">n</span> elementi, tenendo conto dell'ordine in cui li disponiamo (es. <span class="sym">xy ≠ yx</span>).</p>
+<div class="highlight-box"><strong>Formula delle disposizioni semplici:</strong></div>
+<div class="highlight-box" style="margin-top:0"><span class="sym">D(n, k) = n · (n − 1) · (n − 2) ··· (n − k + 1) = n! / (n − k)!</span></div>
+<p><strong>Osservazioni importanti:</strong></p>
+<ul>
+<li><span class="sym">D(n, 1) = n</span> (modi per scegliere un elemento).</li>
+<li><span class="sym">D(n, n) = n!</span> (numero di modi per ordinare <span class="sym">n</span> elementi).</li>
+<li><span class="sym">D(n, k)</span> rappresenta esattamente il numero delle <strong>funzioni iniettive</strong> da un insieme di cardinalità <span class="sym">k</span> a uno di cardinalità <span class="sym">n</span>.</li>
+</ul>
+</section>
+
+<section>
+<h2>2. Combinazioni Semplici e Coefficiente Binomiale</h2>
+<p>Se scegliamo <span class="sym">k</span> elementi distinti da un insieme di <span class="sym">n</span> elementi, ma l'ordine non importa (cioè <span class="sym">{x, y} = {y, x}</span>), parliamo di <strong>combinazioni semplici</strong>. Ciascuna combinazione corrisponde a un <strong>sottoinsieme di <span class="sym">k</span> elementi</span>.</p>
+<p>Si ottiene dividendo le disposizioni per il numero di modi in cui si possono ordinare <span class="sym">k</span> elementi (<span class="sym">k!</span>), dando vita al <strong>coefficiente binomiale</span>:</p>
+<div class="highlight-box"><span class="sym">binom(n, k) = D(n, k) / k! = n! / (k! · (n − k)!)</span></div>
+<p><strong>Proprietà notevoli dei coefficienti binomiali:</strong></p>
+<ul>
+<li><span class="sym">binom(n, 0) = 1</span> (poiché <span class="sym">0! = 1</span>).</li>
+<li><span class="sym">binom(n, 1) = n</span>.</li>
+<li><span class="sym">binom(n, n) = 1</span>.</li>
+<li><strong>Proprietà simmetrica:</strong> <span class="sym">binom(n, k) = binom(n, n − k)</span>.</li>
+<li><strong>Formula di Stiefel:</strong> <span class="sym">binom(n + 1, k) = binom(n, k) + binom(n, k − 1)</span>.</li>
+</ul>
+<p><strong>Teorema del Binomio di Newton:</strong> spiega perché si chiamano coefficienti binomiali, in quanto i numeri <span class="sym">binom(n, k)</span> compaiono nello sviluppo della potenza del binomio <span class="sym">(x + y)<sup>n</sup> = Σ<sub>k=0</sub><sup>n</sup> binom(n, k) · x<sup>k</sup> · y<sup>n − k</sup></span>. Sfruttando questa formula negli appunti si dimostra che la cardinalità dell'insieme delle parti è <span class="sym">| ℬ(A) | = 2<sup>n</sup></span>.</p>
+</section>
+
+<section>
+<h2>3. Disposizioni con Ripetizione</h2>
+<p>Se vogliamo scegliere <span class="sym">k</span> elementi da un insieme di <span class="sym">n</span> elementi ammettendo la <strong>ripetizione</strong> e tenendo conto dell'ordine (es. targhe automobilistiche, funzioni generiche da un insieme <span class="sym">A</span> di cardinalità <span class="sym">k</span> a <span class="sym">B</span> di cardinalità <span class="sym">n</span>):</p>
+<div class="highlight-box"><strong>Il numero totale delle disposizioni con ripetizione è:</strong></div>
+<div class="highlight-box" style="margin-top:0"><span class="sym">n<sup>k</sup></span></div>
+</section>
+
+<section>
+<h2>4. Combinazioni con Ripetizione</h2>
+<p>Se vogliamo scegliere <span class="sym">k</span> elementi in un insieme di <span class="sym">n</span> oggetti ammettendo ripetizioni ma senza che l'ordine sia importante, la formula diventa:</p>
+<div class="highlight-box"><span class="sym">C'_{n, k} = binom(n + k − 1, k) = (n + k − 1)! / (k! · (n − 1)!)</span></div>
+<p>Questo modello si applica perfettamente anche ai classici problemi di "<strong>distribuzione di caramelle identiche a più bambini</strong>" (es. distribuire 5 caramelle a 2 bambini, o 35 caramelle a 5 bambini garantendo almeno 1 caramella a testa).</p>
+</section>
+
+</main>
+</div>
+<script src="motion.js"></script>
+</body>
+</html>

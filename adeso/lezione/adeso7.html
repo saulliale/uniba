@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintesi: Memorie di Massa</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+    <script src="../../motion.js"></script>
+    <style>
+        /* =========================================
+           Variabili di Stile (coerenti con adeso5.html e adeso6.html)
+           ========================================= */
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-2: #20243a;
+            --border: rgba(255,255,255,0.07);
+            --text: #d1d5db;
+            --text-strong: #f3f4f6;
+            --text-muted: #6b7280;
+            --accent: #6366f1;
+            --accent-2: #818cf8;
+            --accent-light: rgba(99,102,241,0.08);
+            --accent-border: rgba(99,102,241,0.25);
+            --font: 'Inter', system-ui, sans-serif;
+            --radius: 14px;
+            --radius-sm: 8px;
+        }
+
+        /* =========================================
+           Reset e Base
+           ========================================= */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--bg);
+            background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 60%);
+            color: var(--text);
+            line-height: 1.75;
+            font-size: 16px;
+            padding: 2rem 1rem 6rem;
+        }
+
+        /* =========================================
+           Layout Principale
+           ========================================= */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4rem 5rem;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+        }
+
+        /* =========================================
+           Back Nav
+           ========================================= */
+        .back-nav {
+            margin-bottom: 2.5rem;
+            animation: fadeDown 0.4s ease both;
+        }
+
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.88rem;
+            transition: color 0.2s, gap 0.2s;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 14px 7px 10px;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .back-nav a:hover { color: var(--accent-2); gap: 12px; border-color: var(--accent-border); }
+        .back-nav a svg { transition: transform 0.2s; }
+        .back-nav a:hover svg { transform: translateX(-3px); }
+
+        /* =========================================
+           Header
+           ========================================= */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            animation: fadeDown 0.5s 0.05s ease both;
+        }
+
+        .subtitle {
+            display: inline-block;
+            color: var(--accent-2);
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            border-radius: 100px;
+            padding: 5px 16px;
+        }
+
+        h1 {
+            font-size: clamp(1.7rem, 4vw, 2.3rem);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-note {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.75rem;
+        }
+
+        /* =========================================
+           Contenuto
+           ========================================= */
+        main {
+            animation: fadeUp 0.6s 0.1s ease both;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        section:last-child { margin-bottom: 0; }
+
+        h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent-2);
+            margin: 2.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, var(--accent), var(--accent-2));
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-strong);
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        p { margin-bottom: 1rem; }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li { margin-bottom: 0.5rem; }
+
+        strong { color: var(--text-strong); font-weight: 600; }
+        em { color: #a5b4fc; }
+
+        .sym {
+            font-size: 1.05em;
+            color: #c7d2fe;
+            white-space: nowrap;
+        }
+
+        .highlight-box {
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            border-left: 3px solid var(--accent);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+        }
+
+        .highlight-box p:last-child { margin-bottom: 0; }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.85rem 1.1rem;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: rgba(255,255,255,0.03);
+            color: var(--text-strong);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        code {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.85em;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            color: #a5b4fc;
+            padding: 2px 7px;
+            border-radius: 5px;
+        }
+
+        /* =========================================
+           Mobile
+           ========================================= */
+        @media (max-width: 768px) {
+            .container { padding: 2rem 1.5rem; border-radius: 14px; }
+            body { font-size: 15px; padding: 1rem 0.5rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="back-nav">
+        <a href="../../adeso.html">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Torna all'indice AESO
+        </a>
+    </div>
+
+    <header>
+        <div class="subtitle">Lezione 7</div>
+        <h1>Memorie di Massa</h1>
+        <div class="header-note">Introduzione, memorie ROM, HDD, SSD, dischi ottici e classificazione generale delle memorie</div>
+    </header>
+
+    <main>
+        <section>
+            <h2>1. Introduzione alle Memorie di Massa</h2>
+            <p>Le <strong>memorie di massa</strong> (o <strong>secondarie</strong>) servono a memorizzare grandi volumi di dati in modo <strong>persistente e non volatile</strong> (mantengono le informazioni anche senza corrente elettrica). I parametri chiave per valutarne le prestazioni sono la <strong>capacità di archiviazione</strong> (misurata in MB, GB, TB) e il <strong>tempo di accesso ai dati</strong> (dell'ordine dei millisecondi). Le tecnologie principali si dividono in <strong>magnetiche</strong>, <strong>ottiche</strong> e <strong>a semiconduttore</strong>.</p>
+        </section>
+
+        <section>
+            <h2>2. Le Memorie ROM (Read Only Memory)</h2>
+            <p>Un caso speciale di memoria permanente è la <strong>ROM</strong>, un insieme di circuiti integrati non volatili a <strong>sola lettura</strong>. I dati vengono impostati direttamente in fabbrica (o tramite procedure speciali) e non possono essere facilmente modificati.</p>
+            <p><strong>Esempio d'uso:</strong> contiene le istruzioni di sistema per l'avvio e il riconoscimento delle periferiche (<strong>BIOS</strong>).</p>
+            <p><strong>Evoluzioni tecnologiche:</strong></p>
+            <ul>
+                <li><strong>PROM:</strong> programmabile una sola volta dall'utente tramite apposita strumentazione.</li>
+                <li><strong>EPROM:</strong> cancellabile tramite esposizione a raggi ultravioletti e riprogrammabile.</li>
+                <li><strong>EEPROM / Memorie Flash:</strong> cancellabili ed elettricamente riscrivibili (es. chiavette USB, schede SD), con le memorie Flash organizzate per <strong>blocchi</strong> anziché per singolo byte.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>3. I Dischi Magnetici (Hard Disk Drive - HDD)</h2>
+            <p>Gli hard disk tradizionali sono costituiti da una serie di <strong>piatti impilati</strong> di materiale ferromagnetico che ruotano a velocità elevate (es. migliaia di RPM).</p>
+            <p><strong>Funzionamento:</strong> la scrittura e la lettura avvengono tramite <strong>testine magnetiche</strong> che sfruttano il fenomeno dell'induzione elettromagnetica, allineando le particelle magnetiche per rappresentare i bit (<span class="sym">0</span> e <span class="sym">1</span>).</p>
+            <p><strong>Organizzazione fisica:</strong> i dati sono disposti in anelli concentrici chiamati <strong>tracce</strong>, a loro volta suddivisi in <strong>settori</strong> (l'unità minima di lettura/scrittura, solitamente da 512 byte).</p>
+            <p><strong>Tempo di accesso totale:</strong> è dato dalla somma di tre fattori:</p>
+            <div class="highlight-box"><span class="sym">T_accesso = T_seek + T_rotazione + T_trasferimento</span></div>
+            <ul>
+                <li><span class="sym">T_seek</span>: spostamento della testina.</li>
+                <li><span class="sym">T_rotazione</span>: latenza di rotazione (stimata come la metà del tempo di una rotazione completa, <span class="sym">T_rotazione = 1 / (2 · V_r)</span>).</li>
+                <li><span class="sym">T_trasferimento</span>: tempo di trasferimento dei dati.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. Hard Disk a Stato Solido (SSD)</h2>
+            <p>Gli <strong>SSD</strong> (Solid State Drive) utilizzano banchi di memoria <strong>Flash</strong> al posto dei piatti magnetici.</p>
+            <p><strong>Vantaggi:</strong> non avendo parti meccaniche in movimento, offrono maggiore velocità, silenziosità, minori consumi, minor calore prodotto e un'elevata resistenza agli urti.</p>
+            <p><strong>Svantaggi:</strong> presentano un <strong>costo per bit superiore</strong> rispetto ai tradizionali HDD.</p>
+        </section>
+
+        <section>
+            <h2>5. I Dischi Ottici (CD, DVD, Blu-ray)</h2>
+            <p>Sfruttano una sorgente di luce <strong>laser</strong> per incidere o leggere informazioni su un supporto protetto da strati di policarbonato e alluminio.</p>
+            <p><strong>Principio di lettura:</strong> la superficie alterna zone incassate (<strong>pit</strong>) e aree piane (<strong>land</strong>); un fotorilevatore misura le diverse variazioni di riflessione del raggio laser. Poiché non c'è contatto fisico, non sono soggetti a usura meccanica.</p>
+            <p><strong>Confronto tra formati:</strong></p>
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr><th>Formato</th><th>Laser</th><th>Capacità</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CD</strong></td>
+                            <td>Infrarossi/rosso (<span class="sym">λ = 780 nm</span>)</td>
+                            <td>650-700 MB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>DVD</strong></td>
+                            <td>Rosso focalizzato meglio (<span class="sym">λ = 650 nm</span>)</td>
+                            <td>4,7 GB fino a 17 GB</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Blu-ray Disc (BD)</strong></td>
+                            <td>Luce blu (<span class="sym">λ = 405 nm</span>)</td>
+                            <td>25 GB (singolo strato) fino a 50 GB e oltre</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <p>Grazie alla lunghezza d'onda più corta, il laser blu del Blu-ray permette di ridurre drasticamente le distanze tra le tracce e la dimensione dei pit, aumentando la capacità di storage.</p>
+        </section>
+
+        <section>
+            <h2>6. Classificazione Generale delle Memorie</h2>
+            <p>Il documento classifica le memorie in base a quattro criteri fondamentali:</p>
+            <ul>
+                <li><strong>Tecnologia:</strong> a semiconduttore (transistor), magnetiche (materiale ferromagnetico) o ottiche (laser).</li>
+                <li><strong>Modalità di accesso:</strong> ad accesso sequenziale oppure ad accesso diretto/casuale (il cui tempo d'accesso non dipende dalla posizione del dato).</li>
+                <li><strong>Volatilità:</strong> volatili (perdono i dati senza corrente) o non volatili/permanenti.</li>
+                <li><strong>Operazioni consentite:</strong> a sola lettura (ROM, CD-ROM) oppure a lettura e scrittura (RAM, HDD, SSD, riscrivibili).</li>
+            </ul>
+        </section>
+    </main>
+</div>
+</body>
+</html>

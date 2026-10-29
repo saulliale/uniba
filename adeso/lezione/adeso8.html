@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintesi: Algebra di Boole e Circuiti Logici</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+    <script src="../../motion.js"></script>
+    <style>
+        /* =========================================
+           Variabili di Stile (coerenti con le altre lezioni AESO)
+           ========================================= */
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-2: #20243a;
+            --border: rgba(255,255,255,0.07);
+            --text: #d1d5db;
+            --text-strong: #f3f4f6;
+            --text-muted: #6b7280;
+            --accent: #6366f1;
+            --accent-2: #818cf8;
+            --accent-light: rgba(99,102,241,0.08);
+            --accent-border: rgba(99,102,241,0.25);
+            --font: 'Inter', system-ui, sans-serif;
+            --radius: 14px;
+            --radius-sm: 8px;
+        }
+
+        /* =========================================
+           Reset e Base
+           ========================================= */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--bg);
+            background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 60%);
+            color: var(--text);
+            line-height: 1.75;
+            font-size: 16px;
+            padding: 2rem 1rem 6rem;
+        }
+
+        /* =========================================
+           Layout Principale
+           ========================================= */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4rem 5rem;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+        }
+
+        /* =========================================
+           Back Nav
+           ========================================= */
+        .back-nav {
+            margin-bottom: 2.5rem;
+            animation: fadeDown 0.4s ease both;
+        }
+
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.88rem;
+            transition: color 0.2s, gap 0.2s;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 14px 7px 10px;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .back-nav a:hover { color: var(--accent-2); gap: 12px; border-color: var(--accent-border); }
+        .back-nav a svg { transition: transform 0.2s; }
+        .back-nav a:hover svg { transform: translateX(-3px); }
+
+        /* =========================================
+           Header
+           ========================================= */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            animation: fadeDown 0.5s 0.05s ease both;
+        }
+
+        .subtitle {
+            display: inline-block;
+            color: var(--accent-2);
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            border-radius: 100px;
+            padding: 5px 16px;
+        }
+
+        h1 {
+            font-size: clamp(1.7rem, 4vw, 2.3rem);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-note {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.75rem;
+        }
+
+        /* =========================================
+           Contenuto
+           ========================================= */
+        main {
+            animation: fadeUp 0.6s 0.1s ease both;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        section:last-child { margin-bottom: 0; }
+
+        h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent-2);
+            margin: 2.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, var(--accent), var(--accent-2));
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-strong);
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        p { margin-bottom: 1rem; }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li { margin-bottom: 0.5rem; }
+
+        strong { color: var(--text-strong); font-weight: 600; }
+        em { color: #a5b4fc; }
+
+        .sym {
+            font-size: 1.05em;
+            color: #c7d2fe;
+            white-space: nowrap;
+        }
+
+        .highlight-box {
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            border-left: 3px solid var(--accent);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+        }
+
+        .highlight-box p:last-child { margin-bottom: 0; }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.85rem 1.1rem;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: rgba(255,255,255,0.03);
+            color: var(--text-strong);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        code {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.85em;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            color: #a5b4fc;
+            padding: 2px 7px;
+            border-radius: 5px;
+        }
+
+        /* =========================================
+           Mobile
+           ========================================= */
+        @media (max-width: 768px) {
+            .container { padding: 2rem 1.5rem; border-radius: 14px; }
+            body { font-size: 15px; padding: 1rem 0.5rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="back-nav">
+        <a href="../../adeso.html">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Torna all'indice AESO
+        </a>
+    </div>
+
+    <header>
+        <div class="subtitle">Lezione 8</div>
+        <h1>Algebra di Boole e Circuiti Logici</h1>
+        <div class="header-note">Livello logico-digitale, forme canoniche, circuiti combinatori e sequenziali, latch S-R</div>
+    </header>
+
+    <main>
+        <section>
+            <h2>1. Introduzione e Algebra di Boole</h2>
+            <p>Il livello logico-digitale costituisce le <strong>fondamenta hardware</strong> di un sistema di elaborazione, basandosi su dispositivi digitali binari (reti logiche) che gestiscono due soli stati: <span class="sym">0</span> (falso) e <span class="sym">1</span> (vero). Il progetto di questi dispositivi poggia sull'<strong>Algebra di Boole</strong>, introdotta da George Boole nel 1854, che utilizza tre operatori logici fondamentali:</p>
+            <ul>
+                <li><strong>Congiunzione (AND - <span class="sym">A · B</span>):</strong> vero solo se tutti gli operandi sono veri.</li>
+                <li><strong>Disgiunzione (OR - <span class="sym">A + B</span>):</strong> vero se almeno un operando è vero.</li>
+                <li><strong>Negazione (NOT - <span class="sym">¬A</span> o <span class="sym">A̅</span>):</strong> inverte il valore di verità.</li>
+            </ul>
+            <p>Il sistema formato da AND, OR e NOT si dice <strong>funzionalmente completo</strong>, poiché qualsiasi funzione logica, per quanto complessa, può essere espressa attraverso di essi. Inoltre, le porte <strong>NAND</strong> e <strong>NOR</strong> sono considerate <strong>universali (complete)</strong>, poiché consentono di implementare qualsiasi funzione logica senza l'ausilio di altri tipi di porte.</p>
+        </section>
+
+        <section>
+            <h2>2. Le Forme Canoniche e la Semplificazione</h2>
+            <p>Una funzione logica può essere descritta tramite una <strong>Tabella di Verità</strong> (con <span class="sym">2<sup>n</sup></span> righe per <span class="sym">n</span> variabili di input). Dalla tabella si possono ricavare espressioni algebriche standard chiamate <strong>forme canoniche</strong>:</p>
+            <ul>
+                <li><strong>Forma canonica disgiuntiva (Somma di prodotti):</strong> si ottiene sommando (tramite OR) i prodotti (AND) delle variabili di input corrispondenti alle righe in cui la funzione vale 1 (le variabili sono negate se valgono 0).</li>
+                <li><strong>Forma canonica congiuntiva (Prodotto di somme).</strong></li>
+            </ul>
+            <p>Per ridurre il numero di componenti hardware, l'espressione logica viene semplificata applicando le proprietà dell'algebra di Boole (commutativa, associativa, distributiva, leggi di De Morgan, ecc.), ottenendo circuiti più efficienti a parità di funzionalità.</p>
+        </section>
+
+        <section>
+            <h2>3. Circuiti Combinatori</h2>
+            <p>I <strong>circuiti combinatori</strong> sono reti logiche in cui l'output dipende unicamente dai valori degli ingressi in quel dato istante. I principali esempi analizzati sono:</p>
+            <ul>
+                <li><strong>Decodificatore:</strong> con <span class="sym">n</span> input e <span class="sym">2<sup>n</sup></span> output, attiva una sola linea di uscita in corrispondenza della combinazione binaria in ingresso; è fondamentale per la selezione delle locazioni di memoria.</li>
+                <li><strong>Comparatore e Shifter:</strong> per il confronto di parole e lo scorrimento dei bit.</li>
+                <li><strong>Sommatore (Half-Adder e Full-Adder):</strong> circuiti basati su porte XOR, AND e OR per eseguire l'addizione binaria gestendo anche il riporto (carry).</li>
+                <li><strong>ALU (Arithmetic Logic Unit):</strong> unità di elaborazione centrale che combina operatori logici e sommatori per eseguire operazioni aritmetiche e logiche di base.</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>4. Circuiti Sequenziali e il Latch S-R</h2>
+            <p>A differenza dei combinatori, i <strong>circuiti sequenziali</strong> producono output che dipendono sia dagli ingressi attuali sia dallo stato precedente del sistema, introducendo la capacità di <strong>memorizzazione</strong>.</p>
+            <p><strong>Il Latch S-R (Set-Reset):</strong> è il circuito sequenziale di base (costruito con porte NOR retroazionate) in grado di memorizzare 1 bit d'informazione.</p>
+            <ul>
+                <li>Mantenendo <span class="sym">S = 0</span> e <span class="sym">R = 0</span>, il circuito mantiene lo stato precedente (<span class="sym">Q<sub>t</sub></span>).</li>
+                <li>Settando <span class="sym">S = 1</span> si porta l'uscita <span class="sym">Q</span> a 1 (Stato 1).</li>
+                <li>Settando <span class="sym">R = 1</span> si porta l'uscita <span class="sym">Q</span> a 0 (Stato 0).</li>
+                <li>La combinazione <span class="sym">S = 1</span> e <span class="sym">R = 1</span> non è consentita perché produce un output inconsistente.</li>
+            </ul>
+            <p><strong>Latch D sincronizzato:</strong> un'evoluzione del latch controllata da un segnale di clock, in cui lo stato si aggiorna copiando il valore dell'ingresso <span class="sym">D</span> solo quando il clock è attivo.</p>
+        </section>
+    </main>
+</div>
+</body>
+</html>

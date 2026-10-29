@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: AESO Laboratorio - Numeri Reali in Aritmetica Finita</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:#e5e7eb;line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul,ol{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+.v{color:#6ee7b7;font-weight:600}.f{color:#fca5a5;font-weight:600}td,th{text-align:center}
+code{font-family:'JetBrains Mono','Courier New',monospace;font-size:.85em;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);color:#a5b4fc;padding:2px 7px;border-radius:5px}
+.code-block{background:#0d1117;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1.5rem 1.75rem;margin:1.75rem 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.88rem;line-height:1.65;overflow-x:auto;color:#abb2bf;white-space:pre;position:relative}
+</style>
+<link rel="stylesheet" href="../../theme.css">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="../../adeso.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice AESO</a></div>
+<header><div class="subtitle">Laboratorio 3</div><h1>Numeri Reali in Aritmetica Finita</h1></header>
+<main>
+
+<section>
+<h2>1. Introduzione ai Numeri Reali in Aritmetica Finita</h2>
+<p>A differenza dei numeri interi, i numeri reali <strong>non possono essere rappresentati in modo esatto e completo</strong> in un'aritmetica finita (poiché non hanno la "<strong>potenza del continuo</strong>"): è possibile rappresentare solo un <strong>sottoinsieme di numeri razionali</strong>. Per farlo, occorre definire contemporaneamente due parametri chiave basati sulle risorse disponibili:</p>
+<ul>
+<li><strong>Intervallo di rappresentabilità:</strong> l'ampiezza del range di valori che possono essere codificati.</li>
+<li><strong>Precisione:</strong> il livello di dettaglio con cui un numero può essere rappresentato.</li>
+</ul>
+<p>I due metodi principali utilizzati sono la <strong>virgola fissa</strong> e la <strong>virgola mobile</strong>.</p>
+</section>
+
+<section>
+<h2>2. Rappresentazione in Virgola Fissa (Fixed-Point)</h2>
+<p><strong>Come funziona:</strong> si suddivide la stringa di <span class="sym">n</span> bit assegnando <span class="sym">1</span> bit per il segno, <span class="sym">k</span> bit per la parte frazionaria e i restanti <span class="sym">n − k − 1</span> bit per la parte intera. È un'estensione della rappresentazione in <strong>complemento a 2</strong>.</p>
+<p><strong>Il "passo":</strong> definisce la differenza fissa tra un numero rappresentabile e l'altro (spaziatura costante). Spostando la virgola a sinistra o a destra si bilancia la <strong>precisione rispetto al valore massimo raggiungibile</strong>.</p>
+<p><strong>Limiti principali:</strong> è un sistema troppo rigido. Per numeri enormi (es. massa del Sole) o piccolissimi (es. massa dell'elettrone) richiederebbe una quantità spropositata di bit, risultando inefficiente e sprecando memoria.</p>
+</section>
+
+<section>
+<h2>3. Rappresentazione in Virgola Mobile (Floating-Point)</h2>
+<p>Per superare i limiti della virgola fissa e svincolare l'intervallo dalla precisione, si adotta la notazione scientifica (o esponenziale):</p>
+<div class="highlight-box"><span class="sym">x = M × B<sup>E</sup></span></div>
+<p>Dove <span class="sym">M</span> è la <strong>mantissa</strong> (che determina la precisione), <span class="sym">B</span> è la <strong>base</strong> (pari a <span class="sym">2</span> nei calcolatori) ed <span class="sym">E</span> è l'<strong>esponente</strong> (che determina l'intervallo di rappresentabilità).</p>
+<p><strong>Forma normalizzata:</strong> si preferisce scrivere i numeri in forma standard in modo che la parte intera della mantissa sia zero (o che il primo bit significativo sia normalizzato) per evitare rappresentazioni multiple dello stesso valore.</p>
+</section>
+
+<section>
+<h2>4. Lo Standard IEEE 754</h2>
+<p>Nei calcolatori moderni si utilizza lo standard internazionale <strong>IEEE 754</strong> per la codifica in virgola mobile binaria, che definisce principalmente due formati:</p>
+<h3>Singola Precisione (32 bit totali)</h3>
+<ul>
+<li><span class="sym">1 bit</span> per il segno (<span class="sym">0 = positivo</span>, <span class="sym">1 = negativo</span>).</li>
+<li><span class="sym">8 bit</span> per l'esponente (memorizzato usando una rappresentazione con eccesso <span class="sym">127</span>).</li>
+<li><span class="sym">23 bit</span> per la mantissa (la parte frazionaria, con un bit iniziale implicito pari a <span class="sym">1</span>).</li>
+</ul>
+<h3>Doppia Precisione (64 bit totali)</h3>
+<ul>
+<li><span class="sym">1 bit</span> per il segno.</li>
+<li><span class="sym">11 bit</span> per l'esponente (con eccesso <span class="sym">1023</span>).</li>
+<li><span class="sym">52 bit</span> per la mantissa.</li>
+</ul>
+</section>
+
+<section>
+<h2>5. Gestione delle Eccezioni (Overflow, Underflow e Speciali)</h2>
+<p>Riservando alcune combinazioni estreme dei bit dell'esponente, lo standard gestisce situazioni particolari:</p>
+<div class="table-container"><table>
+<thead><tr><th>Caso</th><th>Esponente</th><th>Mantissa</th><th>Significato</th></tr></thead>
+<tbody>
+<tr><td><strong>Zero</strong></td><td>Tutti <span class="sym">0</span></td><td>Tutti <span class="sym">0</span></td><td>Rappresenta lo zero</td></tr>
+<tr><td><strong>Numeri Denormalizzati</strong></td><td>Tutti <span class="sym">0</span></td><td>Diversi da <span class="sym">0</span></td><td>Bit implicito pari a <span class="sym">0</span>, utili per numeri piccolissimi vicini allo zero</td></tr>
+<tr><td><strong>Infinito (<span class="sym">∞</span>)</strong></td><td>Tutti <span class="sym">1</span></td><td>Tutti <span class="sym">0</span></td><td>Rappresenta l'infinito</td></tr>
+<tr><td><strong>NaN (Not a Number)</strong></td><td>Tutti <span class="sym">1</span></td><td>Diversi da <span class="sym">0</span></td><td>Risultato di operazioni non valide (es. <span class="sym">0 / 0</span>)</td></tr>
+</tbody></table></div>
+</section>
+
+</main>
+</div>
+<script src="../../motion.js"></script>
+</body>
+</html>

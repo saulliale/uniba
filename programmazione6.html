@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sintesi: Programmazione - Stili di Programmazione</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0f1117;--surface:#1a1d27;--border:rgba(255,255,255,.07);--text:#d1d5db;--strong:#f3f4f6;--muted:#6b7280;--accent:#6366f1;--accent-2:#818cf8;--accent-light:rgba(99,102,241,.08);--accent-border:rgba(99,102,241,.25)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:#e5e7eb;line-height:1.75;font-size:16px;padding:2rem 1rem 6rem}
+.container{max-width:860px;margin:0 auto;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4rem 5rem}
+.back-nav{margin-bottom:2.5rem}
+.back-nav a{display:inline-flex;align-items:center;gap:8px;text-decoration:none;color:var(--muted);font-weight:500;font-size:.88rem;border:1px solid var(--border);border-radius:100px;padding:7px 14px 7px 10px;background:rgba(255,255,255,.03)}
+.back-nav a:hover{color:var(--accent-2);gap:12px}
+header{text-align:center;margin-bottom:4rem;padding-bottom:3rem;border-bottom:1px solid var(--border)}
+.subtitle{display:inline-block;color:var(--accent-2);font-weight:600;font-size:.78rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:1rem;background:var(--accent-light);border:1px solid var(--accent-border);border-radius:100px;padding:5px 16px}
+h1{font-size:clamp(1.7rem,4vw,2.3rem);font-weight:700;color:#fff;letter-spacing:-.03em;line-height:1.25}
+h2{font-size:1.2rem;font-weight:600;color:var(--accent-2);margin:3.5rem 0 1.25rem;display:flex;align-items:center;gap:12px}
+h2::before{content:'';width:20px;height:2px;background:linear-gradient(90deg,var(--accent),var(--accent-2));border-radius:2px;flex-shrink:0}
+p{margin-bottom:1.25rem}ul{margin-bottom:1.25rem;padding-left:1.5rem}li{margin-bottom:.5rem}
+strong{color:var(--strong);font-weight:600}em{color:#a5b4fc}
+.sym{font-size:1.05em;color:#c7d2fe;white-space:nowrap}
+.highlight-box{background:var(--accent-light);border:1px solid var(--accent-border);border-left:3px solid var(--accent);padding:1.25rem 1.5rem;margin:2rem 0;border-radius:0 8px 8px 0;font-size:.95rem}
+.highlight-box p:last-child{margin-bottom:0}
+.figure-container{background:rgba(0,0,0,.2);border:1px solid var(--border);border-radius:14px;padding:2rem;margin:2.5rem 0;text-align:center}
+.figure-caption{font-size:.83rem;color:var(--muted);margin-top:1rem;font-style:italic}
+svg{max-width:100%;height:auto;display:block;margin:0 auto}
+.table-container{overflow-x:auto;margin:1.75rem 0;border-radius:8px;border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse}
+th,td{padding:.85rem 1.1rem;border-bottom:1px solid var(--border);text-align:left;font-size:.9rem}
+th{background:rgba(255,255,255,.03);color:var(--strong);font-size:.82rem;text-transform:uppercase;letter-spacing:.8px}
+tr:last-child td{border-bottom:none}
+@media(max-width:768px){.container{padding:2rem 1.5rem;border-radius:14px}body{font-size:15px;padding:1rem .5rem 4rem}}
+.v{color:#6ee7b7;font-weight:600}.f{color:#fca5a5;font-weight:600}td,th{text-align:left}
+code{font-family:'JetBrains Mono','Courier New',monospace;font-size:.85em;background:rgba(99,102,241,.1);border:1px solid rgba(99,102,241,.2);color:#a5b4fc;padding:2px 7px;border-radius:5px}
+.code-block{background:#0d1117;border:1px solid rgba(255,255,255,.06);border-radius:8px;padding:1.5rem 1.75rem;margin:1.75rem 0;font-family:'JetBrains Mono','Courier New',monospace;font-size:.88rem;line-height:1.65;overflow-x:auto;color:#abb2bf;white-space:pre;position:relative}
+.code-block::before{content:attr(data-lang);position:absolute;top:10px;right:14px;font-family:'Inter',sans-serif;font-size:.7rem;font-weight:700;color:#4b5563;text-transform:uppercase;letter-spacing:1px}
+.k{color:#c678dd}.s{color:#98c379}.n{color:#d19a66}.c{color:#5c6370;font-style:italic}.fn{color:#61afef}
+</style>
+<link rel="stylesheet" href="theme.css">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+</head>
+<body>
+<div class="container">
+<div class="back-nav"><a href="programmazione.html"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>Torna all'indice Programmazione</a></div>
+<header><div class="subtitle">Lezione 6</div><h1>Stili di Programmazione</h1></header>
+<main>
+
+<section>
+<h2>1. L'importanza dello Stile e il Codice Offuscato</h2>
+<p>L'obiettivo: scrivere codice non significa solo farlo funzionare, ma renderlo <strong>pulito, leggibile, manutenibile ed efficiente</strong>.</p>
+<p><strong>Il contesto ironico:</strong> esistono competizioni come l'<strong>International Obfuscated C Code Contest (IOCCC)</strong> nate proprio per scrivere il codice C più oscuro, illeggibile e contorto possibile, mostrando così per assurdo l'importanza vitale di seguire precise regole di stile.</p>
+<p><strong>Lo spirito "C-ZEN":</strong> richiama principi simili al Zen di Python: <strong>esplicito è meglio di implicito</strong>, <strong>semplice è meglio di complesso</strong>, la <strong>leggibilità conta molto</strong> e se un'implementazione è difficile da spiegare, è una cattiva idea.</p>
+</section>
+
+<section>
+<h2>2. Le Regole d'Oro per la Scrittura del Codice C</h2>
+<p>Il documento elenca diciassette regole fondamentali e convenzioni di stile:</p>
+<h3>Coerenza e Indentazione</h3>
+<p>Scegliere uno stile di indentazione (es. <strong>Allman</strong>, <strong>K&R</strong>, <strong>GNU</strong>) e mantenerlo coerente in tutto il progetto, esplicitandolo con un commento iniziale.</p>
+<h3>Prototipi e Struttura</h3>
+<p>Usare sempre i <strong>prototipi di funzione</strong>. La funzione <span class="sym">main()</span> va messa sempre in alto, e se una funzione ne chiama un'altra, la chiamata va inserita dopo.</p>
+<h3>Nomi Significativi</h3>
+<ul>
+<li>Usare <strong>sostantivi</strong> per le variabili (es. <span class="sym">oraApertura</span>).</li>
+<li>Evitare nomi di una sola lettera (tranne per i contatori come <span class="sym">i</span>, <span class="sym">j</span>, <span class="sym">k</span>) o la lettera <span class="sym">l</span> che si confonde con l'uno.</li>
+<li>Usare <strong>verbi</strong> per le funzioni (es. <span class="sym">rimuoviPari</span>, <span class="sym">getOrarioApertura</span>).</li>
+</ul>
+<h3>Convenzioni di Naming</h3>
+<ul>
+<li><strong>Camel Case</strong> (es. <span class="sym">degreeToRadiants</span>) o <strong>Pascal Case</strong> (es. <span class="sym">DegreeToRadiants</span>).</li>
+<li>Le <strong>costanti</strong> vanno scritte tutte in <strong>MAIUSCOLO</strong> con le parole separate da trattino basso (<span class="sym">_</span>).</li>
+<li>I <strong>puntatori</strong> dovrebbero iniziare con il prefisso <span class="sym">ptr</span> o <span class="sym">pt</span>.</li>
+</ul>
+<h3>Funzioni e Complessità</h3>
+<ul>
+<li>Scrivere funzioni "<strong>piccole</strong>".</li>
+<li>Evitare di sviluppare sottoprogrammi costituiti da una sola istruzione (non offrono reali benefici e sprecano prestazioni).</li>
+<li>Evitare loop annidati oltre i <strong>3 livelli</strong>.</li>
+</ul>
+<h3>Gestione delle Variabili</h3>
+<ul>
+<li>Evitare le <strong>variabili globali</strong> (usare i parametri).</li>
+<li>Dichiarare le variabili all'inizio del blocco e inizializzarle solo prima di usarle.</li>
+<li>Non usare mai <span class="sym">typedef</span> per rinominare i tipi standard (es. <span class="sym">int</span>).</li>
+</ul>
+</section>
+
+<section>
+<h2>3. Uso Corretto dei Costrutti di Controllo</h2>
+<h3>If / Else</h3>
+<p>Sfruttare la parte <span class="sym">else</span> per evitare valutazioni di condizioni ridondanti ed evitare blocchi <span class="sym">if</span> vuoti con tutto il codice relegato nell'<span class="sym">else</span>. Limitare l'uso di <span class="sym">return</span> sparsi nel codice per preservare la programmazione strutturata.</p>
+<h3>Cicli (for vs while vs do-while)</h3>
+<ul>
+<li>Usare il <span class="sym">for</span> esclusivamente quando il numero di iterazioni è noto (a conteggio).</li>
+<li>Usare il <span class="sym">while</span> per cicli non a conteggio.</li>
+<li>Usare il <span class="sym">do-while</span> quando la condizione è di controllo finale (evitando forzature con il <span class="sym">while</span>).</li>
+</ul>
+<h3>Bandite le Istruzioni di Salto</h3>
+<p>Non usare <span class="sym">break</span> e <span class="sym">continue</span> per alterare il flusso dei cicli, ma introdurre apposite <strong>variabili sentinella</strong> per mantenere il codice rigorosamente strutturato.</p>
+</section>
+
+<section>
+<h2>4. Ottimizzazione e Passaggio dei Parametri</h2>
+<h3>Evitare Chiamate Ripetute</h3>
+<p>Se una funzione calcola un valore che viene riutilizzato più volte (es. <span class="sym">strlen(s)</span> dentro la condizione di un ciclo), va calcolato una sola volta prima del ciclo per evitare pesanti rallentamenti.</p>
+<h3>Array e Sottoprogrammi</h3>
+<p>Quando si passa un array a una funzione, passare sempre anche la dimensione degli elementi significativi (tranne per le stringhe che usano il terminatore). Passare solo i parametri strettamente necessari.</p>
+<h3>Molteplici Risultati</h3>
+<p>Se un sottoprogramma deve restituire più di un valore, evitare di creare strutture dati "aggregatrici" fittizie, preferendo il <strong>passaggio dei parametri per indirizzo</strong> (puntatori).</p>
+</section>
+
+</main>
+</div>
+<script src="motion.js"></script>
+</body>
+</html>
