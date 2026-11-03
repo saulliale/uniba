@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sintesi: I Componenti della CPU e il Ciclo di Istruzione</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../../theme.css">
+    <script src="../../motion.js"></script>
+    <style>
+        /* =========================================
+           Variabili di Stile (coerenti con le altre lezioni AESO)
+           ========================================= */
+        :root {
+            --bg: #0f1117;
+            --surface: #1a1d27;
+            --surface-2: #20243a;
+            --border: rgba(255,255,255,0.07);
+            --text: #d1d5db;
+            --text-strong: #f3f4f6;
+            --text-muted: #6b7280;
+            --accent: #6366f1;
+            --accent-2: #818cf8;
+            --accent-light: rgba(99,102,241,0.08);
+            --accent-border: rgba(99,102,241,0.25);
+            --font: 'Inter', system-ui, sans-serif;
+            --radius: 14px;
+            --radius-sm: 8px;
+        }
+
+        /* =========================================
+           Reset e Base
+           ========================================= */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: var(--font);
+            background-color: var(--bg);
+            background-image: radial-gradient(ellipse 60% 40% at 50% 0%, rgba(99,102,241,0.08) 0%, transparent 60%);
+            color: var(--text);
+            line-height: 1.75;
+            font-size: 16px;
+            padding: 2rem 1rem 6rem;
+        }
+
+        /* =========================================
+           Layout Principale
+           ========================================= */
+        .container {
+            max-width: 860px;
+            margin: 0 auto;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 20px;
+            padding: 4rem 5rem;
+            box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+        }
+
+        /* =========================================
+           Back Nav
+           ========================================= */
+        .back-nav {
+            margin-bottom: 2.5rem;
+            animation: fadeDown 0.4s ease both;
+        }
+
+        .back-nav a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.88rem;
+            transition: color 0.2s, gap 0.2s;
+            border: 1px solid var(--border);
+            border-radius: 100px;
+            padding: 7px 14px 7px 10px;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .back-nav a:hover { color: var(--accent-2); gap: 12px; border-color: var(--accent-border); }
+        .back-nav a svg { transition: transform 0.2s; }
+        .back-nav a:hover svg { transform: translateX(-3px); }
+
+        /* =========================================
+           Header
+           ========================================= */
+        header {
+            text-align: center;
+            margin-bottom: 4rem;
+            padding-bottom: 3rem;
+            border-bottom: 1px solid var(--border);
+            animation: fadeDown 0.5s 0.05s ease both;
+        }
+
+        .subtitle {
+            display: inline-block;
+            color: var(--accent-2);
+            font-weight: 600;
+            font-size: 0.78rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            border-radius: 100px;
+            padding: 5px 16px;
+        }
+
+        h1 {
+            font-size: clamp(1.7rem, 4vw, 2.3rem);
+            font-weight: 700;
+            color: #fff;
+            letter-spacing: -0.03em;
+            line-height: 1.25;
+            margin-bottom: 0.5rem;
+        }
+
+        .header-note {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 0.75rem;
+        }
+
+        /* =========================================
+           Contenuto
+           ========================================= */
+        main {
+            animation: fadeUp 0.6s 0.1s ease both;
+        }
+
+        section {
+            margin-bottom: 3rem;
+        }
+
+        section:last-child { margin-bottom: 0; }
+
+        h2 {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--accent-2);
+            margin: 2.5rem 0 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        h2::before {
+            content: '';
+            width: 4px;
+            height: 20px;
+            background: linear-gradient(180deg, var(--accent), var(--accent-2));
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--text-strong);
+            margin: 1.5rem 0 0.75rem;
+        }
+
+        p { margin-bottom: 1rem; }
+
+        ul, ol {
+            margin-bottom: 1rem;
+            padding-left: 1.5rem;
+        }
+
+        li { margin-bottom: 0.5rem; }
+
+        strong { color: var(--text-strong); font-weight: 600; }
+        em { color: #a5b4fc; }
+
+        .sym {
+            font-size: 1.05em;
+            color: #c7d2fe;
+            white-space: nowrap;
+        }
+
+        .highlight-box {
+            background: var(--accent-light);
+            border: 1px solid var(--accent-border);
+            border-left: 3px solid var(--accent);
+            padding: 1.25rem 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+        }
+
+        .highlight-box p:last-child { margin-bottom: 0; }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 0.85rem 1.1rem;
+            border-bottom: 1px solid var(--border);
+            text-align: left;
+            font-size: 0.9rem;
+        }
+
+        th {
+            background: rgba(255,255,255,0.03);
+            color: var(--text-strong);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+
+        tr:last-child td { border-bottom: none; }
+
+        code {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.85em;
+            background: rgba(99,102,241,0.1);
+            border: 1px solid rgba(99,102,241,0.2);
+            color: #a5b4fc;
+            padding: 2px 7px;
+            border-radius: 5px;
+        }
+
+        .kv-table td:first-child, .kv-table th:first-child {
+            min-width: 170px;
+        }
+
+        .chip {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            padding: 2px 8px;
+            border-radius: 100px;
+            background: var(--surface-2);
+            border: 1px solid var(--border);
+            color: var(--accent-2);
+            margin-left: 6px;
+        }
+
+        /* =========================================
+           Figure e Diagrammi SVG
+           ========================================= */
+        .figure-container {
+            background: rgba(0,0,0,0.2);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            padding: 2rem;
+            margin: 2.5rem 0;
+            text-align: center;
+        }
+
+        .figure-caption {
+            font-size: 0.83rem;
+            color: var(--text-muted);
+            margin-top: 1rem;
+            font-style: italic;
+        }
+
+        svg {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 0 auto;
+        }
+
+        /* =========================================
+           Mobile
+           ========================================= */
+        @media (max-width: 768px) {
+            .container { padding: 2rem 1.5rem; border-radius: 14px; }
+            body { font-size: 15px; padding: 1rem 0.5rem 4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="back-nav">
+        <a href="../../adeso.html">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin:0"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
+            Torna all'indice AESO
+        </a>
+    </div>
+
+    <header>
+        <div class="subtitle">Lezione 9</div>
+        <h1>I Componenti della CPU e il Ciclo di Istruzione</h1>
+        <div class="header-note">Registri, Unità di Controllo, ALU e FPU, bus interni, registri di stato (PSW) e le fasi Fetch, Decode, Execute, Store</div>
+    </header>
+
+    <main>
+        <section>
+            <h2>1. I Componenti Principali del Processore (CPU)</h2>
+            <p>Il processore è il <strong>cervello dell'elaboratore</strong>: esegue le istruzioni dei programmi e coordina il flusso dei dati. È costituito da quattro elementi fondamentali:</p>
+            <ul>
+                <li><strong>Registri:</strong> piccole aree di memoria interne alla CPU, velocissime, usate per conservare temporaneamente dati, indirizzi e istruzioni in fase di elaborazione.</li>
+                <li><strong>Unità di Controllo (CU):</strong> il "direttore d'orchestra" che coordina tutte le operazioni della CPU e delle unità esterne.</li>
+                <li><strong>Unità Aritmetico-Logica (ALU):</strong> il motore di calcolo che esegue operazioni matematiche e logiche.</li>
+                <li><strong>Bus Interni:</strong> le autostrade interne per il trasferimento dei dati tra i vari componenti della CPU.</li>
+            </ul>
+            <div class="figure-container">
+                <svg viewBox="0 0 720 420" width="100%">
+                    <defs>
+                        <marker id="arrow" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse">
+                            <path d="M0,0 L0,10 L10,5 z" fill="#94a3b8"/>
+                        </marker>
+                    </defs>
+                    <!-- CPU container -->
+                    <rect x="30" y="30" width="660" height="360" rx="16" fill="rgba(26,29,39,0.6)" stroke="var(--accent-border)" stroke-width="1.5"/>
+                    <text x="360" y="62" font-family="Inter,sans-serif" font-size="17" font-weight="700" fill="#e5e7eb" text-anchor="middle">CPU (Central Processing Unit)</text>
+                    <text x="360" y="82" font-family="Inter,sans-serif" font-size="11" fill="#94a3b8" text-anchor="middle">Quattro elementi fondamentali</text>
+
+                    <!-- Registri -->
+                    <rect x="50" y="120" width="160" height="90" rx="10" fill="rgba(16,185,129,0.12)" stroke="#10b981" stroke-width="1.8"/>
+                    <text x="130" y="152" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">Registri</text>
+                    <text x="130" y="172" font-family="Inter,sans-serif" font-size="11" fill="#6ee7b7" text-anchor="middle">memoria interna velocissima</text>
+
+                    <!-- CU -->
+                    <rect x="280" y="60" width="160" height="90" rx="10" fill="rgba(129,140,248,0.12)" stroke="#818cf8" stroke-width="1.8"/>
+                    <text x="360" y="92" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">CU</text>
+                    <text x="360" y="112" font-family="Inter,sans-serif" font-size="11" fill="#a5b4fc" text-anchor="middle">Unità di Controllo</text>
+
+                    <!-- ALU -->
+                    <rect x="280" y="270" width="160" height="90" rx="10" fill="rgba(59,130,246,0.12)" stroke="#3b82f6" stroke-width="1.8"/>
+                    <text x="360" y="302" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">ALU</text>
+                    <text x="360" y="322" font-family="Inter,sans-serif" font-size="11" fill="#93c5fd" text-anchor="middle">calcolo aritmetico-logico</text>
+
+                    <!-- Bus -->
+                    <rect x="50" y="230" width="620" height="22" rx="6" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1.5"/>
+                    <text x="360" y="246" font-family="Inter,sans-serif" font-size="11" font-weight="600" fill="#818cf8" text-anchor="middle">Bus Interni — trasferimento dati tra i componenti</text>
+
+                    <!-- Frecce -->
+                    <path d="M210 165 L270 105" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                    <path d="M210 165 L270 315" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                    <path d="M130 210 L200 241" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                    <path d="M520 241 L590 241" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                    <path d="M440 105 L530 165" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                    <path d="M440 315 L530 255" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arrow)"/>
+                </svg>
+                <div class="figure-caption">Figura 1 — I quattro elementi principali della CPU collegati dai bus interni.</div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>In sintesi:</strong> i <strong>registri</strong> conservano, la <strong>CU</strong> comanda, l'<strong>ALU</strong> calcola e i <strong>bus</strong> trasportano.</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>2. L'Organizzazione dei Registri Interni</h2>
+            <p>I registri interni alla CPU si suddividono in tre grandi categorie, a seconda di chi li utilizza e di quale funzione svolgono:</p>
+
+            <h3>2.1 Registri Utente (General-Purpose)</h3>
+            <p>Sono registri di uso generico utilizzati dal <strong>programmatore</strong> (in linguaggio macchina o Assembly) per memorizzare temporaneamente <strong>dati o indirizzi</strong>. Grazie ad essi si evitano continui e lenti accessi alla memoria centrale durante l'esecuzione di un programma.</p>
+
+            <h3>2.2 Registri di Controllo</h3>
+            <p>Sono fondamentali per la gestione del flusso delle istruzioni. I principali sono:</p>
+            <table class="kv-table">
+                <thead>
+                    <tr><th>Registro</th><th>Significato</th><th>Contenuto</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>PC</strong> <span class="chip">Program Counter</span></td>
+                        <td>Contiene l'indirizzo della prossima istruzione da eseguire.</td>
+                        <td>Indirizzo di memoria</td>
+                    </tr>
+                    <tr>
+                        <td><strong>IR</strong> <span class="chip">Instruction Register</span></td>
+                        <td>Contiene l'istruzione corrente in fase di esecuzione.</td>
+                        <td>Codice dell'istruzione</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MAR</strong> <span class="chip">Memory Address Register</span></td>
+                        <td>Contiene l'indirizzo di memoria a cui accedere, in lettura o scrittura.</td>
+                        <td>Indirizzo di memoria</td>
+                    </tr>
+                    <tr>
+                        <td><strong>MDR</strong> <span class="chip">Memory Data Register</span></td>
+                        <td>Contiene il dato letto oppure il dato da scrivere nella locazione indicata dal MAR.</td>
+                        <td>Dato</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="figure-container">
+                <svg viewBox="0 0 720 460" width="100%">
+                    <defs>
+                        <marker id="arr2" markerWidth="8" markerHeight="8" refX="7" refY="4" orient="auto-start-reverse">
+                            <path d="M0,0 L0,8 L8,4 z" fill="#94a3b8"/>
+                        </marker>
+                    </defs>
+                    <text x="360" y="34" font-family="Inter,sans-serif" font-size="16" font-weight="700" fill="#e5e7eb" text-anchor="middle">Registro — rappresentazione schematica</text>
+
+                    <!-- Gruppo Registri Utente -->
+                    <rect x="40" y="70" width="200" height="180" rx="10" fill="rgba(249,115,22,0.1)" stroke="#f59e0b" stroke-width="1.5"/>
+                    <text x="140" y="96" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#fb923c" text-anchor="middle">Registri Utente (General-Purpose)</text>
+                    <text x="140" y="114" font-family="Inter,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">R0  R1  R2  R3</text>
+                    <rect x="70" y="130" width="140" height="30" rx="6" fill="rgba(249,115,22,0.05)" stroke="#f59e0b" stroke-width="1"/>
+                    <text x="140" y="150" font-family="JetBrains Mono,monospace" font-size="11" fill="#e5e7eb" text-anchor="middle">[ R0 | R1 | R2 | R3 ]</text>
+
+                    <!-- Gruppo Registri di Controllo -->
+                    <rect x="260" y="70" width="200" height="180" rx="10" fill="rgba(129,140,248,0.1)" stroke="#818cf8" stroke-width="1.5"/>
+                    <text x="360" y="96" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#a5b4fc" text-anchor="middle">Registri di Controllo</text>
+                    <rect x="290" y="120" width="40" height="24" rx="4" fill="rgba(129,140,248,0.15)" stroke="#818cf8" stroke-width="1"/>
+                    <text x="310" y="138" font-family="JetBrains Mono,monospace" font-size="11" fill="#e5e7eb" text-anchor="middle">PC</text>
+                    <rect x="330" y="120" width="40" height="24" rx="4" fill="rgba(129,140,248,0.15)" stroke="#818cf8" stroke-width="1"/>
+                    <text x="350" y="138" font-family="JetBrains Mono,monospace" font-size="11" fill="#e5e7eb" text-anchor="middle">IR</text>
+                    <rect x="290" y="156" width="40" height="24" rx="4" fill="rgba(129,140,248,0.15)" stroke="#818cf8" stroke-width="1"/>
+                    <text x="310" y="174" font-family="JetBrains Mono,monospace" font-size="11" fill="#e5e7eb" text-anchor="middle">MAR</text>
+                    <rect x="330" y="156" width="40" height="24" rx="4" fill="rgba(129,140,248,0.15)" stroke="#818cf8" stroke-width="1"/>
+                    <text x="350" y="174" font-family="JetBrains Mono,monospace" font-size="11" fill="#e5e7eb" text-anchor="middle">MDR</text>
+                    <text x="360" y="200" font-family="Inter,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">PC → IR → MAR → MDR</text>
+                    <path d="M310 122 L310 156" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+                    <path d="M350 122 L350 156" stroke="#94a3b8" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+
+                    <!-- Gruppo PSW -->
+                    <rect x="480" y="70" width="200" height="180" rx="10" fill="rgba(245,158,11,0.1)" stroke="#d97706" stroke-width="1.5"/>
+                    <text x="580" y="96" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#fbbf24" text-anchor="middle">Registri di Stato (PSW)</text>
+                    <rect x="510" y="120" width="140" height="30" rx="6" fill="rgba(245,158,11,0.05)" stroke="#d97706" stroke-width="1"/>
+                    <text x="580" y="140" font-family="JetBrains Mono,monospace" font-size="10" fill="#e5e7eb" text-anchor="middle">[ C | Z | S | O | I ]</text>
+                    <text x="580" y="162" font-family="Inter,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Carry · Zero · Segno · Overflow · Interrupt</text>
+
+                    <!-- Flusso ciclo -->
+                    <rect x="40" y="280" width="640" height="140" rx="10" fill="rgba(16,29,39,0.4)" stroke="var(--border)" stroke-width="1"/>
+                    <text x="360" y="306" font-family="Inter,sans-serif" font-size="13" font-weight="600" fill="#e5e7eb" text-anchor="middle">Flusso dati durante l'esecuzione di un'istruzione</text>
+                    <rect x="80" y="325" width="70" height="28" rx="6" fill="rgba(99,102,241,0.15)" stroke="#6366f1" stroke-width="1.2"/>
+                    <text x="115" y="343" font-family="JetBrains Mono,monospace" font-size="11" fill="#818cf8" text-anchor="middle">PC</text>
+                    <path d="M150 339 L190 339" stroke="#6366f1" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+                    <rect x="190" y="325" width="70" height="28" rx="6" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.2"/>
+                    <text x="225" y="343" font-family="JetBrains Mono,monospace" font-size="11" fill="#6ee7b7" text-anchor="middle">MAR</text>
+                    <path d="M260 339 L300 339" stroke="#6366f1" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+                    <rect x="300" y="325" width="70" height="28" rx="6" fill="rgba(59,130,246,0.15)" stroke="#3b82f6" stroke-width="1.2"/>
+                    <text x="335" y="343" font-family="JetBrains Mono,monospace" font-size="11" fill="#93c5fd" text-anchor="middle">MDR</text>
+                    <path d="M370 339 L410 339" stroke="#6366f1" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+                    <rect x="410" y="325" width="70" height="28" rx="6" fill="rgba(129,140,248,0.15)" stroke="#818cf8" stroke-width="1.2"/>
+                    <text x="445" y="343" font-family="JetBrains Mono,monospace" font-size="11" fill="#a5b4fc" text-anchor="middle">IR</text>
+                    <path d="M480 339 L520 339" stroke="#6366f1" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+                    <rect x="520" y="325" width="70" height="28" rx="6" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.2"/>
+                    <text x="555" y="343" font-family="JetBrains Mono,monospace" font-size="11" fill="#6ee7b7" text-anchor="middle">PC++</text>
+                    <path d="M590 339 L630 339" stroke="#6366f1" stroke-width="1.5" fill="none" marker-end="url(#arr2)"/>
+                    <rect x="610" y="325" width="40" height="28" rx="6" fill="rgba(245,158,11,0.15)" stroke="#d97706" stroke-width="1.2"/>
+                    <text x="630" y="343" font-family="JetBrains Mono,monospace" font-size="10" fill="#fbbf24" text-anchor="middle">Esegui</text>
+                </svg>
+                <div class="figure-caption">Figura 2 — Le tre categorie di registri interni e il flusso PC → MAR → MDR → IR → PC++ durante il Fetch.</div>
+            </div>
+
+            <h3>2.3 Registri di Stato (PSW - Program Status Word)</h3>
+            <p>Contengono i <strong>flag</strong>, ossia bit impostati dall'hardware per indicare condizioni particolari derivate dall'ultima operazione eseguita. I flag principali sono:</p>
+            <ul>
+                <li><strong>Carry (riporto):</strong> indica che un'operazione aritmetica ha generato un riporto oltre il bit più significativo.</li>
+                <li><strong>Zero:</strong> indica che il risultato dell'ultima operazione è nullo.</li>
+                <li><strong>Segno:</strong> indica se il risultato è negativo.</li>
+                <li><strong>Overflow:</strong> segnala che il valore ottenuto è troppo grande per essere rappresentato nel formato disponibile.</li>
+                <li><strong>Interrupt:</strong> legato alla gestione delle interruzioni del processore.</li>
+            </ul>
+            <p>L'insieme di questi flag forma la <strong>PSW (Program Status Word)</strong>, utilizzata ad esempio per decidere salti condizionati nel programma.</p>
+        </section>
+
+        <section>
+            <h2>3. L'Unità Aritmetico-Logica (ALU) e la FPU</h2>
+            <p>L'<strong>ALU</strong> è il cuore computazionale della CPU: si occupa di eseguire i <strong>calcoli aritmetici</strong> (es. somme e prodotti), i <strong>confronti</strong> e le <strong>operazioni logiche</strong> come <strong>AND</strong>, <strong>OR</strong> e <strong>NOT</strong>.</p>
+            <p>Quando si tratta di calcoli complessi con <strong>numeri in virgola mobile</strong> (numeri reali), interviene un'apposita sotto-unità dedicata chiamata <strong>FPU (Floating Point Unit)</strong>. La FPU è ottimizzata per l'aritmetica in virgola mobile e solleva l'ALU da operazioni più complesse e onerose.</p>
+            <div class="figure-container">
+                <svg viewBox="0 0 720 380" width="100%">
+                    <defs>
+                        <marker id="arr3" markerWidth="10" markerHeight="10" refX="9" refY="5" orient="auto-start-reverse">
+                            <path d="M0,0 L0,10 L10,5 z" fill="#94a3b8"/>
+                        </marker>
+                    </defs>
+                    <text x="360" y="30" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#e5e7eb" text-anchor="middle">ALU e FPU nel flusso di calcolo</text>
+
+                    <!-- Ingresso -->
+                    <rect x="40" y="90" width="120" height="40" rx="6" fill="rgba(16,185,129,0.15)" stroke="#10b981" stroke-width="1.5"/>
+                    <text x="100" y="114" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#6ee7b7" text-anchor="middle">Operandi in ingresso</text>
+
+                    <!-- Freccia a ALU -->
+                    <path d="M160 110 L240 150" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arr3)"/>
+
+                    <!-- ALU -->
+                    <rect x="240" y="120" width="180" height="100" rx="10" fill="rgba(59,130,246,0.12)" stroke="#3b82f6" stroke-width="1.8"/>
+                    <text x="330" y="152" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">ALU</text>
+                    <text x="330" y="172" font-family="Inter,sans-serif" font-size="10" fill="#93c5fd" text-anchor="middle">Interi · Comparazioni · AND · OR · NOT</text>
+
+                    <!-- Freccia a FPU -->
+                    <path d="M420 170 L500 150" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arr3)"/>
+
+                    <!-- FPU -->
+                    <rect x="500" y="120" width="180" height="100" rx="10" fill="rgba(249,115,22,0.12)" stroke="#f59e0b" stroke-width="1.8"/>
+                    <text x="590" y="152" font-family="Inter,sans-serif" font-size="14" font-weight="700" fill="#e5e7eb" text-anchor="middle">FPU</text>
+                    <text x="590" y="172" font-family="Inter,sans-serif" font-size="10" fill="#fb923c" text-anchor="middle">Virgola mobile (numeri reali)</text>
+
+                    <!-- Uscite -->
+                    <path d="M420 220 L460 220" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arr3)"/>
+                    <path d="M680 220 L640 220" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arr3)"/>
+                    <rect x="460" y="200" width="120" height="40" rx="6" fill="rgba(139,92,246,0.15)" stroke="#a855f7" stroke-width="1.5"/>
+                    <text x="520" y="224" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#c4b5fd" text-anchor="middle">Risultato finale</text>
+                </svg>
+                <div class="figure-caption">Figura 3 — L'ALU gestisce interi e logica booleana; la FPU interviene per i calcoli in virgola mobile.</div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>ALU →</strong> interi, confronti, logica booleana (AND, OR, NOT). &nbsp;|&nbsp; <strong>FPU →</strong> numeri in virgola mobile (calcoli reali complessi).</p>
+            </div>
+        </section>
+
+        <section>
+            <h2>4. L'Unità di Controllo (CU)</h2>
+            <p>La <strong>CU</strong> ha il compito di <strong>interpretare ed eseguire ogni istruzione</strong> in linguaggio macchina. Per svolgere questo compito si articola in sotto-unità specializzate:</p>
+            <table class="kv-table">
+                <thead>
+                    <tr><th>Sotto-unità</th><th>Compito</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Unità di controllo del bus</strong></td>
+                        <td>Gestisce la comunicazione con le unità esterne (memoria e periferiche) tramite i bus di sistema.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unità di istruzione</strong></td>
+                        <td>Estrae e decodifica le istruzioni.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unità di indirizzi</strong></td>
+                        <td>Calcola gli indirizzi di memoria necessari per l'esecuzione.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Unità di controllo principale</strong></td>
+                        <td>Genera i segnali di temporizzazione e controllo per eseguire le micro-operazioni.</td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="figure-container">
+                <svg viewBox="0 0 720 400" width="100%">
+                    <defs>
+                        <marker id="arr4" markerWidth="9" markerHeight="9" refX="8" refY="4.5" orient="auto-start-reverse">
+                            <path d="M0,0 L0,9 L9,4.5 z" fill="#94a3b8"/>
+                        </marker>
+                    </defs>
+                    <text x="360" y="32" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#e5e7eb" text-anchor="middle">Unità di Controllo (CU) e sue sotto-unità</text>
+
+                    <!-- CU centrale -->
+                    <rect x="280" y="70" width="160" height="140" rx="12" fill="rgba(129,140,248,0.14)" stroke="#818cf8" stroke-width="2"/>
+                    <text x="360" y="105" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#e5e7eb" text-anchor="middle">CU</text>
+                    <text x="360" y="125" font-family="Inter,sans-serif" font-size="10" fill="#a5b4fc" text-anchor="middle">Unità di Controllo Principale</text>
+                    <text x="360" y="142" font-family="Inter,sans-serif" font-size="10" fill="#a5b4fc" text-anchor="middle">temporizzazione e micro-operazioni</text>
+
+                    <!-- Sotto-unità attorno -->
+                    <rect x="40" y="140" width="170" height="80" rx="8" fill="rgba(59,130,246,0.1)" stroke="#3b82f6" stroke-width="1.5"/>
+                    <text x="125" y="170" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#93c5fd" text-anchor="middle">Unità di Istruzione</text>
+                    <text x="125" y="188" font-family="Inter,sans-serif" font-size="10" fill="#bfdbfe" text-anchor="middle">estrae e decodifica</text>
+
+                    <rect x="40" y="260" width="170" height="80" rx="8" fill="rgba(16,185,129,0.1)" stroke="#10b981" stroke-width="1.5"/>
+                    <text x="125" y="290" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#6ee7b7" text-anchor="middle">Unità di Indirizzi</text>
+                    <text x="125" y="308" font-family="Inter,sans-serif" font-size="10" fill="#a7f3d0" text-anchor="middle">calcola indirizzi memoria</text>
+
+                    <rect x="510" y="140" width="170" height="80" rx="8" fill="rgba(249,115,22,0.1)" stroke="#f59e0b" stroke-width="1.5"/>
+                    <text x="595" y="170" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#fb923c" text-anchor="middle">Controllo del Bus</text>
+                    <text x="595" y="188" font-family="Inter,sans-serif" font-size="10" fill="#fcd34d" text-anchor="middle">memoria e periferiche</text>
+
+                    <rect x="510" y="260" width="170" height="80" rx="8" fill="rgba(139,92,246,0.1)" stroke="#a855f7" stroke-width="1.5"/>
+                    <text x="595" y="290" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#c4b5fd" text-anchor="middle">Segnali di Controllo</text>
+                    <text x="595" y="308" font-family="Inter,sans-serif" font-size="10" fill="#ddd6fe" text-anchor="middle">micro-operazioni</text>
+
+                    <!-- Frecce verso il centro -->
+                    <path d="M210 180 L270 120" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arr4)"/>
+                    <path d="M210 300 L270 210" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arr4)"/>
+                    <path d="M510 180 L450 120" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arr4)"/>
+                    <path d="M510 300 L450 210" stroke="#94a3b8" stroke-width="2" fill="none" marker-end="url(#arr4)"/>
+                </svg>
+                <div class="figure-caption">Figura 4 — La CU si articola in quattro sotto-unità specializzate che concorrono all'esecuzione delle micro-operazioni.</div>
+            </div>
+        </section>
+
+        <section>
+            <h2>5. Il Ciclo di Istruzione (Instruction Cycle)</h2>
+            <p>Per eseguire un programma, la CPU ripete ciclicamente una serie di passi fondamentali:</p>
+            <ol>
+                <li><strong>Fetch dell'istruzione:</strong> preleva l'istruzione dalla memoria centrale. Nel dettaglio, l'indirizzo contenuto nel <strong>PC</strong> passa al <strong>MAR</strong>, la memoria invia l'istruzione sul bus esterno, l'<strong>MDR</strong> la riceve, l'<strong>IR</strong> la memorizza e il <strong>PC</strong> viene incrementato.</li>
+                <li><strong>Decode (Decodifica):</strong> la CU interpreta il codice operativo e i riferimenti agli operandi presenti nell'<strong>IR</strong>.</li>
+                <li><strong>Fetch degli operandi:</strong> eventuale recupero dei dati necessari dalla memoria.</li>
+                <li><strong>Execute (Esecuzione):</strong> l'istruzione viene eseguita concretamente dalla CU e dall'<strong>ALU</strong>.</li>
+                <li><strong>Store (Memorizzazione):</strong> l'eventuale risultato viene scritto e salvato in memoria.</li>
+            </ol>
+            <div class="figure-container">
+                <svg viewBox="0 0 720 420" width="100%">
+                    <defs>
+                        <marker id="arr5" markerWidth="12" markerHeight="12" refX="10" refY="6" orient="auto-start-reverse">
+                            <path d="M0,0 L0,12 L12,6 z" fill="#818cf8"/>
+                        </marker>
+                    </defs>
+                    <text x="360" y="34" font-family="Inter,sans-serif" font-size="15" font-weight="700" fill="#e5e7eb" text-anchor="middle">Ciclo di Istruzione (Instruction Cycle)</text>
+
+                    <!-- Cerchio esterno -->
+                    <circle cx="360" cy="210" r="150" fill="none" stroke="var(--border)" stroke-width="1.5" stroke-dasharray="6 4"/>
+
+                    <!-- Fasi -->
+                    <g>
+                        <!-- Fetch -->
+                        <rect x="60" y="140" width="120" height="70" rx="8" fill="rgba(99,102,241,0.14)" stroke="#6366f1" stroke-width="1.8"/>
+                        <text x="120" y="168" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#818cf8" text-anchor="middle">Fetch</text>
+                        <text x="120" y="186" font-family="Inter,sans-serif" font-size="9" fill="#c7d2fe" text-anchor="middle">preleva istruzione</text>
+                        <!-- Decode -->
+                        <rect x="300" y="60" width="120" height="70" rx="8" fill="rgba(16,185,129,0.14)" stroke="#10b981" stroke-width="1.8"/>
+                        <text x="360" y="88" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#6ee7b7" text-anchor="middle">Decode</text>
+                        <text x="360" y="106" font-family="Inter,sans-serif" font-size="9" fill="#a7f3d0" text-anchor="middle">decodifica istruzione</text>
+                        <!-- Execute -->
+                        <rect x="540" y="140" width="120" height="70" rx="8" fill="rgba(59,130,246,0.14)" stroke="#3b82f6" stroke-width="1.8"/>
+                        <text x="600" y="168" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#93c5fd" text-anchor="middle">Execute</text>
+                        <text x="600" y="186" font-family="Inter,sans-serif" font-size="9" fill="#bfdbfe" text-anchor="middle">esecuzione (CU + ALU)</text>
+                        <!-- Store -->
+                        <rect x="300" y="290" width="120" height="70" rx="8" fill="rgba(249,115,22,0.14)" stroke="#f59e0b" stroke-width="1.8"/>
+                        <text x="360" y="318" font-family="Inter,sans-serif" font-size="12" font-weight="600" fill="#fb923c" text-anchor="middle">Store</text>
+                        <text x="360" y="336" font-family="Inter,sans-serif" font-size="9" fill="#fcd34d" text-anchor="middle">salva risultato</text>
+                    </g>
+
+                    <!-- Frecce ciclo -->
+                    <path d="M180 175 Q240 140 300 105" stroke="#818cf8" stroke-width="2.5" fill="none" marker-end="url(#arr5)"/>
+                    <path d="M420 95 Q480 140 540 175" stroke="#10b981" stroke-width="2.5" fill="none" marker-end="url(#arr5)"/>
+                    <path d="M660 245 Q600 280 540 325" stroke="#3b82f6" stroke-width="2.5" fill="none" marker-end="url(#arr5)"/>
+                    <path d="M420 355 Q300 300 240 245" stroke="#f59e0b" stroke-width="2.5" fill="none" marker-end="url(#arr5)"/>
+                    <path d="M180 245 Q120 200 60 175" stroke="#d97706" stroke-width="2.5" fill="none" marker-end="url(#arr5)"/>
+
+                    <!-- Nota Fetch -->
+                    <rect x="60" y="340" width="600" height="60" rx="8" fill="rgba(15,17,23,0.5)" stroke="var(--border)" stroke-width="1"/>
+                    <text x="360" y="364" font-family="Inter,sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">Fetch dettagliato: PC → MAR → memoria → bus → MDR → IR → PC++</text>
+                </svg>
+                <div class="figure-caption">Figura 5 — Il ciclo si ripete per ogni istruzione: Fetch → Decode → Fetch operandi → Execute → Store.</div>
+            </div>
+            <div class="highlight-box">
+                <p><strong>Flusso del Fetch:</strong> <span class="sym">PC → MAR</span> → memoria invia istruzione sul bus → <span class="sym">MDR</span> riceve → <span class="sym">IR</span> memorizza → <span class="sym">PC++</span> (incremento).</p>
+            </div>
+            <p>L'insieme Fetch → Decode → Execute → Store costituisce il ciclo base che si ripete per ogni istruzione del programma.</p>
+        </section>
+    </main>
+</div>
+</body>
+</html>
